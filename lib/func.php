@@ -77,13 +77,13 @@ return $data;
 
 // mostra erros padronizados
 function qerror($i){
-$str[0]="O Capacitor de Fluxo est� com a carga baixa, n�o � possivel efetuar a transferencia de dados.";
-$str[1]="O sistema de teletransporte est� com defeito, o envio dos dados n�o foi efetuado";
+$str[0]="O Capacitor de Fluxo est� com a carga baixa, não � possivel efetuar a transferencia de dados.";
+$str[1]="O sistema de teletransporte est� com defeito, o envio dos dados não foi efetuado";
 $str[2]="Ocorreu uma microfissura no n�cleo de plasma, a energia est� sendo direcionada ao suporte de vida.";
 $str[3]="Uma tempestade derrubou a torre da antena do satelite, a comunica��o est� inoperante.";
-$str[4]="O n�vel do fluxo de dados est� muito baixo, n�o � poss�vel concluir a irriga��o.";
+$str[4]="O n�vel do fluxo de dados est� muito baixo, não � poss�vel concluir a irriga��o.";
 $str[5]="O condutor de plasma est� entupido, o dispositivo transdimensional est� inoperante.";
-$str[6]="A Policia Federal apreendeu o onibus que transportava as informa��es, n�o � possivel importar os dados.";
+$str[6]="A Policia Federal apreendeu o onibus que transportava as informa��es, não � possivel importar os dados.";
 
 die("<h1>SERVER ERROR!!</h1>
 $str[$i]
@@ -95,13 +95,13 @@ $_SERVER[SERVER_SIGNATURE]
 
 // mostra erros padronizados
 function error($i){
-$str[0]="O Capacitor de Fluxo est� com a carga baixa, n�o � possivel efetuar a transferencia de dados.";
-$str[1]="O sistema de teletransporte est� com defeito, o envio dos dados n�o foi efetuado";
+$str[0]="O Capacitor de Fluxo est� com a carga baixa, não � possivel efetuar a transferencia de dados.";
+$str[1]="O sistema de teletransporte est� com defeito, o envio dos dados não foi efetuado";
 $str[2]="Ocorreu uma microfissura no n�cleo de plasma, a energia est� sendo direcionada ao suporte de vida.";
 $str[3]="Uma tempestade derrubou a torre da antena do satelite, a comunica��o est� inoperante.";
-$str[4]="O n�vel do fluxo de dados est� muito baixo, n�o � poss�vel concluir a irriga��o.";
+$str[4]="O n�vel do fluxo de dados est� muito baixo, não � poss�vel concluir a irriga��o.";
 $str[5]="O condutor de plasma est� entupido, o dispositivo transdimensional est� inoperante.";
-$str[6]="A Policia Federal apreendeu o onibus que transportava as informa��es, n�o � possivel importar os dados.";
+$str[6]="A Policia Federal apreendeu o onibus que transportava as informa��es, não � possivel importar os dados.";
 $str[7]="O navio que trazia o container de dados afundou devido a um ataque de piratas.";
 
 die("<div
@@ -239,26 +239,20 @@ function minimo($string, $qtd, $retornaZeros = false) {
 
 // Limpa qualquer tipo de caractere de uma sequencia de numeros
 function unmask($string) {
-   #remove todos os caracteres n�o alfa-num�ricos da string
+   #remove todos os caracteres não alfa-num�ricos da string
    $retorno = str_replace(array('R$',' ','.','-','_','(',')',',','/'), '', $string);
    return $retorno;
 }
 
-// Substitui todos os caracteres especiais pelas suas vogais respectivas
-function clean($string) {
+   // Substitui todos os caracteres especiais pelas suas vogais respectivas
+	function clean($string) {
+      $pattern = array("'é'", "'è'", "'ë'", "'ê'", "'É'", "'È'", "'Ë'", "'Ê'", "'Ã'", "'ã'", "'á'", "'à'", "'ä'", "'â'", "'å'", "'Á'", "'À'", "'Ä'", "'Â'", "'Å'", "'ó'", "'ò'", "'ö'", "'ô'", "'Ó'", "'Ò'", "'Ö'", "'Ô'", "'í'", "'ì'", "'ï'", "'î'", "'Í'", "'Ì'", "'Ï'", "'Î'", "'ú'", "'ù'", "'ü'", "'û'", "'Ú'", "'Ù'", "'Ü'", "'Û'", "'ý'", "'ÿ'", "'Ý'", "'ø'", "'Ø'", "'œ'", "'Œ'", "'Æ'", "'ç'", "'Ç'");
+		$replace = array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A', 'A', 'o', 'o', 'o', 'o', 'O', 'O', 'O', 'O', 'i', 'i', 'i', 'I', 'I', 'I', 'I', 'I', 'u', 'u', 'u', 'u', 'U', 'U', 'U', 'U', 'y', 'y', 'Y', 'o', 'O', 'a', 'A', 'A', 'c', 'C'); 
 
-  $search = explode(",","�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,�,e,i,�,�,u");
-  $replace = explode(",","c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,a,e,i,o,o,u");
-  // $retorno = preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $string));
-  $retorno = str_replace($search, $replace, $string);
+		$retorno = preg_replace($pattern, $replace, $string);
 
-  return $retorno;
-}
-
-function semAcentos($string) {
-  
-}
-
+      return $retorno;
+   }
 
 function modulo_11($num, $base=9, $r=0)  {
     /**

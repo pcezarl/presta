@@ -56,6 +56,7 @@ public function __construct(){
 global $mysql;
  
 $db=mysql_connect($mysql["host"],$mysql["user"],$mysql["pass"]) or die("BD::erro ao conectar") ;
+mysql_set_charset("UTF8", $db);
 mysql_selectdb($mysql["dados"],$db ) or die("DB::erro ao selecionar dados" ) ;
 
 $this->banco=$db;
@@ -136,7 +137,7 @@ cancela = anula as operacoes anteriores
 */
 
 public function transact($opt){
-if(!array_key_exists($opt,$this->opts))die("<b>Class DB::</b> comando transact n�o reconhecido: <i>$opt</i>.");
+if(!array_key_exists($opt,$this->opts))die("<b>Class DB::</b> comando transact não reconhecido: <i>$opt</i>.");
 
 mysql_query($this->pre_opts[$opt],$this->banco);
 mysql_query($this->opts[$opt],$this->banco);

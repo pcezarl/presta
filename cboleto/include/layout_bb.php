@@ -4,7 +4,7 @@
 <head>
 <title><?php echo $dadosboleto["identificacao"]; ?></title>
 <META http-equiv=Content-Type content=text/html charset="utf-8">
-<meta name="Generator" content="Projeto BoletoPHP - www.boletophp.com.br - Licen�a GPL" />
+<meta name="Generator" content="Projeto BoletoPHP - www.boletophp.com.br - Licen�a GPL" />
 	
 <style type="text/css">
 <!--
@@ -466,7 +466,7 @@ div.barcode {
 <div id="container">
 	<div id="">
 <!--
-  Use no lugar do <div id=""> caso queira imprimir sem o logotipo e instru��es
+  Use no lugar do <div id=""> caso queira imprimir sem o logotipo e instru��es
   <div id="instructions">
  -->
 		
@@ -476,7 +476,7 @@ div.barcode {
 				nos terminais de Auto-Atendimento BB.
 			</p>
 			
-			<h2>Instru&ccedil;&otilde;es</h2>
+			<h2>Instruções</h2>
 			<ol>
 			<li>
 				Imprima em impressora jato de tinta (ink jet) ou laser, em 
@@ -558,7 +558,7 @@ do Sacado</b></div></TD></tr></tbody></table>
 		<tbody>
 		<tr class="titulos">
 			<td class="desconto">(-) Desconto / Abatimento</td>
-			<td class="outras_deducoes">(-) Outras dedu&ccedil;&otilde;es</td>
+			<td class="outras_deducoes">(-) Outras deduções</td>
 			<td class="mora_multa">(+) Mora / Multa</td>
 			<td class="outros_acrescimos">(+) Outros acr&eacute;scimos</td>
 			<td class="valor_cobrado">(=) Valor cobrado</td>
@@ -684,7 +684,7 @@ do Sacado</b></div></TD></tr></tbody></table>
 			<tbody>
 			<tr class="titulos">
 				<td class="instrucoes">
-						Instru&ccedil;&otilde;es (Texto de responsabilidade do cedente)
+						Instruções (Texto de responsabilidade do cedente)
 				</td>
 			</tr>
 			<tr class="campos">
@@ -719,7 +719,7 @@ do Sacado</b></div></TD></tr></tbody></table>
 			<table class="line" cellspacing="0" cellpadding="0">
 			<tbody>
 			<tr class="titulos">
-				<td class="outras_deducoes2">(-) Outras dedu&ccedil;&otilde;es</td>
+				<td class="outras_deducoes2">(-) Outras deduções</td>
 			</tr>
 			<tr class="campos">
 				<td class="outras_deducoes2">&nbsp;</td>

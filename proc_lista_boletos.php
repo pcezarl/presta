@@ -23,7 +23,7 @@
 		$b = new boleto_CEF();
 		$b->init();
 
-		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a opera��o");
+		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
 		// loop boletos
 		while($d=mysql_fetch_object($db->result)){
 			$b->val("razao"   , $d->razao);
@@ -37,7 +37,7 @@
 		$b = new boleto_Bradesco();
 		$b->init();
 
-		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a opera��o");
+		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
 		// loop boletos
 		while($d=mysql_fetch_object($db->result)){
 			$b->val("razao"     , $d->razao);
@@ -52,7 +52,7 @@
 	} else if ( $dados[0] == 'SICOOB' ) {
 		$b = new boleto_SICOOB();
 		$b->init();
-		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a opera��o");
+		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
 		// loop boletos
 		while($d=mysql_fetch_object($db->result)){
 			
@@ -85,7 +85,7 @@
 
 	$db->query($sql);
 	$qt=$db->rows;
-	if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a opera��o");
+	if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
 
 
 
@@ -162,9 +162,9 @@
 			$msg="
 			Segue em anexo<br />
 			boleto referente ao pagamento de parcela do apartamento {$d->ap_num} do edificio {$d->ed_nome}<br>
-			Valor da presta��o: R\${$valor}<br />
+			Valor da prestação: R\${$valor}<br />
 			Numero do documento: {$ndoc}<br /><br /><br />
-			caso tenha problemas na visualiza��o do boleto, utilize a linha digitavel:<br /><br />
+			caso tenha problemas na visualização do boleto, utilize a linha digitavel:<br /><br />
 			<span style='padding:3px;background:#C0C0C0;border:1px solid;#585858;font-family:courier;font-size:11pt;color:black;font-weight:bold'>{$b->dadosboleto[linha_digitavel]} </span>";
 
 			$mail->set_dados($boleto);

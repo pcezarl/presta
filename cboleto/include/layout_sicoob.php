@@ -48,7 +48,7 @@
     <table width=666 cellspacing=0 cellpadding=0 border=0>
       <tr>
         <td valign=top class=cp>
-          <DIV ALIGN="CENTER">Instru&ccedil;&otilde;es
+          <DIV ALIGN="CENTER">Instruções
             de Impress&atilde;o</DIV>
         </TD>
       </TR>
@@ -224,7 +224,7 @@
             Desconto / Abatimentos</td>
           <td class=ct valign=top width=7 height=13><img height=13 src=imagens/1.png width=1 border=0></td>
           <td class=ct valign=top width=112 height=13>(-)
-            Outras dedu&ccedil;&otilde;es</td>
+            Outras deduções</td>
           <td class=ct valign=top width=7 height=13><img height=13 src=imagens/1.png width=1 border=0></td>
           <td class=ct valign=top width=113 height=13>(+)
             Mora / Multa</td>
@@ -576,7 +576,7 @@
             </table>
           </td>
           <td valign=top width=480 rowspan=5>
-            <span class=ct>Informa&ccedil;&otilde;es de responsabilidade do benefici&aacute;rio
+            <span class=ct>Informações de responsabilidade do benefici&aacute;rio
             </span><br><br><span class=cp>
               <span class=campo>
                 {{instrucoes1}}<br>
@@ -629,7 +629,7 @@
               <tbody>
                 <tr>
                   <td class=ct valign=top width=7 height=13><img height=13 src=imagens/1.png width=1 border=0></td>
-                  <td class=ct valign=top width=180 height=13>(-) Outras dedu&ccedil;&otilde;es</td>
+                  <td class=ct valign=top width=180 height=13>(-) Outras deduções</td>
                   <td class=ct valign=top width=7 height=13><img height=13 src=imagens/1.png width=1 border=0></td>
                 </tr>
                 <tr>

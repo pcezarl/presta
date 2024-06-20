@@ -14,14 +14,14 @@
 </style>
 <script type="text/javascript">
 function apaga(id){
-if(confirm("Deseja excluir este apartamento?\nTODOS OS DADOS SER√O ELIMINADOS.\nINCLUSIVE SUAS PRESTA«’ES.")){
+if(confirm("Deseja excluir este apartamento?\nTODOS OS DADOS SER√ÉO ELIMINADOS.\nINCLUSIVE SUAS PRESTA√á√ïES.")){
 document.location="proc_apaga_apto.php?i="+id;
 }
 return true;
 }
 
 function dispo(id){
-if(confirm("Confirma a exclus„o da venda?\neste apartamento ficar· disponivel ‡ venda")){
+if(confirm("Confirma a exclus√£o da venda?\neste apartamento ficar√° disponivel √° venda")){
 document.location="proc_disp_apto.php?i="+id;
 }
 return true;
@@ -108,7 +108,7 @@ return true;
     <td>&nbsp;</td>
   </tr>
   <tr> 
-    <td>valor presta&ccedil;&otilde;es:</td>
+    <td>valor presta√ß√µes:</td>
     <td align="right" class="valores">{{valor_presta}}</td>
     <td>&nbsp;</td>
     <td>quantidade mensalidades</td>
@@ -143,7 +143,7 @@ return true;
     <td>&nbsp;</td>
   </tr>
   <tr> 
-    <td><a href="lista-prestacoes.php?i={{id}}" class="aqua2">ver presta&ccedil;&otilde;es</a></td>
+    <td><a href="lista-prestacoes.php?i={{id}}" class="aqua2">ver presta√ß√µes</a></td>
     <td><a href="javascript:void(0)" class="aqua2" onclick="apaga('{{id}}')">EXCLUIR</a></td>
         <td>{{bt venda}}</td>
     <td></td>

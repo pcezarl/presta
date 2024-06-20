@@ -4,7 +4,7 @@ error_reporting(164);
 // error_reporting(-1);
 
 // phpinfo();
-// ini_set("default_charset", 'utf-8');
+ini_set("default_charset", 'utf-8');
 
 ob_start("ob_gzhandler");
 
@@ -13,9 +13,9 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 $_version=PHP_VERSION;
 die("
 <h1>ERRO DE SISTEMA</h1>
-A vers�o do compilador n�o � compativel com o sistema.<br />
-Vers�o atual: <b>$_version</b><br />
-Vers�o requerida: <b>5.3.0</b> ou posterior.<br />
+A versãoo do compilador não é compativel com o sistema.<br />
+Versão atual: <b>$_version</b><br />
+Versão requerida: <b>5.3.0</b> ou posterior.<br />
 <hr>
 $_SERVER[SERVER_SIGNATURE]
 ");
@@ -38,7 +38,7 @@ $mes_extenso=array(
 "",
 "Janeiro",
 "Fevereiro",
-"Mar�o",
+"Março",
 "Abril",
 "Maio",
 "Junho",

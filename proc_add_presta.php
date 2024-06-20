@@ -42,7 +42,7 @@
 	$db->query($sqlbase);
 	if($db->status=="erro")
 	{
-		die("ERRO::N�O FOI POSSIVEL ADICIONAR PRESTACAO<BR>{$db->erro}");
+		die("ERRO::NÃO FOI POSSIVEL ADICIONAR PRESTACAO<BR>{$db->erro}");
 	}
 
 	//die($sqlbase);
@@ -60,7 +60,7 @@
 	$db->query($sql_indice);
 	if($db->status=="erro")
 	{
-		die("ERRO::N�O FOI POSSIVEL RECRIAR INDICE DE PRESTACOES<BR>{$db->erro}");
+		die("ERRO::NÃO FOI POSSIVEL RECRIAR INDICE DE PRESTACOES<BR>{$db->erro}");
 	}
 	  */
 
@@ -73,7 +73,7 @@
 
 
 
-	alert("OK!! Presta��o adicionada com sucesso.");
+	alert("OK!! Prestação adicionada com sucesso.");
 	self.close();
 
 
