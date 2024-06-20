@@ -1,0 +1,94 @@
+
+
+<script type="text/javascript" src="js/jquery.bsformaccelerator.js"></script>
+
+
+<script type="text/javascript"> 
+<!--
+$(document).ready(function()
+{
+
+$.bsformaccelerator('myform',{handle : 'enter'});  
+
+});
+-->
+</script>
+
+ 
+<h3 class="titulo">Cadastro de apartamento ::</h3>
+
+
+<style type="text/css">
+input{
+background-image: url("images/fundo-form.gif");
+height: 24px;
+font-size: 12pt;
+border:1px solid #B5A266;
+}
+
+.obr{
+font-family: tahoma;
+color:red;
+font-weight: bold;
+padding-right : 4px;
+font-size: 14pt;
+}
+
+
+</style>
+
+
+<form action="proc_add_apto.php" method="post" target="proc" name="myform" id="myform" onsubmit="document.getElementById('c_proc').style.display='block'" >
+  <table width="95%" border="0" cellpadding="3" cellspacing="0">
+    <tr> 
+      <td width="10%"><span class="obr">!</span>edificio</td>
+      <td width="38%">{{lista ed}}</td>
+      <td width="11%"><span class="obr">!</span>numero</td>
+      <td width="41%"><input name="numero" type="text" id="numero" tabindex="2" size="6" maxlength="6"></td>
+    </tr>
+    <tr> 
+      <td><span class="obr">!</span>valor</td>
+      <td><input name="valor" type="text" id="valor" size="40" tabindex="3"></td>
+      <td><td>
+      <td> 
+       </td>
+    </tr>
+    <tr> 
+      <td colspan="2">&nbsp; </td>
+      <td>&nbsp; </td>
+      <td>&nbsp; </td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+      <td>informa&ccedil;&otilde;es adicionais:<br> </td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+      <td><textarea name="info" cols="40" rows="4" wrap="PHYSICAL" id="info" ></textarea></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr> 
+      <td colspan="4">
+<div id="c_proc" style="display:none;">
+<iframe name="proc" id="proc" height="45px" width="650px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" ></iframe>
+</div>
+
+
+</td>
+      
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+      <td align="center"> <input name="limpa" type="reset" id="limpa" value="Limpar"> 
+      </td>
+      <td>&nbsp;</td>
+      <td align="center"> <input name="ok" type="submit" id="ok" value=":: Cadastrar ::"  tabindex="11"> 
+      </td>
+    </tr>
+  </table>
+</form>
+
+

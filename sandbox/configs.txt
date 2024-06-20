@@ -1,0 +1,8 @@
+<?php
+$titulo="";
+$manutancao="";
+$rodape="";
+$categoria1="";
+$categoria2="";
+$categoria3="";
+?>

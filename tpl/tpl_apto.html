@@ -1,0 +1,152 @@
+<style type="text/css">
+<!--
+.unnamed1 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #000000;
+	text-align: center;
+}
+.valores {
+	font-family: "Courier New", Courier, mono;
+	font-size: 12pt;
+}
+-->
+</style>
+<script type="text/javascript">
+function apaga(id){
+if(confirm("Deseja excluir este apartamento?\nTODOS OS DADOS SERÃO ELIMINADOS.\nINCLUSIVE SUAS PRESTAÇÕES.")){
+document.location="proc_apaga_apto.php?i="+id;
+}
+return true;
+}
+
+function dispo(id){
+if(confirm("Confirma a exclusão da venda?\neste apartamento ficará disponivel à venda")){
+document.location="proc_disp_apto.php?i="+id;
+}
+return true;
+}
+
+
+
+</script>
+
+
+<table width="90%" border="1" cellspacing="0">
+  <tr> 
+    <td colspan="4" class="unnamed1">INFORMA&Ccedil;&Otilde;ES</td>
+  </tr>
+  <tr> 
+    <td width="9%">edificio:</td>
+    <td width="42%">{{edificio}}</td>
+    <td width="10%">valor</td>
+    <td width="39%">R$ {{valor}}</td>
+  </tr>
+  <tr> 
+    <td>proprietario</td>
+    <td><a href="cliente.php?i={{id_prop}}">{{prop_nome}}</a></td>
+    <td>entregue</td>
+    <td>{{entregue}}</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<br>
+<table width="90%" border="1" cellspacing="0">
+  <tr> 
+    <td colspan="5" class="unnamed1">INFORMATIVO FINANCEIRO</td>
+  </tr>
+  <tr> 
+    <td width="14%">valor total::</td>
+    <td width="27%" align="right" class="valores">{{valor}}</td>
+    <td width="13%">&nbsp;</td>
+    <td width="21%">&nbsp;</td>
+    <td width="25%">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>valor pago</td>
+    <td align="right" class="valores">{{pago}}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>saldo</td>
+    <td align="right" class="valores">{{saldo}}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>valor presta&ccedil;&otilde;es:</td>
+    <td align="right" class="valores">{{valor_presta}}</td>
+    <td>&nbsp;</td>
+    <td>quantidade mensalidades</td>
+    <td>{{total_presta}}</td>
+  </tr>
+  <tr> 
+    <td>valor trimestral</td>
+    <td align="right" class="valores">{{valor_trimestral}}</td>
+    <td>&nbsp;</td>
+    <td>quantidade trimestrais</td>
+    <td>{{total_trimestral}}</td>
+  </tr>
+  <tr> 
+    <td>valor semestral</td>
+    <td align="right" class="valores">{{valor_semestral}}</td>
+    <td>&nbsp;</td>
+    <td>quantidade semestrais</td>
+    <td>{{total_semestral}}</td>
+  </tr>
+  <tr> 
+    <td>valor chaves</td>
+    <td align="right" class="valores">{{valor_chaves}}</td>
+    <td>&nbsp;</td>
+    <td>quantidade entrada</td>
+    <td>{{total_entrada}}</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><a href="lista-prestacoes.php?i={{id}}" class="aqua2">ver presta&ccedil;&otilde;es</a></td>
+    <td><a href="javascript:void(0)" class="aqua2" onclick="apaga('{{id}}')">EXCLUIR</a></td>
+        <td>{{bt venda}}</td>
+    <td></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>

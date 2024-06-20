@@ -1,0 +1,280 @@
+body{
+margin: 0;
+font-family: tahoma;
+font-size: 11pt;
+color:black;
+background-color: #1B2543;
+
+}
+
+#master{
+position: relative;
+}
+
+#conteudo{
+position:relative;
+border:2px solid #808080;
+margin-left: 40px;
+margin-right: 40px;
+background-color: transparent;
+padding: 4px;
+padding-bottom: 50px;
+background-image: url('images/bg-div.png');
+}
+
+#cab{
+position: relative;
+border:0;
+margin-left: 120px;
+margin-right: 40px;
+margin-bottom: 10px;
+height: 214px;
+background-image: url("images/barra.jpg");
+background-repeat: no-repeat;
+}
+
+#fim{
+font-size:8pt;
+border:1px solid black;
+background-color: #263C6C;
+color:white;
+position: relative;
+margin-bottom: 70px;
+margin-top: 200px;
+}
+
+#menu_cima{
+position: absolute;
+border:0;
+left:370px;
+top:17px;
+}
+
+input{
+background-image: url("images/fundo-form.gif");
+height: 20px;
+font-size: 10pt;
+border:1px solid #B5A266;
+}
+
+.titulo{
+font-weight: normal;
+font-size: 14pt;
+padding-left: 20px;
+background-color: #1E4277;
+color:white;
+height: 25px;
+background-image: url("images/fundo-titulo.gif");
+}
+
+.busca{
+font-family: tahoma;
+font-size: 10pt;
+border:1px solid #4F78BD;
+}
+
+.listagem:link, .listagem:visited{
+color:black;
+text-decoration: none;
+}
+
+.listagem:hover{
+color: #F97600;
+text-decoration: underline;
+}
+
+.listagem:active{
+color: white;
+text-decoration: underline;
+background: #8C2ECB;
+}
+
+.quadro{
+position: relative;
+display: block;
+height: 150px;
+width: 200px;
+overflow: auto;
+border-top: 5px solid #FF8000;
+border-bottom: 5px solid #5C8DD6;
+border-left:  1px solid #5C8DD6;
+border-right :  1px solid #5C8DD6;
+}
+
+.corsim{
+background-color: #9ADFFA;
+}
+
+.cornao{
+background-color: #69D0F8;
+}
+
+.corsim:hover, .cornao:hover {
+background-color: #E0FF82;
+color:black;
+}
+
+
+.titulo-total{
+padding-left: 5px;
+background-color: black;
+color: white;
+}
+
+.link-lista:link, .link-lista:visited{
+color:black;
+display: block;
+text-decoration: none;
+padding-left: 3px;
+padding-right: 3px;
+width:95%;
+;
+}
+.link-lista:hover{
+color:white;
+background-color: #3177C4;
+text-decoration: underline;
+}
+
+.obr{
+font-family: tahoma;
+color:red;
+font-weight: bold;
+padding-right : 4px;
+font-size: 14pt;
+}
+
+.cinza:link, .cinza:visited{
+display:block;
+width:80px;
+height:20px;
+color:black;
+background-image: url("images/bt_cinza.gif");
+background-position: 0 0;
+background-repeat: no-repeat;
+text-align: center;
+font-size:10pt;
+font-family:verdana;
+text-decoration: none;
+}
+
+.cinza:hover{
+background-position: 0 -20px ;
+}
+
+
+
+
+.opt:link, .opt:visited{
+height:20px;
+color:white;
+background-image: url("images/bt-opt.gif");
+background-position: 0 0;
+background-repeat:repeat-x;
+text-align: center;
+font-size:10pt;
+font-family:verdana;
+text-decoration: none;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+.opt:hover{
+background-position: 0 -20px ;
+color:black;
+}
+
+
+
+.aqua:link, .aqua:visited{
+display:block;
+width:115px;
+height:25px;
+color:black;
+background-image: url("images/botoes-aqua.jpg");
+background-position: 0 0;
+background-repeat: no-repeat;
+text-align: center;
+font-size:10pt;
+font-family:verdana;
+text-decoration: none;
+padding-top:5px;
+}
+
+.aqua:hover{
+background-position: 0 -35px ;
+}
+
+.aqua:active{
+background-position: 0 -69px ;
+}
+
+.aqua2:link, .aqua2:visited{
+display:block;
+width:116px;
+height:28px;
+color:black;
+background-image: url("images/aqua2.png");
+background-position: 0 0;
+background-repeat: no-repeat;
+text-align: center;
+font-size:10pt;
+font-family:verdana;
+text-decoration: none;
+padding-top:5px;
+}
+
+.aqua2:hover{
+background-position: 0 -33px ;
+}
+
+.aqua2:active{
+background-position: 0 -66px ;
+}
+
+.aqua4:link, .aqua4:visited{
+display:block;
+width:116px;
+height:28px;
+color:black;
+background-image: url("images/aqua4.png");
+background-position: 0 0;
+background-repeat: no-repeat;
+text-align: center;
+font-size:10pt;
+font-family:verdana;
+text-decoration: none;
+padding-top:5px;
+}
+
+.aqua4:hover{
+background-position: 0 -33px ;
+}
+
+.aqua4:active{
+background-position: 0 -66px ;
+}
+
+.pr{
+font-family:courier;
+font-size:10pt;
+color:black;
+border:1px solid #88703C;
+background: #FDFFDD;
+display: block;
+overflow: auto;
+height: 60px;
+width: 250px;
+
+}
+
+.info{
+	color:black;
+	background-color: #FFFDB0;
+	border:1px solid #938F00;
+	font-family: sans-serif;
+	font-size: 9pt;
+	padding: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}

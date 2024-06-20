@@ -1,0 +1,148 @@
+<!--
+
+ESSE ARQUIVO TEM 2 FORMS
+
+
+-->
+
+
+<script type="text/javascript">
+
+	function buscar_apto(){
+
+		window.open("pop_lista_aptos.php","","top=200,left=120,width=520,height=350");
+		return true;
+
+	}
+
+
+	// é correge mesmo, o certo seria corrige
+	function correge(){
+		ob=document.getElementById("correcao");
+
+		if( (ob.value!='') & (isNaN(ob.value)==false)){
+
+			if(confirm("Confirma correção de "+document.getElementById("correcao").value+"% ?")){
+				document.getElementById('carregando').style.display="block";
+				document.getElementById('proc').style.display="none";
+				document.getElementById('ff').submit();
+			}
+
+		}else{
+			alert("                   ERRO!!!\nDados insuficientes para completar a ligação");
+			document.getElementById('correcao').focus();
+		}
+
+	} // fim function
+
+
+	// é correge mesmo, o certo seria corrige
+	function correge2(){
+		ob=document.getElementById("correcao2");
+		ap=document.getElementById("apto");
+
+
+
+		if( (ob.value!='') & (isNaN(ob.value)==false)  & (ap.value!='') & (isNaN(ap.value)==false) ){
+
+			if(confirm("Confirma correção de "+document.getElementById("correcao2").value+"% ?")){
+				document.getElementById('carregando').style.display="block";
+				document.getElementById('proc').style.display="none";
+				document.getElementById('ff2').submit();
+			}
+
+		}else{
+			alert("                   ERRO!!!\nDados insuficientes para completar a ligação");
+			document.getElementById('correcao').focus();
+		}
+
+	} // fim function
+
+
+
+
+
+</script>
+<style type="text/css">
+
+	.on{
+		display:block;
+	}
+
+	.off{
+		display:none;
+	}
+
+</style>
+<h1 class='titulo'>Taxa de Correção</h1>
+<form action="proc_correcao.php" method="post" name="form1" target="proc" id="ff" onsubmit="correge()">
+	<br>
+	<table width="90%" border="1" cellspacing="0">
+		<tr>
+			<td width="40%">Dia
+				<select name="dia" id="dia">
+					<!--loop:linha -->
+					<option value="{{dia}}">{{dia}}</option>
+					<!--end loop:linha -->
+				</select></td>
+			<td width="60%">Indice de corre&ccedil;&atilde;o
+				<input name="correcao" type="text" id="correcao" size="10" maxlength="12">
+				%</td>
+		</tr>
+		<tr>
+			<td align="center"><a href="javascript:void(document.getElementById('ff').reset())" class="aqua2" >Limpar</a></td>
+			<td align="center"><a href="javascript:void(correge())"  class="aqua4" >Corrigir</a></td>
+		</tr>
+	</table>
+</form>
+<hr />
+<div id="carregando"  style="text-align:center" class="off">
+	<img src="images/loadroxo.gif" alt="carregando"/>
+</div>
+<iframe style="margin-top:5px;display:none" id="proc" name="proc" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" width="90%" height="90" src="blank.html"></iframe>
+<br />
+
+<!-- DATAS ANTERIORES -->
+
+
+<h1 class="titulo">Corrigir prestações anteriores</h1>
+
+<form action="proc_correcao_anteriores.php" method="post" name="form1" target="proc" id="ff2" onsubmit="correge2()">
+	<br>
+	<table width="90%" border="1" cellspacing="0">
+		<tr>
+			<td>
+				Data:<input type="text" name="dia" id="dia_ant" size="2" />/
+				<select name="mes">
+					<option value="01">Janeiro</option>
+					<option value="02">Fevereiro</option>
+					<option value="03">Março</option>
+					<option value="04">Abril</option>
+					<option value="05">Maio</option>
+					<option value="06">Junho</option>
+					<option value="07">Julho</option>
+					<option value="08">Agosto</option>
+					<option value="09">Setembro</option>
+					<option value="10">Outubro</option>
+					<option value="11">Novembro</option>
+					<option value="12">Dezembro</option>
+				</select>/
+				<input type="text" name="ano" id="ano_ant" size="5" />
+
+
+			</td>
+			<td>
+				apto(cod): <input type="text" size="6" name="apto" id="apto" />
+				<a href="javascript:void(0)"  onclick="buscar_apto()"><img src="images/ver.gif"  border="0"  alt="pesquise" title="Procurar" /></a>
+			</td>
+			<td>Indice de corre&ccedil;&atilde;o
+				<input name="correcao" type="text" id="correcao2" size="10" maxlength="12">
+				%</td>
+		</tr>
+		<tr>
+			<td align="center"><a href="javascript:void(document.getElementById('ff2').reset())" class="aqua2" >Limpar</a></td>
+			<td>&nbsp;</td>
+			<td align="center"><a href="javascript:void(correge2())"  class="aqua4" >Corrigir</a></td>
+		</tr>
+	</table>
+</form>

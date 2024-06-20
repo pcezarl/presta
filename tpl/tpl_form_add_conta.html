@@ -1,0 +1,95 @@
+
+<!-- <script type="text/javascript" src="js/jquery-.2.2.4.min.js"></script> -->
+<script type="text/javascript" src="js/jquery.bsformaccelerator.js"></script>
+<!-- <script type="text/javascript" src="js/jquery.mask.min.js"></script> -->
+<script src="js/jquery.makedinput.min.js" type="text/javascript" /></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	// $('.show_acessorio').hide();
+
+	$('#banco').change(function() {
+		console.log(this.value);
+		if ( this.value == 'BRA' ) {
+			$('.show_acessorio').show();
+			$('.text.conta').html('<span class="obr">!</span>Conta:<sup>s/ d&iacute;gito</sup>')
+		} else if ( this.value == "CEF" ) {
+			$('.show_acessorio').hide();
+			$('.text.conta').html('<span class="obr">!</span>Cod. Cedente:<sup>s/ d&iacute;gito</sup>')
+		}
+	})
+	$.bsformaccelerator('myform',{handle : 'enter'});
+	$('#cnpj').mask('99.999.999/9999-99');
+
+});
+
+function ss(){
+document.getElementById("c_proc").style.display="block";
+}
+
+</script>
+
+<h3 class="titulo">Cadastro de conta ::</h3>
+
+<form action="proc_add_conta.php" method="post" target="proc" name="myform" id="myform" onsubmit="ss()">
+  <table width="95%" border="0" cellpadding="3" cellspacing="0">
+	<tr>
+	  <td class="text"><span class="obr">!</span>Raz&atilde;o Social:</td>
+	  <td width=""><input name="razao" type="text" id="razao" size="40" tabindex="1" /></td>
+	  <td class="text"><span class="obr">!</span>CNPJ</td>
+	  <td width=""><input name="cnpj" type="text" id="cnpj" size="40" tabindex="2" /></td>
+	  <td class="text show_acessorio"><span class="obr">!</span>Ass. Esc.</td>
+	  <td width="" class="show_acessorio"><input name="acessorio" type="text" id="acessorio" size="40" tabindex="2" /></td>
+	</tr>
+	<tr>
+	  <!-- <td width=""><span class="obr">!</span>Banco:</td> -->
+	  <td class="text"><span class="obr">!</span>Banco:</td>
+	  <td>
+		  <select name="banco" id="banco" style="width: 310px;">
+		  		<option value="BRA">Bradesco</option>
+		  		<option value="CEF">Caixa Econ&ocirc;mica Federal</option>
+		  </select>
+	  </td>
+
+	  <td class="text"><span class="obr">!</span>Ag&ecirc;ncia: <sup> s/ d&iacute;gito</td>
+	  <td width=""><input name="agencia" type="text" id="agencia" size="40" tabindex="3" /></td>
+	  <td class="text conta"><span class="obr">!</span>Conta: <sup> s/ d&iacute;gito</sup></td>
+	  <td width=""><input name="conta" type="text" id="conta" size="40" tabindex="4" /></td>
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	</tr>
+	
+	<tr>
+	  <td>&nbsp;</td>
+	  <!-- <td><textarea name="info" cols="40" rows="4" id="info" ></textarea></td> -->
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td colspan="4">
+
+<div  id="c_proc" style="display:none;">
+<iframe name="proc" id="proc" height="48px" width="650px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+</div>
+</td>
+
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td align="center"> <button name="limpa" type="reset" id="limpa">Limpar</button>
+	  </td>
+	  <td>&nbsp;</td>
+	  <td align="center"> <button name="ok" type="submit" id="ok" tabindex="11">:: Cadastrar ::</button>
+	  </td>
+	</tr>
+  </table>
+</form>
+<style type="text/css" media="screen">
+	td input, #banco {width: 75% !important;}
+	td.text {width: 14%;}
+</style>

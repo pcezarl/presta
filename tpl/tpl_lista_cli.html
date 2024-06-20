@@ -1,0 +1,20 @@
+<!-- começo do template da lista -->
+<table width="90%" border="1" cellspacing="0">
+  <thead>
+    <tr> 
+      <th>Nome</th>
+      <th>e-mail</th>
+      <th>Telefone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!--loop:linha -->
+    <tr class="{{cor}}"> 
+      <td><a href="cliente.php?i={{id}}" class="listagem">{{nome}}</a></td>
+      <td><a href="mailto:{{email}}">{{email}}</a></td>
+      <td>{{telefone}}</td>
+    </tr>
+    <!--end loop:linha -->
+  </tbody>
+</table>
+<!-- fim do template da lista -->

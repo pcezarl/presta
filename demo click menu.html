@@ -1,0 +1,365 @@
+<html>
+<head>
+<title>clickmenu demo page</title>
+<script type="text/javascript" src="http://p.sohei.org/wp-content/jquery/jquery-1.1.4.pack.js"></script>
+<script type="text/javascript" src="jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="jquery.clickmenu.js"></script>
+<link rel="stylesheet" type="text/css" href="clickmenu.css" />
+<script type="text/javascript">
+<!--
+$(document).ready(function()
+{
+	$.fn.clickMenu.setDefaults({arrowSrc:'arrow_right.gif'});
+	$('#mainmenu').clickMenu();
+	$('#menu1').clickMenu();
+	$('#menu2').clickMenu();
+	//use another arrow - image from http://www.famfamfam.com/lab/icons/silk/
+	$('#stylishmenu').clickMenu({arrowSrc:'arrow_right.png', onClick:function(){
+		var a = $(this).find('>a');
+		if ( a.length )
+		{
+			//close the menu
+			alert($(a).text() + ' was clicked');
+			$('#stylishmenu').trigger('closemenu');
+		}
+		return false; //stop default action
+	}}); 
+});
+-->
+</script>
+<style type="text/css">
+/* demopage styles */
+body
+{
+	margin: 0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+#divone
+{
+	position: fixed;
+	top: 0;
+	border: 0;
+	border-bottom: 1px solid gray;
+	padding: 0 0 0 5px;
+	width: 100%;
+	z-index: 10;
+	background-color: #eee;
+}
+#divone div.cmDiv
+{
+	border: 0;
+}
+#divone li.main.hover
+{
+	background-color: #dedede;
+}
+#divone li.main li.hover
+{
+	background-color: #4a93e3;
+}
+hr
+{
+	height: 1px;
+	margin: 4px 2px;
+	border-color: #bbb;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	padding:0;
+}
+#helper
+{
+	margin-top: 40px;
+	//margin-top: 20px; /* for ie */
+}
+li.sep
+{
+	border-top: 1px solid gray;
+	margin: 2px 0;
+	height: 0px;
+	//fmargin-bottom: 0px; /* ie */
+	//font-size: 0; /* ie */
+	//float: left; /* ie */
+	//width: 100%; /* ie */
+}
+li li
+{
+	//clear: left;
+}
+#centerDiv
+{
+	width: 200px; 
+	position: absolute;
+	top: 200px;
+	left: 550px;
+}
+#centerDiv li.main
+{
+	background: white;
+	width: 178px;
+	//width: 198px;/*ie*/
+	text-align: center;
+}
+#centerdiv li.main.hover
+{
+	background: #d3e3f6;
+}
+#centerDiv li.main ul
+{
+	background: #ebf5ff;
+}
+#centerDiv li.main li.hover
+{
+	background: #d3e3f6;
+}
+#centerDiv li.main *
+{
+	text-align: left;
+}
+#stylishmenu, #stylishmenu ul
+{
+	padding: 0 2px;
+	background: white url(menu.gif);
+}
+#stylishmenu li.main
+{
+	background: inherit;
+	height: 20px;
+	padding-top: 1px;
+}
+#stylishmenu li.main li
+{
+	padding-top: 1px;
+	height: 21px;
+	//height: 22px; /*ie*/
+	white-space: nowrap;
+}
+#stylishmenu li.hover
+{
+	background: white url(menuh.gif);
+}
+#stylishmenu li.main li.disabled
+{
+	color: #bbb;
+	background: white url(menu.gif) !important;
+}
+#stylishmenu img.pic
+{
+	width: 16px;
+	height: 16px;
+	margin-right: 2px;
+	position: relative;
+	top: 2px;
+}
+#stylishmenu img.liArrow
+{
+	top: 3px;
+	right: 0;
+}
+#stylishdiv div.cmDiv
+{
+	position: absolute;
+	left: 600px;
+	background: 0;
+}
+</style>
+</head>
+<body>
+<div id="divone">
+<ul id="mainmenu">
+<li>File
+	<ul><li>New&nbsp;window</li>
+		<li class="sep"></li>
+		<li>Save...</li>
+		<li>Print...</li>
+		<li class="sep"></li>
+		<li>Exit</li>
+	</ul>
+</li>
+<li>Edit
+	<ul><li>Undo</li>
+		<li>Redo</li>
+		<li class="sep"></li>
+		<li>Cut</li>
+		<li>Copy</li>
+		<li>Paste<ul><li>All</li><li>Something</li></ul></li>
+		<li>Delete</li>
+	</ul>
+</li>
+<li>Bookmarks
+	<ul><li>Bookmark&nbsp;manager</li>
+		<li class="sep"></li>
+		<li>some&nbsp;bookmark</li>
+		<li>another&nbsp;bookmark</li>
+		<li class="sep"></li>
+		<li>Imported&nbsp;bookmarks
+			<ul><li>bookmark&nbsp;one</li>
+				<li>bookmark&nbsp;two</li>
+				<li>bookmark&nbsp;three</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+<li>Help
+	<ul><li>Help&nbsp;index</li>
+		<li class="sep"></li>
+		<li>About...</li>
+	</ul>
+</li>
+</ul>
+</div>
+<div id="helper"></div>
+<ul id="menu1">
+<li>one level
+	<ul>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+		<li>thats</li>
+	</ul>
+</li>
+<li><a href="#">no level</a></li>
+<li>two levels
+	<ul>
+		<li>thats
+			<ul><li>test
+			<ul><li>test</li></ul>
+			</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+		<li>thats
+			<ul><li>test</li></ul>
+		</li>
+	</ul>
+</li>
+<li>Item one
+	<ul>
+		<li>stuff_stuff_stuff_stuff</li>
+		<li>more stuff</a></li>
+		<li>stuff inside</a>
+			<ul>
+				<li>stuff&nbsp;1&nbsp;stuff_stuff_stuff_stuff&nbsp;stuff_stuff_stuff_stuff
+					<ul><li>test</li>
+					<li>test2</li>
+					</ul>
+				</li>
+				<li>stuff 2</li>
+				<li>stuff 3</li>
+			</ul>
+		</li>
+		<li>exit</li>
+	</ul>
+</li>
+<li>Item two
+	<ul>
+		<li>some item</li>
+		<li>some item</li>
+		<li>some item</li>
+	</ul>
+</li>
+</ul>
+<br />
+<form>
+<select><option>test</option><option>test2</option></select>
+<select><option>for correct display in</option><option>test2</option></select>
+<select><option>Internet Explorer 6</option><option>test2</option></select>
+</form>
+<div id="centerdiv">
+<ul id="menu2">
+<li>click to select something
+	<ul>
+		<li>red</li>
+		<li>green</li>
+		<li>blue</li>
+		<li>cups</a>
+			<ul>
+				<li>small&nbsp;cup</li>
+				<li>cup</li>
+				<li>big&nbsp;cup</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+</ul>
+</div>
+<div id="stylishdiv">
+<ul id="stylishmenu">
+<li><a href="404.html" title="some link">Stylish menu</a><!-- images from http://www.famfamfam.com/lab/icons/silk/ -->
+	<ul><li><img class="pic" src="exclamation.png" /><a href="#">enabled 1</a></li>
+		<li><img class="pic" src="exclamation.png" /><a href="#">enabled 2</a></li>
+		<li class="disabled"><img class="pic" src="exclamation.png" />disabled</li>
+		<li><img class="pic" src="exclamation.png" />submenu
+			<ul><li class="disabled"><img class="pic" src="exclamation.png" />an&nbsp;item</li>
+				<li><img class="pic" src="exclamation.png" /><a href="#">an&nbsp;item</a></li>
+			</ul>
+		</li>
+	</ul>
+</li>
+</ul>
+</div>
+<div style="width: 500px; height: 2000px; background: lightblue; border: 1px solid gray; margin: 20px;">very long test container to test the fixed menu at the top (not working in IE!)</div>
+</body>
+</html>

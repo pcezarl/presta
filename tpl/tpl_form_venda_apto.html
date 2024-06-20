@@ -1,0 +1,276 @@
+
+<script type="text/javascript" src="js/jquery.bsformaccelerator.js"></script>
+<script type="text/javascript">
+	<!--
+	$(document).ready(function()
+	{
+		$.bsformaccelerator('myform',{handle : 'enter'});
+	});
+	-->
+
+</script>
+
+<script type="text/javascript">
+
+	// valida o formulario  antes do envio
+
+	function _validar(){
+		erro =0;
+		str_erro="";
+
+		if(document.getElementById("cliente").value==""){
+			erro++;
+			str_erro+="O CLIENTE NÃO FOI SELECIONADO\n";
+		}
+
+		if(document.getElementById("prestacao").value==""){
+			erro++;
+			str_erro+="O NÚMERO DE PRESTAÇÕES NÃO FOI DEFINIDO\n";
+		}
+
+
+		if(document.getElementById("dia_inicial").value==""){
+			erro++;
+			str_erro+="O DIA DE INICIO DAS PRESTAÇÕES NÃO FOI DEFINIDO\n";
+		}
+
+
+		if(document.getElementById("ano_inicial").value==""){
+			erro++;
+			str_erro+="O ANO DE INICIO DAS PRESTAÇÕES NÃO FOI DEFINIDO\n";
+		}
+
+
+		/*
+		if(document.getElementById("ano_chave").value==""){
+			erro++;
+			str_erro+="O ANO DE ENTREGA DAS CHAVES NÃO FOI DEFINIDO\n";
+		}
+
+		  */
+
+
+		if(erro>0){
+			alert("        ERRO: DADOS INCOMPLETOS              \n\n"+str_erro);
+			return false;
+		}else{
+			return true;
+		}
+	}// fim validacao
+
+	//envia dadso
+	function validar(){
+		if(_validar()==true){
+
+			if(confirm("Confirma a venda deste apartamento?")){
+				document.getElementById("c_proc").style.display="block";
+				mf=document.getElementById("myform");
+				mf.target="proc";
+				mf.action="proc_venda_apto.php";
+				mf.submit();
+			}
+
+			return true;
+		}
+
+	}// fim envia dados
+
+
+	// abre telinha das prestacoes
+	function pop(t){
+
+		lista_input= new Array();
+		lista_input["ent"]="entrada";
+		lista_input["sem"]="semestral";
+		lista_input["tri"]="trimestral";
+		lista_input["int"]="intermediaria";
+
+
+		lista_div= new Array();
+		lista_div["ent"]="l_ent";
+		lista_div["sem"]="l_sem";
+		lista_div["tri"]="l_tri";
+		lista_div["int"]="l_int";
+
+
+		document.getElementById(lista_div[t]).innerHTML='';
+		document.getElementById(lista_input[t]).value='';
+
+		doc="prep_presta.php?i="+t;
+		window.open(doc,"prep","left=260,top=200,width=380,height=280,scrollbars=no,location=no,status=0,resizable=no");
+
+		return true;
+	} // fim pop
+
+
+	// limpa o formulario
+	function limpar(){
+		document.getElementById("myform").reset();
+		document.getElementById("l_ent").innerHTML='';
+		document.getElementById("l_sem").innerHTML='';
+		document.getElementById("l_tri").innerHTML='';
+		return true;
+	}
+
+
+	// previsualizacao
+	function previs(){
+		if(_validar()==true){
+			mf=document.getElementById("myform");
+			mf.target="previsualizar";
+			mf.action="proc_venda_apto_vis.php";
+			mf.submit();
+			return true;
+		}
+
+	}
+	// fim previa
+
+
+
+</script>
+<h3 class="titulo">Venda de apartamento ::{{ed}}:: apto:{{ap}}</h3>
+
+<style type="text/css">
+	<!--
+	.info-claro {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 9pt;
+		color: #999999;
+	}
+	-->
+</style>
+<form action="proc_venda_apto.php" method="post" target="proc" name="myform" id="myform" >
+
+	<input type="hidden" name="entrada"        id="entrada"        value="" />
+	<input type="hidden" name="trimestral"     id="trimestral"     value="" />
+	<input type="hidden" name="semestral"      id="semestral"      value="" />
+	<input type="hidden" name="intermediaria"  id="intermediaria"  value="" />
+
+
+
+	<table width="100%" border="0" cellpadding="3" cellspacing="0">
+		<tr>
+			<td width="9%">edificio</td>
+			<td width="42%">{{ed}}</td>
+			<td width="17%">apartamento</td>
+			<td width="32%">{{ap}}</td>
+		</tr>
+		<tr>
+			<td>valor</td>
+			<td><input name="valor" type="text" id="valor" tabindex="1" value="{{valor}}" size="16"></td>
+			<td>total de mensais</td>
+			<td><input name="prestacao" type="text" id="prestacao" tabindex="2" size="6" maxlength="6">
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom"><a href="javascript:void(0)" onClick="pop('ent')" class="aqua2">
+				entrada</a> </td>
+			<td valign="bottom"><br>
+				<div id="l_ent" class="pr"></div>
+			</td>
+			<td>cliente </td>
+			<td><select name="cliente" id="cliente" >
+					<option  disabled="DISABLE" selected="selected" value="">SELECIONE</option>
+					<!--loop:cli -->
+					<option value="{{id}}">{{nome}}</option>
+					<!--end loop:cli -->
+			</select> </td>
+		</tr>
+		<tr>
+			<td valign="bottom"><a href="javascript:void(0)" onClick="pop('tri')" class="aqua2">trimestral</a>
+			</td>
+			<td valign="bottom"><br>
+				<div id="l_tri" class="pr"></div>
+			</td>
+			<td>Data inicial</td>
+			<td>
+
+				<input name="dia_inicial" type="text" id="dia_inicial" size="3" maxlength="2" />
+				/
+				<select name="mes_inicial">
+					<option value="01">Janeiro</option>
+					<option value="02">Fevereiro</option>
+					<option value="03">Março</option>
+					<option value="04">Abril</option>
+					<option value="05">Maio</option>
+					<option value="06">Junho</option>
+					<option value="07">Julho</option>
+					<option value="08">Agosto</option>
+					<option value="09">Setembro</option>
+					<option value="10">Outubro</option>
+					<option value="11">Novembro</option>
+					<option value="12">Dezembro</option>
+				</select>/
+				<input name="ano_inicial" type="text" id="ano_inicial" tabindex="5" size="6" maxlength="6" />
+
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom"><a href="javascript:void(0)" onClick="pop('sem')" class="aqua2">semestral</a></td>
+			<td valign="bottom"><br>
+				<div id="l_sem" class="pr"></div>
+			</td>
+			<td>entrega das chaves</td>
+			<td> <select name="mes_chave">
+					<option value="01">Janeiro</option>
+					<option value="02">Fevereiro</option>
+					<option value="03">Março</option>
+					<option value="04">Abril</option>
+					<option value="05">Maio</option>
+					<option value="06">Junho</option>
+					<option value="07">Julho</option>
+					<option value="08">Agosto</option>
+					<option value="09">Setembro</option>
+					<option value="10">Outubro</option>
+					<option value="11">Novembro</option>
+					<option value="12">Dezembro</option>
+				</select>
+				de
+				<input name="ano_chave" type="text" id="ano_chave" tabindex="9" size="4" maxlength="4"></td>
+		</tr>
+		<tr>
+			<td valign="bottom"><a href="javascript:void(0)" onClick="pop('int')" class="aqua2">intermediaria</a></td>
+			<td><br /><div id="l_int" class="pr"></div> </td>
+			<td>chaves</td>
+			<td><input name="chaves" type="text" id="chaves" tabindex="6" size="16"></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>informa&ccedil;&otilde;es adicionais:<br> </td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><textarea name="info" cols="50" rows="4" wrap="PHYSICAL" id="info" ></textarea></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><input name="apto" type="hidden" id="apto" value="{{id_apto}}"></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr><td colspan="6">
+				<div  id="c_proc"  style="display:none;">
+					<iframe  src="blank.html" name="proc" id="proc" height="60px" width="650px" frameborder="0" scrolling="no"></iframe>
+				</div>
+			</td></tr>
+		<tr>
+			<td align="center"> <a href="javascript:void(0)" class="aqua2" onclick="limpar()" >Limpar</a> </td>
+			<td > <a href="javascript:void(0)" class="aqua2" onclick="previs()" >pre-visualizar</a>
+			</td>
+			<td></td>
+			<td><a href="javascript:void(0)" class="aqua4" onclick="validar()" >Efetuar Venda</a>
+			</td>
+		</tr>
+	</table>
+</form>

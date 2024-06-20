@@ -1,0 +1,124 @@
+<script type="text/javascript" src="js/jquery.checkboxes.js"></script>
+
+<script type="text/javascript">
+
+
+function isArray(o){
+return(typeof(o.length)=="undefined")?false:true;
+}
+
+
+function filtra(){
+d=document.getElementById("f_dia").value;
+if(parseInt(d)<=31){
+location="lista-boletos.php?i="+d;
+}else{
+if(d==''){
+location="lista-boletos.php";
+}
+document.getElementById("f_dia").value='';
+document.getElementById("f_dia").focus();
+}
+
+}
+
+
+function gera(){
+var a=0;   
+
+if(isArray(document.form1["parcela[]"])){
+
+n=document.form1["parcela[]"].length;
+for(x=0;x<n;x++){
+if(document.form1["parcela[]"][x].checked){
+a++;
+}
+} // fim loop
+
+}else{
+if(document.form1["parcela[]"].checked)a=1;
+}
+
+
+if ( a > 0 ){
+	if (jQuery('.hidden_banco').val() != '' ){
+		document.getElementById("form1").submit();
+	} else {
+		alert('Por favor, selecione um banco e uma conta');
+	}
+}else{
+alert("Não existem parcelas selecionadas, impossível continuar");
+}
+
+} // fim gera
+
+
+</script>
+
+<style type="text/css">
+.b1{
+border-right: 1px solid #5F5F5F;
+}
+.b2{
+border-right: 1px solid #ffffff;
+}
+
+
+
+</style>
+
+<h1 class="titulo">Seleção das prestações para gerar boletos {{titulo}} - parcelas:{{qt}} </h1>
+<div id="Layer1">
+<table border="0" width="100%">
+<tr>
+<td><a href="javascript:void(0);" onclick="jQuery('#form1').checkCheckboxes()" class="aqua2">marcar todos</a></td>
+<td><a href="javascript:void(0);" onclick="jQuery('#form1').unCheckCheckboxes()" class="aqua2">desmarcar todos</a></td>
+<td><select class="select_banco" >
+	<option value="">Selecione o banco</option>
+	{{lista_contas}}
+	<!-- <option value="bradesco">Bradesco</option> -->
+	<!-- <option value="cef">Caixa Federal</option> -->
+</select></td>
+<td><a href="javascript:void(0);" onclick="gera()" class="aqua4">gerar boletos</a></td>
+<td>
+Exibir Somente dia <input type="text" id="f_dia" name="f_dia" size="3" maxlength="2" /><a href="javascript:void(0);" onclick="filtra()" class="cinza" style="display:inline;padding-left:10px;padding-right:10px;margin-left:10px;margin-right:5px">IR</a><span style="color:#808080;font-size:8pt">deixe em branco para exibir todos</span>
+</td>
+
+</tr>
+</table>
+</div>
+
+<div style="margin-left : 10%;width: 80%;">
+<form action="proc_lista_boletos.php" method="post" id="form1" name="form1" target="_blank"><br>
+<div style="background-color: #FFF5B3;border:1px solid #5E5200;margin-bottom: 10px;">
+Enviar por e-mail? <input type="radio" name="send" value="s" checked="checked"><label for="send">Sim</label> / <input type="radio" name="send" value="n"><label for="send">Não</label>
+<input type="hidden" class="hidden_banco" name="banco">
+</div>
+<table border="0" cellspacing="0" width="100%" align="center">
+<tr style="background:black;color:white;text-align:center">
+<td width="1%" class="b2">&nbsp;</td>
+<td width="1%" class="b2">Dia</td>
+<td class="b2">Cliente</td>
+<td class="b2">Valor</td>
+<td class="b2">Edificio</td>
+<td class="b2" width="1%">Apto</td>
+</tr>
+
+<!--loop:linha -->
+<tr class="{{cor}}">
+<td class="b1" style="background:#305BCF"><input name="parcela[]" type="checkbox" value="{{id}}" /></td>
+<td class="b1">{{dia}}</td>
+<td class="b1"><img src= "images/{{indicador}}" alt=''/> {{cliente}}</td>
+<td class="b1" style="font-family:courier;padding-right:4px" align="right">{{valor}}</td>
+<td class="b1">{{edificio}}</td>
+<td>{{apto}}</td>
+</tr>
+<!--end loop:linha -->
+</table>
+</form>
+</div>
+<script>
+	jQuery('.select_banco').change(function() {
+		jQuery('.hidden_banco').val(this.value);
+	});
+</script>
