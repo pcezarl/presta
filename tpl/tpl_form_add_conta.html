@@ -17,6 +17,9 @@ $(document).ready(function() {
 		} else if ( this.value == "CEF" ) {
 			$('.show_acessorio').hide();
 			$('.text.conta').html('<span class="obr">!</span>Cod. Cedente:<sup>s/ d&iacute;gito</sup>')
+		} else if ( this.value == "SICOOB" ) {
+			$('.show_acessorio').hide();
+			$('.text.conta').html('<span class="obr">!</span>Cod. Cedente:<sup>s/ d&iacute;gito</sup>')
 		}
 	})
 	$.bsformaccelerator('myform',{handle : 'enter'});
@@ -47,6 +50,7 @@ document.getElementById("c_proc").style.display="block";
 	  <td class="text"><span class="obr">!</span>Banco:</td>
 	  <td>
 		  <select name="banco" id="banco" style="width: 310px;">
+				<option value="SICOOB">SICOOB</option>
 		  		<option value="BRA">Bradesco</option>
 		  		<option value="CEF">Caixa Econ&ocirc;mica Federal</option>
 		  </select>

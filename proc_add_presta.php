@@ -5,7 +5,7 @@
 
 	include "lib/var.php";
 	include "lib/func.php";
-	//error_reporting(E_ALL);
+	error_reporting(E_ALL);
 	$db=new db();
 
 	foreach($_POST as $n=>$v)
@@ -42,7 +42,7 @@
 	$db->query($sqlbase);
 	if($db->status=="erro")
 	{
-		die("ERRO::NÃO FOI POSSIVEL ADICIONAR PRESTACAO<BR>{$db->erro}");
+		die("ERRO::Nï¿½O FOI POSSIVEL ADICIONAR PRESTACAO<BR>{$db->erro}");
 	}
 
 	//die($sqlbase);
@@ -60,7 +60,7 @@
 	$db->query($sql_indice);
 	if($db->status=="erro")
 	{
-		die("ERRO::NÃO FOI POSSIVEL RECRIAR INDICE DE PRESTACOES<BR>{$db->erro}");
+		die("ERRO::Nï¿½O FOI POSSIVEL RECRIAR INDICE DE PRESTACOES<BR>{$db->erro}");
 	}
 	  */
 
@@ -73,7 +73,7 @@
 
 
 
-	alert("OK!! Prestação adicionada com sucesso.");
+	alert("OK!! Prestaï¿½ï¿½o adicionada com sucesso.");
 	self.close();
 
 

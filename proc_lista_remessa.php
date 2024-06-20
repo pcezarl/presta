@@ -17,6 +17,8 @@
 		$b = new remessa_CEF();
 	} else if ( $_SESSION['banco'] == 'BRA' ) {
 		$b = new remessa_Bradesco();
+	} else if ( $_SESSION['banco'] == 'SICOOB' ) {
+		$b = new remessa_SICOOB();
 	} else {
 		// $b= new boleto_HSBC();
 		die('Erro na hora do processamento');
@@ -27,7 +29,6 @@
 	$cb   = new db(); // link de checagem da remessa
 	$ub   = new db(); // query de update da remessa
 	// $mail = new envia_boleto();
-
 	// Pego o ultimo ID de remessa gerado
 	$db->query("SELECT MAX(remessa_id) as max_remessa_id FROM boletos WHERE conta_id =".$_SESSION['conta_id']);
 	$result = mysql_fetch_assoc($db->result);
@@ -45,10 +46,10 @@
 	$data['numero_sequencia_remessa'] = $remessa_id;
 	$data['numero_sequencia_registro'] = 1;
 
-	// Classe que monta o cabeçalho do arquivo de remessa
+	// Classe que monta o cabecalho do arquivo de remessa
 	$b->header($data);
 
-	// Crio um select buscando os detalhes das prestações selecionadas
+	// Crio um select buscando os detalhes das prestaÃ§Ãµes selecionadas
 	$lista_presta=implode(",",$_POST["parcela"]);
 	$enviar=limpa($_POST["send"]);
 	$sql="select * from prestacoes as a
@@ -77,14 +78,19 @@
 			$data['endereco_pagador'] = $d->cli_rua.' - '.$d->cli_numero;
 			$data['cidade_pagador']   = $d->cli_cidade;
 			$data['estado_pagador']   = $d->cli_estado;
-
+		} else if ( $_SESSION['banco'] == 'SICOOB' ) {
+			$data['data_vencimento_titulo'] = $d->bo_data_vence;
+			$data['endereco_pagador'] = $d->cli_rua.' - '.$d->cli_numero;
+			$data['cidade_pagador']   = $d->cli_cidade;
+			$data['estado_pagador']   = $d->cli_estado;
+			$data['parcela'] = $d->id_presta;
 		}
 		$data['cep_pagador'] = $d->cli_cep;
 		$data['nosso_numero'] = $d->bo_nnum;
 		$data['numero_documento'] = $d->bo_ndoc;
 		// $data['numero_sequencia_registro']++;
 
-		// atualizo o boleto, indicando que ele pertence á essa remessa que está sendo gerada
+		// atualizo o boleto, indicando que ele pertence a essa remessa que esta sendo gerada
 		$ub->query("UPDATE boletos SET remessa_id = $remessa_id WHERE id_boleto = $d->id_boleto");
 
 		// classe registro, que vai possuir os detalhes dos boletos

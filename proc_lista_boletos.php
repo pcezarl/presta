@@ -23,7 +23,7 @@
 		$b = new boleto_CEF();
 		$b->init();
 
-		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
+		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operaï¿½ï¿½o");
 		// loop boletos
 		while($d=mysql_fetch_object($db->result)){
 			$b->val("razao"   , $d->razao);
@@ -37,9 +37,25 @@
 		$b = new boleto_Bradesco();
 		$b->init();
 
-		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
+		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operaï¿½ï¿½o");
 		// loop boletos
 		while($d=mysql_fetch_object($db->result)){
+			$b->val("razao"     , $d->razao);
+			$b->val("cnpj"      , $d->cnpj);
+			$b->val("agencia"   , $d->agencia);
+			$b->val("conta"     , $d->conta);
+			// $b->val("acessorio" , $d->acessorio);
+			$dados[2] = $d->id;
+
+		}
+
+	} else if ( $dados[0] == 'SICOOB' ) {
+		$b = new boleto_SICOOB();
+		$b->init();
+		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operaï¿½ï¿½o");
+		// loop boletos
+		while($d=mysql_fetch_object($db->result)){
+			
 			$b->val("razao"     , $d->razao);
 			$b->val("cnpj"      , $d->cnpj);
 			$b->val("agencia"   , $d->agencia);
@@ -54,6 +70,7 @@
 		die('Erro na hora do processamento');
 	}
 
+	
 
 	$cnt=0;
 
@@ -68,7 +85,7 @@
 
 	$db->query($sql);
 	$qt=$db->rows;
-	if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
+	if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operaï¿½ï¿½o");
 
 
 
@@ -92,52 +109,28 @@
 
 		$parc=$tipo_parcela[$d->pr_tipo];
 		$parc=strtoupper($parc);
+        $b->set("demonstrativo1","Parcela $parc") ;
+        $b->set("parcela", $parc) ;
 
-
-        
-
-   
-
-        $b->set("demonstrativo1","parcela {$d->pr_num} de $tt ($parc)") ;  
 		$b->set("demonstrativo2","Edificio {$d->ed_nome}  -  apartamento {$d->ap_num}"); 
-		//$b->set("demonstrativo3","parcela 01/02 Convencao Condominial: R\$ ".mil($b->taxa_boleto));    
-		//$b->set("demonstrativo4","taxa do boleto: R\$ ".mil($b->taxa_boleto));  
-		//$b->set("demonstrativo3",".");  
-		//$b->set("demonstrativo4",".");
-
-
-
-//("demonstrativo4","taxa do boleto: R\$ ".mil($b->taxa_boleto)); 
-
-		//- atualizada com juros e multa + honorarios advocaticios
-
-		// 1) parcela {$d->pr_num} de $tt ($parc)
-
-		// 2) Edificio {$d->ed_nome}  -  apartamento {$d->ap_num}
-
-		//  referente aluguel do mes agosto/2018
-
-		//  referente aluguel do periodo de 06 de março/2015 a 05 de abril/2015
-
-		//  sala comercial sito a Av.Pres. Castelo Branco, 4.718 loja 04
-		//  aluguel ref.: 01/03/2019 a 31/03/2019 R$ 3.297,33 e IPTU março/2019 R$ 137,16
-
-//  Terreno Tupi - Lote 26 Quadra K
-//  aluguel ref.: março/2019 
-
-		$b->set("endereco1", htmlspecialchars(($d->cli_rua)).','.$d->cli_numero.' - '.utf8_encode($d->cli_bairro));
-		$b->set("endereco2", htmlspecialchars($d->cli_cidade)." - ".htmlspecialchars(($d->cli_estado))." - CEP: {$d->cli_cep}");
+		$b->set("endereco1", utf8_encode(($d->cli_rua)).','.$d->cli_numero.' - '.$d->cli_bairro);
+		$b->set("endereco2", utf8_encode($d->cli_cidade." - ".$d->cli_estado." - CEP: {$d->cli_cep}"));
 		$b->val("valor_boleto", $d->pr_valor);
 		$b->val("data_vencimento",$vc);
 
-		$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".substr(unmask($d->cli_cpf),0 , 6).date('my')."%' ORDER BY bo_ndoc desc");
-		$boleto = $bol->get_val("bo_ndoc");
-		if ( $boleto != '' ) {
-			$digito = substr($boleto, -1, 1)+1;
+		if ( $dados[0] == 'SICOOB' ) {
+			$ndoc = $d->id_presta;
 		} else {
-			$digito = 1;
+			$ndoc = substr(unmask($d->cli_cpf),0 , 6) . date('my');
+			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
+			$boleto = $bol->get_val("bo_ndoc");
+			if ( $boleto != '' ) {
+				$digito = substr($boleto, -1, 1)+1;
+			} else {
+				$digito = 1;
+			}
+			$ndoc = $ndoc. $digito;
 		}
-		$ndoc = substr(unmask($d->cli_cpf),0 , 6) . date('my') . $digito;
 
 		$b->val("numero_documento",$ndoc);
 		$b->set("data_documento",date("d/m/Y"));
@@ -169,9 +162,9 @@
 			$msg="
 			Segue em anexo<br />
 			boleto referente ao pagamento de parcela do apartamento {$d->ap_num} do edificio {$d->ed_nome}<br>
-			Valor da prestação: R\${$valor}<br />
+			Valor da prestaï¿½ï¿½o: R\${$valor}<br />
 			Numero do documento: {$ndoc}<br /><br /><br />
-			caso tenha problemas na visualização do boleto, utilize a linha digitavel:<br /><br />
+			caso tenha problemas na visualizaï¿½ï¿½o do boleto, utilize a linha digitavel:<br /><br />
 			<span style='padding:3px;background:#C0C0C0;border:1px solid;#585858;font-family:courier;font-size:11pt;color:black;font-weight:bold'>{$b->dadosboleto[linha_digitavel]} </span>";
 
 			$mail->set_dados($boleto);
@@ -187,8 +180,7 @@
 		if($cb->status=="erro")die($cb->erro);
 
 		if($cb->get_val("qt")==0){
-			$nnum = str_replace(array('/','-',' '), '', $b->nossonumero);
-			$nnum = substr($nnum, 2);
+			$nnum = str_replace(array('/','-',' '), '', ($dados[0] != 'SICOOB') ? substr($b->dadosboleto["nosso_numero"], 2) : $b->dadosboleto["nosso_numero"]);
 			$sql="insert into boletos (bo_apto,bo_prop,bo_presta,bo_valor,bo_data_emissao,bo_data_vence,bo_num_presta,bo_ndoc,bo_nnum, conta_id)
 			values ('{$d->id_apto}','{$d->id_cliente}', '{$d->id_presta}', '{$d->pr_valor}','$de','$vcq','{$d->pr_num}','$ndoc','$nnum', '{$dados[2]}')
 			";
@@ -198,7 +190,6 @@
 
 		}
 		/////////// fim verifica boleto
-
 		$b->reset();
 	} // fim loop boletos
 ?>

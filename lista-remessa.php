@@ -18,7 +18,6 @@ $mes=date("m");
 $mes_atual=$mes_extenso[(integer)date("m")];
 $ano=date("Y");
 
-// pre($_SESSION);''
 // dia separado
 if($i){
 $sql="
@@ -49,7 +48,6 @@ and pr_pago='n'
 ";
 $pn->set("titulo","$mes_atual/$ano");
 } // fim todos
-// pre($sql);
 $db->query($sql);
 if($db->rows<1){
     $pn->set("sem_registros", "Essa conta n&atilde;o possui nenhum boleto gerado no momento");
@@ -63,7 +61,6 @@ $pn->set("qt",$db->rows);
 $pn->begin_loop("linha");
 while($d=mysql_fetch_object($db->result)){
 $c++;
-
 $dia=strtotime($d->pr_vencimento);
 $dia=date("d",$dia);
 $aa["indicador"]=($d->bo_ndoc)?"ind-verm.gif":"ind-verde.gif";
@@ -78,7 +75,6 @@ $pn->set_loop($aa);
 
 }
 $sql = "select * from contas";
-// pre($_SESSION);
 $res = $db->query($sql);
 if($db->rows<1){
     error(6);
@@ -115,10 +111,6 @@ if($db->rows<1){
 $pn->set('lista_contas', $lista_contas);
 
 $pn->end_loop("linha");
-
-
-
-
 $p->set("pagina","Listagem de boletos - Geração de Remessa");
 $p->set("conteudo",$pn->tvar());
 $p->tprint();

@@ -1,6 +1,11 @@
 <?php /// Valmirez System - valmirez@hotmail.com
 
 error_reporting(164);
+// error_reporting(-1);
+
+// phpinfo();
+// ini_set("default_charset", 'utf-8');
+
 ob_start("ob_gzhandler");
 
 function __autoload($c) {require_once "lib/class_".$c . '.php';}
@@ -8,9 +13,9 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 $_version=PHP_VERSION;
 die("
 <h1>ERRO DE SISTEMA</h1>
-A versão do compilador não é compativel com o sistema.<br />
-Versão atual: <b>$_version</b><br />
-Versão requerida: <b>5.3.0</b> ou posterior.<br />
+A versï¿½o do compilador nï¿½o ï¿½ compativel com o sistema.<br />
+Versï¿½o atual: <b>$_version</b><br />
+Versï¿½o requerida: <b>5.3.0</b> ou posterior.<br />
 <hr>
 $_SERVER[SERVER_SIGNATURE]
 ");
@@ -26,14 +31,14 @@ $_host="http://127.0.0.1/presta";
 $mysql["host"]="127.0.0.1";
 $mysql["dados"]="contabilidade";
 $mysql["user"]="root";
-$mysql["pass"]="zaq1xsw2";
+$mysql["pass"]="root";
 
 
 $mes_extenso=array(
 "",
 "Janeiro",
 "Fevereiro",
-"Março",
+"Marï¿½o",
 "Abril",
 "Maio",
 "Junho",

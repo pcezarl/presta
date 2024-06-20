@@ -47,7 +47,7 @@ if ( a > 0 ){
 		alert('Por favor, selecione um banco e uma conta');
 	}
 }else{
-alert("Não existem parcelas selecionadas, impossível continuar");
+alert("NÃ£o existem parcelas selecionadas, impossï¿½vel continuar");
 }
 
 } // fim gera
@@ -67,7 +67,7 @@ border-right: 1px solid #ffffff;
 
 </style>
 
-<h1 class="titulo">Seleção das prestações para gerar boletos {{titulo}} - parcelas:{{qt}} </h1>
+<h1 class="titulo">SeleÃ§Ã£o das prestaÃ§Ãµes para gerar boletos {{titulo}} - parcelas:{{qt}} </h1>
 <div id="Layer1">
 <table border="0" width="100%">
 <tr>
@@ -76,8 +76,6 @@ border-right: 1px solid #ffffff;
 <td><select class="select_banco" >
 	<option value="">Selecione o banco</option>
 	{{lista_contas}}
-	<!-- <option value="bradesco">Bradesco</option> -->
-	<!-- <option value="cef">Caixa Federal</option> -->
 </select></td>
 <td><a href="javascript:void(0);" onclick="gera()" class="aqua4">gerar boletos</a></td>
 <td>
@@ -91,7 +89,7 @@ Exibir Somente dia <input type="text" id="f_dia" name="f_dia" size="3" maxlength
 <div style="margin-left : 10%;width: 80%;">
 <form action="proc_lista_boletos.php" method="post" id="form1" name="form1" target="_blank"><br>
 <div style="background-color: #FFF5B3;border:1px solid #5E5200;margin-bottom: 10px;">
-Enviar por e-mail? <input type="radio" name="send" value="s" checked="checked"><label for="send">Sim</label> / <input type="radio" name="send" value="n"><label for="send">Não</label>
+Enviar por e-mail? <input type="radio" name="send" value="s" checked="checked"><label for="send">Sim</label> / <input type="radio" name="send" value="n"><label for="send">NÃ£o</label>
 <input type="hidden" class="hidden_banco" name="banco">
 </div>
 <table border="0" cellspacing="0" width="100%" align="center">

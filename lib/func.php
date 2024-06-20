@@ -23,7 +23,7 @@ $res=array(
 );
 
 $s=strip_tags($s);
-$s=preg_replace("[<>#%\^]","",$s);
+$s=preg_replace("/[<>#%\^]/","",$s);
 $s=str_replace($res,'',$s);
 return $s;
 
@@ -77,13 +77,13 @@ return $data;
 
 // mostra erros padronizados
 function qerror($i){
-$str[0]="O Capacitor de Fluxo está com a carga baixa, não é possivel efetuar a transferencia de dados.";
-$str[1]="O sistema de teletransporte está com defeito, o envio dos dados não foi efetuado";
-$str[2]="Ocorreu uma microfissura no núcleo de plasma, a energia está sendo direcionada ao suporte de vida.";
-$str[3]="Uma tempestade derrubou a torre da antena do satelite, a comunicação está inoperante.";
-$str[4]="O nível do fluxo de dados está muito baixo, não é possível concluir a irrigação.";
-$str[5]="O condutor de plasma está entupido, o dispositivo transdimensional está inoperante.";
-$str[6]="A Policia Federal apreendeu o onibus que transportava as informações, não é possivel importar os dados.";
+$str[0]="O Capacitor de Fluxo estï¿½ com a carga baixa, nï¿½o ï¿½ possivel efetuar a transferencia de dados.";
+$str[1]="O sistema de teletransporte estï¿½ com defeito, o envio dos dados nï¿½o foi efetuado";
+$str[2]="Ocorreu uma microfissura no nï¿½cleo de plasma, a energia estï¿½ sendo direcionada ao suporte de vida.";
+$str[3]="Uma tempestade derrubou a torre da antena do satelite, a comunicaï¿½ï¿½o estï¿½ inoperante.";
+$str[4]="O nï¿½vel do fluxo de dados estï¿½ muito baixo, nï¿½o ï¿½ possï¿½vel concluir a irrigaï¿½ï¿½o.";
+$str[5]="O condutor de plasma estï¿½ entupido, o dispositivo transdimensional estï¿½ inoperante.";
+$str[6]="A Policia Federal apreendeu o onibus que transportava as informaï¿½ï¿½es, nï¿½o ï¿½ possivel importar os dados.";
 
 die("<h1>SERVER ERROR!!</h1>
 $str[$i]
@@ -95,13 +95,13 @@ $_SERVER[SERVER_SIGNATURE]
 
 // mostra erros padronizados
 function error($i){
-$str[0]="O Capacitor de Fluxo está com a carga baixa, não é possivel efetuar a transferencia de dados.";
-$str[1]="O sistema de teletransporte está com defeito, o envio dos dados não foi efetuado";
-$str[2]="Ocorreu uma microfissura no núcleo de plasma, a energia está sendo direcionada ao suporte de vida.";
-$str[3]="Uma tempestade derrubou a torre da antena do satelite, a comunicação está inoperante.";
-$str[4]="O nível do fluxo de dados está muito baixo, não é possível concluir a irrigação.";
-$str[5]="O condutor de plasma está entupido, o dispositivo transdimensional está inoperante.";
-$str[6]="A Policia Federal apreendeu o onibus que transportava as informações, não é possivel importar os dados.";
+$str[0]="O Capacitor de Fluxo estï¿½ com a carga baixa, nï¿½o ï¿½ possivel efetuar a transferencia de dados.";
+$str[1]="O sistema de teletransporte estï¿½ com defeito, o envio dos dados nï¿½o foi efetuado";
+$str[2]="Ocorreu uma microfissura no nï¿½cleo de plasma, a energia estï¿½ sendo direcionada ao suporte de vida.";
+$str[3]="Uma tempestade derrubou a torre da antena do satelite, a comunicaï¿½ï¿½o estï¿½ inoperante.";
+$str[4]="O nï¿½vel do fluxo de dados estï¿½ muito baixo, nï¿½o ï¿½ possï¿½vel concluir a irrigaï¿½ï¿½o.";
+$str[5]="O condutor de plasma estï¿½ entupido, o dispositivo transdimensional estï¿½ inoperante.";
+$str[6]="A Policia Federal apreendeu o onibus que transportava as informaï¿½ï¿½es, nï¿½o ï¿½ possivel importar os dados.";
 $str[7]="O navio que trazia o container de dados afundou devido a um ataque de piratas.";
 
 die("<div
@@ -223,7 +223,7 @@ function zeros($qtd) {
    return $zeros;
 }
 
-function minimo($string,$qtd, $retornaZeros = false) {
+function minimo($string, $qtd, $retornaZeros = false) {
    $string = clean($string);
    if(mb_strlen($string) < $qtd) {
       if( $retornaZeros == true ) {
@@ -239,7 +239,7 @@ function minimo($string,$qtd, $retornaZeros = false) {
 
 // Limpa qualquer tipo de caractere de uma sequencia de numeros
 function unmask($string) {
-   #remove todos os caracteres não alfa-numéricos da string
+   #remove todos os caracteres nï¿½o alfa-numï¿½ricos da string
    $retorno = str_replace(array('R$',' ','.','-','_','(',')',',','/'), '', $string);
    return $retorno;
 }
@@ -247,7 +247,7 @@ function unmask($string) {
 // Substitui todos os caracteres especiais pelas suas vogais respectivas
 function clean($string) {
 
-  $search = explode(",","ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ã,e,i,ø,õ,u");
+  $search = explode(",","ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,ï¿½,e,i,ï¿½,ï¿½,u");
   $replace = explode(",","c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,a,e,i,o,o,u");
   // $retorno = preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $string));
   $retorno = str_replace($search, $replace, $string);
@@ -265,22 +265,22 @@ function modulo_11($num, $base=9, $r=0)  {
      *   Autor:
      *           Pablo Costa <pablo@users.sourceforge.net>
      *
-     *   Função:
+     *   Funï¿½ï¿½o:
      *    Calculo do Modulo 11 para geracao do digito verificador 
      *    de boletos bancarios conforme documentos obtidos 
      *    da Febraban - www.febraban.org.br 
      *
      *   Entrada:
-     *     $num: string numérica para a qual se deseja calcularo digito verificador;
+     *     $num: string numï¿½rica para a qual se deseja calcularo digito verificador;
      *     $base: valor maximo de multiplicacao [2-$base]
      *     $r: quando especificado um devolve somente o resto
      *
-     *   Saída:
+     *   Saï¿½da:
      *     Retorna o Digito verificador.
      *
-     *   Observações:
-     *     - Script desenvolvido sem nenhum reaproveitamento de código pré existente.
-     *     - Assume-se que a verificação do formato das variáveis de entrada é feita antes da execução deste script.
+     *   Observaï¿½ï¿½es:
+     *     - Script desenvolvido sem nenhum reaproveitamento de cï¿½digo prï¿½ existente.
+     *     - Assume-se que a verificaï¿½ï¿½o do formato das variï¿½veis de entrada ï¿½ feita antes da execuï¿½ï¿½o deste script.
      */                                        
     $soma = 0;
     $fator = 2;

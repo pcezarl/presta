@@ -3,7 +3,7 @@
 /////////////////////////////////////////////
 // Classe DB criada por Valmir Campos      //
 //  valmirez@hotmail.com                   //
-// é so uma mini-interface para facilitar  //
+// ï¿½ so uma mini-interface para facilitar  //
 // consultas no servidor MySql             //
 //  ******* requer PHP5 *******            //
 /////////////////////////////////////////////
@@ -136,7 +136,7 @@ cancela = anula as operacoes anteriores
 */
 
 public function transact($opt){
-if(!array_key_exists($opt,$this->opts))die("<b>Class DB::</b> comando transact não reconhecido: <i>$opt</i>.");
+if(!array_key_exists($opt,$this->opts))die("<b>Class DB::</b> comando transact nï¿½o reconhecido: <i>$opt</i>.");
 
 mysql_query($this->pre_opts[$opt],$this->banco);
 mysql_query($this->opts[$opt],$this->banco);

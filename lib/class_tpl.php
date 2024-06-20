@@ -102,7 +102,7 @@ $this->dados=eregi_replace("<!--php:$arq -->","$t",$this->dados);
 function parse($arquivo){
 ob_start();
 if(!file_exists($arquivo)){
-print("<b>KERNEL PANIC:</b> erro ao tentar incluir um script (o arquivo <u>$arquivo</u> não existe).\n");}
+print("<b>KERNEL PANIC:</b> erro ao tentar incluir um script (o arquivo <u>$arquivo</u> nï¿½o existe).\n");}
 else{
 eval("require_once(\"$arquivo\");");
 }
@@ -141,32 +141,32 @@ fclose($f);
 function acentos($str){
 
 $acentos = array(
-'/Á/' => '&Aacute;',
-'/á/' => '&aacute;',
+'/Ã¡/' => '&Aacute;',
+'/Ã/' => '&aacute;',
 
-'/ã/' => '&atilde;',
-'/Ã/' => '&Atilde;',
+'/Ã£/' => '&atilde;',
+'/Ãƒ/' => '&Atilde;',
 
-'/Â/' => '&Acirc;',
-'/â/' => '&acirc;',
+'/ï¿½ /' => '&Acirc;',
+'/ï¿½/' => '&acirc;',
 
-'/À/' => '&Agrave;',
-'/à/' => '&agrave;',
+'/ï¿½/' => '&Agrave;',
+'/ï¿½/' => '&agrave;',
 
-'/é/' => '&eacute;',
-'/É/' => '&Eacute;',
+'/ï¿½/' => '&eacute;',
+'/ï¿½/' => '&Eacute;',
 
-'/í/' => '&iacute;',
-'/Í/' => '&Iacute;',
+'/ï¿½/' => '&iacute;',
+'/ï¿½/' => '&Iacute;',
 
-'/ó/' => '&oacute;',
-'/Ó/' => '&Oacute;',
+'/ï¿½/' => '&oacute;',
+'/ï¿½/' => '&Oacute;',
 
-'/õ/' => '&otilde;',
-'/Õ/' => '&Otilde;',
+'/ï¿½/' => '&otilde;',
+'/ï¿½/' => '&Otilde;',
 
-'/ç/' => '&ccedil;',
-'/Ç/' => '&Ccedil;'
+'/ï¿½/' => '&ccedil;',
+'/ï¿½/' => '&Ccedil;'
 
 );
 return preg_replace(array_keys($acentos),$acentos , $str);
