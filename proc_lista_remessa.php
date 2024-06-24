@@ -82,13 +82,13 @@
 			$data['data_vencimento_titulo'] = $d->bo_data_vence;
 			$data['endereco_pagador'] = $d->cli_rua.' - '.$d->cli_numero;
 			$data['cidade_pagador']   = $d->cli_cidade;
+			$data['bairro_pagador']   = $d->cli_bairro;
 			$data['estado_pagador']   = $d->cli_estado;
 			$data['parcela'] = $d->id_presta;
 		}
 		$data['cep_pagador'] = $d->cli_cep;
 		$data['nosso_numero'] = $d->bo_nnum;
 		$data['numero_documento'] = $d->bo_ndoc;
-		// $data['numero_sequencia_registro']++;
 
 		// atualizo o boleto, indicando que ele pertence a essa remessa que esta sendo gerada
 		$ub->query("UPDATE boletos SET remessa_id = $remessa_id WHERE id_boleto = $d->id_boleto");

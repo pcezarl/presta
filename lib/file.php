@@ -17,7 +17,7 @@ class file {
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate');
 		header('Pragma: public');
-	        flush();
+		flush();
 		readfile($path.$filename);
 	}
 }

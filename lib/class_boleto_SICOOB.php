@@ -5,18 +5,6 @@ error_reporting(E_ERROR);
 
 class boleto_SICOOB
 {
-
-  ///////////////////////// configuração  /////////////////////
-
-  private $identificacao_empresa = "AMS NEGOCIOS IMOBILIARIOS LTDA"; // nome da empresa
-  private $cnpj_empresa = "24.518.095/0001-06"; // CNPJ da empresa
-  private $endereco_empresa = "Av. Brasil - Praia Grande - SP"; // endereco da empresa
-  private $cidade_empresa = ""; // cidade da empresa
-  public $imprimir = false; //  [true ou false] define se o dialogo de impressão aparecerá automaticamente
-  public $mvence = 0; // dias de vencimento do boleto
-  public $taxa_boleto = 0.00; // taxa do boleto
-
-
   // configuracao das instrucoes do boleto
   const inst1 = "Sr. Caixa, cobrar multa de 2%";
   const inst2 = "Não receber após 30 dias do vencimento.";
@@ -83,7 +71,7 @@ class boleto_SICOOB
 
     if ($tipo == "digitavel") {
 
-      if ((!is_int((integer) $this->dadosboleto["valor_boleto"]))) {
+      if ((!is_int((integer) $this->dadosboleto['valor_boleto']))) {
         $numero = str_replace(".", "", $numero);
         $cents = false;
       } else {
@@ -270,7 +258,6 @@ class boleto_SICOOB
 
   private function _fbarcode($valor)
   {
-
     $fino = 1;
     $largo = 3;
     $altura = 50;
@@ -492,9 +479,8 @@ class boleto_SICOOB
   {
 
     $im = ($this->imprimir) ? "onload='print()'" : "";
-
     $this->layout = "
-    <html><head><title>Boleto - $this->identificacao_empresa </title></head><body $im>
+    <html><head><title>Boleto - ". $this->dadosboleto['razao']. " </title></head><body $im>
     " . $this->layout;
 
   } // fim init
@@ -504,25 +490,25 @@ class boleto_SICOOB
   {
 
     $this->dadosboleto['data_processamento'] = date('d/m/Y');
-    $this->codigo_cliente = $this->dadosboleto["conta_cedente"] = $this->formata_numero($this->dadosboleto['conta'], 7, 0);
-    $this->codigo_cliente_dv = $this->dadosboleto["conta_dv"] = $this->digitoVerificador_cedente($this->codigo_cliente);
+    $this->codigo_cliente = $this->dadosboleto['conta_cedente'] = $this->formata_numero($this->dadosboleto['codigo_cliente'], 7, 0);
+    $this->codigo_cliente_dv = $this->dadosboleto['conta_dv'] = $this->digitoVerificador_cedente($this->codigo_cliente);
     
-    $this->nosso_numero = $this->formata_numero($this->dadosboleto["numero_documento"], 7, 0); // tamanho 7
+    $this->nosso_numero = $this->formata_numero($this->dadosboleto['numero_documento'], 7, 0); // tamanho 7
 
-    $this->valor = $this->formata_numero($this->dadosboleto["valor_boleto"] + $this->taxa_boleto, 10, 0, "digitavel");
+    $this->valor = $this->formata_numero($this->dadosboleto['valor_boleto'] + $this->taxa_boleto, 10, 0, "digitavel");
 
-    $this->parcela = !is_numeric($this->dadosboleto["parcela"]) ? "1" : $this->dadosboleto["parcela"];
+    $this->parcela = !is_numeric($this->dadosboleto['parcela']) ? "1" : $this->dadosboleto['parcela'];
 
     $this->codigo_banco_com_dv = $this->geraCodigoBanco($this->codigobanco);
     $this->set("codigo_banco_com_dv", $this->codigo_banco_com_dv);
 
-    $this->fator_vencimento = $this->_fator_vencimento($this->dadosboleto["data_vencimento"]);
-    $this->ndoc = $this->dadosboleto["numero_documento"];
-    $this->data_vencimento = $this->dadosboleto["data_vencimento"];
+    $this->fator_vencimento = $this->_fator_vencimento($this->dadosboleto['data_vencimento']);
+    $this->ndoc = $this->dadosboleto['numero_documento'];
+    $this->data_vencimento = $this->dadosboleto['data_vencimento'];
     $this->set("data_vencimento", $this->data_vencimento);
 
     //agencia é 4 digitos
-    $this->codigo_cooperativa = $this->formata_numero($this->dadosboleto["agencia"], 4, 0);
+    $this->codigo_cooperativa = $this->formata_numero($this->dadosboleto['agencia'], 4, 0);
 
     $this->campo_livre = $this->monta_campo_livre();
     $dv_nosso_numero = $this->dvNossoNumero($this->formata_numero($this->codigo_cooperativa, 4, 0) . $this->formata_numero($this->codigo_cliente, 10, 0) . $this->nosso_numero);
@@ -530,12 +516,12 @@ class boleto_SICOOB
     $linha = $this->monta_linha_digitavel();
     
     $this->set('linha_digitavel', $linha);
-    $this->set('agencia_codigo', $this->codigo_cooperativa);
+    $this->set('agencia_codigo', $this->codigo_cooperativa."/".$this->codigo_cliente);
     $this->set('nosso_numero',  $this->nosso_numero.'-'.$dv_nosso_numero);
     $this->set('codigo_barras', $this->fbarcode($this->monta_codigo_barras()));
 
-    // $this->set("data_vencimento",$this->dadosboleto["data_vencimento"]);
-    $this->set("valor_boleto", $this->mil($this->dadosboleto["valor_boleto"]));
+    // $this->set("data_vencimento",$this->dadosboleto['data_vencimento']);
+    $this->set("valor_boleto", $this->mil($this->dadosboleto['valor_boleto']));
 
     $this->set("valor_unitario", '');
 
@@ -544,15 +530,15 @@ class boleto_SICOOB
     $this->set("identificacao", $this->dadosboleto['razao']);
     $this->set("cpf_cnpj", $this->dadosboleto['cnpj']);
     $this->set("agencia_codigo", $this->codigo_cooperativa);
-    $this->set("endereco", utf8_decode($this->endereco_empresa));
-    $this->set("cidade", utf8_decode($this->cidade_empresa));
+    $this->set("endereco", $this->endereco_empresa);
+    $this->set("cidade", $this->cidade_empresa);
     $this->set("data_processamento", $this->data_processamento);
     $this->set("data_vencimento", $this->vencimento);
     $this->set("aceite", "");
     $this->set("especie", "REAL");
     $this->set("especie_doc", "");
     $this->set("quantidade", "");
-    $this->set("numero_documento", $this->dadosboleto["numero_documento"]);
+    $this->set("numero_documento", $this->dadosboleto['numero_documento']);
     $this->set("nosso_numero", $this->nosso_numero);
     $this->set("carteira", $this->carteira);
     $this->set("demonstrativo3", "taxa do boleto: R\$ " . $this->mil($this->taxa_boleto));

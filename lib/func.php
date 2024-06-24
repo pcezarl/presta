@@ -239,7 +239,7 @@ function minimo($string, $qtd, $retornaZeros = false) {
 
 // Limpa qualquer tipo de caractere de uma sequencia de numeros
 function unmask($string) {
-   #remove todos os caracteres não alfa-num�ricos da string
+   #remove todos os caracteres não alfa-numericos da string
    $retorno = str_replace(array('R$',' ','.','-','_','(',')',',','/'), '', $string);
    return $retorno;
 }

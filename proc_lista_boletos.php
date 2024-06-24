@@ -51,19 +51,19 @@
 
 	} else if ( $dados[0] == 'SICOOB' ) {
 		$b = new boleto_SICOOB();
-		$b->init();
 		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
 		// loop boletos
 		while($d=mysql_fetch_object($db->result)){
 			
-			$b->val("razao"     , $d->razao);
-			$b->val("cnpj"      , $d->cnpj);
-			$b->val("agencia"   , $d->agencia);
-			$b->val("conta"     , $d->conta);
-			// $b->val("acessorio" , $d->acessorio);
+			$b->val("razao"     	, $d->razao);
+			$b->val("cnpj"      	, $d->cnpj);
+			$b->val("agencia"   	, $d->agencia);
+			$b->val("conta"     	, $d->conta);
+			$b->val("codigo_cliente", $d->cod_cliente);
 			$dados[2] = $d->id;
-
+			
 		}
+		$b->init();
 
 	} else {
 		// $b= new boleto_HSBC();
@@ -113,8 +113,8 @@
         $b->set("parcela", $parc) ;
 
 		$b->set("demonstrativo2","Edificio {$d->ed_nome}  -  apartamento {$d->ap_num}"); 
-		$b->set("endereco1", utf8_encode(($d->cli_rua)).','.$d->cli_numero.' - '.$d->cli_bairro);
-		$b->set("endereco2", utf8_encode($d->cli_cidade." - ".$d->cli_estado." - CEP: {$d->cli_cep}"));
+		$b->set("endereco1", (($d->cli_rua)).','.$d->cli_numero.' - '.$d->cli_bairro);
+		$b->set("endereco2", ($d->cli_cidade." - ".$d->cli_estado." - CEP: {$d->cli_cep}"));
 		$b->val("valor_boleto", $d->pr_valor);
 		$b->val("data_vencimento",$vc);
 
