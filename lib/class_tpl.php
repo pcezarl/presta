@@ -1,4 +1,4 @@
-        <?php /// Valmirez System - valmirez@hotmail.com
+<?php /// Valmirez System - valmirez@hotmail.com
 
         //data: 24 abril 2008 
 
@@ -171,23 +171,5 @@
         );
         return preg_replace(array_keys($acentos),$acentos , $str);
         } ////// fim acentos
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }// fim classe
-
-
-
+}// fim classe
 ?>

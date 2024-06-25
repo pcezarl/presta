@@ -5,7 +5,6 @@
 
 	include "lib/var.php";
 	include "lib/func.php";
-	error_reporting(E_ALL);
 	$db=new db();
 
 	foreach($_POST as $n=>$v)

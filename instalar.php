@@ -13,7 +13,7 @@
 <meta name="keywords" content="">
 <meta name="creation-date" content="01/01/2009">
 <meta name="revisit-after" content="15 days">
-<title>Instalação</title>
+<title>Instalaï¿½ï¿½o</title>
 
 </head>
 <body>
@@ -109,7 +109,7 @@ if($db->status=="erro")die($db->erro."<hr>".$db->sql);
 echo _ok."<hr />";
 
 ////////////////////////////////////////
-echo "Criando tabela \"Prestações\"...";
+echo "Criando tabela \"Prestaï¿½ï¿½es\"...";
 
 $db->query("DROP TABLE IF EXISTS prestacoes;");
 if($db->status=="erro")die($db->erro."<hr>".$db->sql);
@@ -160,10 +160,7 @@ CREATE  TABLE IF NOT EXISTS `aptos` (
   `ap_obs` TEXT NULL ,
   `ap_vendido` ENUM('s','n') NULL DEFAULT 'n' ,
   PRIMARY KEY (`id_apto`) )
-ENGINE = InnoDB;
-
-
-          ");
+ENGINE = InnoDB;");
 if($db->status=="erro")die($db->erro."<hr>".$db->sql);
 
 echo _ok."<hr />";
@@ -198,8 +195,8 @@ echo _ok."<hr />";
 
 
 ?>
-<h2>Criação das tabelas do sistema</h2>
-<h2>Atenção: todos os dados existentes serão excluidos</h2>
+<h2>Criaï¿½ï¿½o das tabelas do sistema</h2>
+<h2>Atenï¿½ï¿½o: todos os dados existentes serï¿½o excluidos</h2>
 <form action="" method="post">
 <input type="checkbox" name="opt" value="ok">Confirmar<br />
 <input type="submit" value="Instalar" style="width:100px;height:40px;">

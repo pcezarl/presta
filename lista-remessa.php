@@ -114,5 +114,4 @@ $pn->end_loop("linha");
 $p->set("pagina","Listagem de boletos - Geração de Remessa");
 $p->set("conteudo",$pn->tvar());
 $p->tprint();
-
 ?>

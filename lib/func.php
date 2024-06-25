@@ -318,6 +318,4 @@ function digitoVerificadorBradesco_nossonumero($numero) {
     }
     return $dv;
 }
-
-
 ?>

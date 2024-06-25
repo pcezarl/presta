@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);
 
 $vc=strtotime(date("Y-m-d"));
 $vc=strtotime("+5 days",$vc);
@@ -10,7 +9,7 @@ exit();
 
 class boleto_HSBC{
 
-///////////////////////// configuração  ////////////////////
+///////////////////////// configuraï¿½ï¿½o  ////////////////////
 
 
 private $identificacao_empresa="Construtora Aires"; // nome da empresa
@@ -249,7 +248,7 @@ src=imagens/p.png width=<?php echo $largo?> height=<?php echo $altura?> border=0
 src=imagens/b.png width=<?php echo $fino?> height=<?php echo $altura?> border=0><img 
 src=imagens/p.png width=<?php echo 1?> height=<?php echo $altura?> border=0> 
   <?php
-} //Fim da funçao
+} //Fim da funï¿½ao
 
 private function fbarcode($n){
 ob_start();

@@ -162,8 +162,4 @@ mysql_query("flush tables", $this->banco);
 
 }  //fim classe
 ///////////////////////////////
-
-
-
-
 ?>

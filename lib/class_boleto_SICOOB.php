@@ -1,7 +1,4 @@
 ﻿<?php
-error_reporting(E_ERROR);
-
-
 
 class boleto_SICOOB
 {
@@ -288,7 +285,7 @@ class boleto_SICOOB
 
 
     //Guarda inicial
-    ?><img src="cboleto/imagens/p.png" width=<?php echo $fino ?> height=<?php echo $altura ?> border=0><img
+?><img src="cboleto/imagens/p.png" width=<?php echo $fino ?> height=<?php echo $altura ?> border=0><img
       src="cboleto/imagens/b.png" width=<?php echo $fino ?> height=<?php echo $altura ?> border=0><img
       src="cboleto/imagens/p.png" width=<?php echo $fino ?> height=<?php echo $altura ?> border=0><img
       src="cboleto/imagens/b.png" width=<?php echo $fino ?> height=<?php echo $altura ?> border=0><img <?php
@@ -324,8 +321,8 @@ class boleto_SICOOB
             ?> src="cboleto/imagens/p.png" width=<?php echo $largo ?> height=<?php echo $altura ?> border=0><img src="cboleto/imagens/b.png" width=<?php echo $fino ?>
       height=<?php echo $altura ?> border=0><img src="cboleto/imagens/p.png" width=<?php echo 1 ?> height=<?php echo $altura ?>
       border=0>
-    <?php
-  } //Fim da função
+<?php
+} //Fim da função
 
   private function fbarcode($n)
   {
@@ -598,10 +595,5 @@ class boleto_SICOOB
     return chunk_split($this->str_encode($this->layout_original), 70);
 
   }
-
-
 } // fim da classe
-
-
-
 ?>

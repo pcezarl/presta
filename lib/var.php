@@ -79,7 +79,4 @@ $tipo_parcela=array(
 "a"=>"avulsa",
 "i"=>"intermediaria"
 );
-
-
-
 ?>
