@@ -8,8 +8,8 @@ var $conf;
 
 function __construct(){
 $this->conf= array(
-"de"=>"construtora@airesimoveis.com.br",
-"responder"=>"construtora@airesimoveis.com.br"
+"de"=>"construtora@aires.com.br",
+"responder"=>"construtora@aires.com.br"
 );
 
 

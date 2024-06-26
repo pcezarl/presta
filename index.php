@@ -18,7 +18,7 @@
 	$mes_atual=$mes_extenso[(integer)date("m")]  ;
 	$ano=date("Y");
 
-	$p->set("pagina","PÃ¡gina inicial - $data");
+	$p->set("pagina","Página inicial - $data");
 
 	////////// lista edificio
 
@@ -67,7 +67,7 @@
 
 	$led="<table border='0' width='100%' cellspacing='0'>
 	<tr class='titulo-total' style='text-align:center;font-size:9pt'>
-	<td>DIA</td><td>VALOR TOTAL</td><td>PRESTAÃ‡Ã•ES</td>
+	<td>DIA</td><td>VALOR TOTAL</td><td>PRESTAÇÕES</td>
 	</tr>
 	";
 	while ($dados=mysql_fetch_array($r)){
@@ -98,5 +98,4 @@
 
 	$p->set("conteudo",$pn->tvar());
 	$p->tprint();
-
 ?>

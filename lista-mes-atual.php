@@ -40,7 +40,7 @@
 	order by day(pr_vencimento)
 	";
 
-	$cont="<h1 class='titulo'>PrestaÃ§Ãµes: $mes_extenso[$mes] de $ano</h1>";
+	$cont="<h1 class='titulo'>Prestações: $mes_extenso[$mes] de $ano</h1>";
 
 	$db->query($sql);
 	if($db->status=="erro")die($db->erro);
@@ -80,10 +80,10 @@
 		$id=$dados->id_presta;
 		$ap=$dados->pr_apto;
 
-		$pago=($dados->pr_pago=='s')?"":"<span style='color:red'><b>NÃƒO PAGA</b></span>";
+		$pago=($dados->pr_pago=='s')?"":"<span style='color:red'><b>NÃO PAGA</b></span>";
 
 		$bt_pagar=($dados->pr_pago=='s')?"<img src='images/bt_trans.gif' alt='' title=''  />":"<img src='images/vender.gif' border='0' alt='pagar' title='Marcar como pago' onclick=\"opt('p','$id','$ap')\" style='cursor:pointer; cursor:hand;' />";
-		$bt_editar="<a href='edita_prestacao.php?i=$id' rel='facebox'><img src='images/bt_editar.gif' alt='editar' title='editar prestaÃ§Ã£o' border='0' /></a>";
+		$bt_editar="<a href='edita_prestacao.php?i=$id' rel='facebox'><img src='images/bt_editar.gif' alt='editar' title='editar prestação' border='0' /></a>";
 
 
 		if($dados->bo_ndoc==null){
@@ -133,8 +133,13 @@
 	} // fim loop dados
 	$t->end_loop("linha");
 
+	
+
 	$cont.=$t->tvar();
-	$p->set("pagina","Detalhes das prestaÃ§Ãµes");
+
+	
+
+	$p->set("pagina","Detalhes das prestações");
 	$p->set("conteudo",$cont);
 	$p->tprint();
 

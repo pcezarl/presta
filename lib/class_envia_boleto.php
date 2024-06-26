@@ -17,10 +17,10 @@ $this->m   =new vmail();
 
 function set_dados($d){
 $this->boleto=$d;
-$this->mht->SetFrom('Construtora Aires <vendas@airesimoveis.com.br>');
+$this->mht->SetFrom('Construtora Aires <aires@aires.com.br>');
 $this->mht->SetSubject('Boleto');
 $this->mht->AddContents("","text/html",$this->boleto);
-$this->mht->AddFile('imagens/logocaixa.jpg', 'logocaixa.jpg', NULL);
+$this->mht->AddFile('imagens/logohsbc.jpg', 'logohsbc.jpg', NULL);
 $this->mht->AddFile('imagens/1.png', '1.png', NULL);
 $this->mht->AddFile('imagens/2.png', '2.png', NULL);
 $this->mht->AddFile('imagens/3.png', '3.png', NULL);
@@ -252,8 +252,8 @@ var $conf;
 
 function __construct(){
 $this->conf= array(
-"de"=>"construtora@airesimoveis.com.br",
-"responder"=>"construtora@airesimoveis.com.br"
+"de"=>"construtora@aires.com.br",
+"responder"=>"construtora@aires.com.br"
 );
 
 

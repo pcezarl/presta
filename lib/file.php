@@ -9,16 +9,14 @@ class file {
 	}
 	
 	public function prepare($path, $filename) {
-//		header('Content-Type: application/txt');
-		header('Content-Type: text/plain');
-		header('Charset: ISO-8859-1');
-		header('Content-Disposition: attachment; filename='.$filename);
-		header('Charset: windows-1252');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate');
-		header('Pragma: public');
-		flush();
-		readfile($path.$filename);
+	   header('Content-Type: application/octet-stream');
+	   header('Content-Disposition: attachment; filename='.$filename);
+	   header('Charset: UTF-8');
+	   header('Expires: 0');
+	   header('Cache-Control: must-revalidate');
+	   header('Pragma: public');
+	   readfile($path.$filename);
+		
 	}
 }
 ?>

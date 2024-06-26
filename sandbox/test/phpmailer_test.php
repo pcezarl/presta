@@ -8,7 +8,7 @@ $INCLUDE_DIR = "../";
 
 require("phpunit.php");
 require($INCLUDE_DIR . "class.phpmailer.php");
-// error_reporting(E_ALL);
+error_reporting(E_ALL);
 
 /**
  * Performs authentication tests

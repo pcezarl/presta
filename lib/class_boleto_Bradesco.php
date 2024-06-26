@@ -564,7 +564,7 @@ class boleto_Bradesco {
     if ( strpos($this->dadosboleto['razao'], 'HB SANTOS') !== false ) {
         $this->set("instrucoes1", htmlspecialchars("Sr. Caixa, após o vencimento cobrar 2% de multa."));
     } else {
-        $this->set("instrucoes1", htmlspecialchars("Sr. Caixa, após o vencimento cobrar 10% de multa."));
+        $this->set("instrucoes1", htmlspecialchars("Sr. Caixa, após o vencimento cobrar 2% de multa."));
     }
 
     $this->set("instrucoes2", htmlspecialchars("Não receber após 30 dias do vencimento."));

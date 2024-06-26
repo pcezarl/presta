@@ -16,6 +16,9 @@ $db=new db();
 $dbt=new db();
 
 
+
+
+
 $mes=(integer)date("m");
 $ano=date("Y");
 
@@ -64,7 +67,15 @@ $bt_boleto="<a href='ver-boleto-unico.php?i=$id' target='_blank'><img src='image
 $dbt->query("select max(pr_num) as idx from prestacoes where pr_tipo='{$dados->pr_tipo}' and pr_apto='{$dados->pr_apto}' ");
 //die($dbt->sql);
 $max_presta=$dbt->get_val("idx") ;
-$tipo="<span style='font-size:7pt;font-family:verdana'>".$dados->pr_num."/".$max_presta. "</span> " . $tipo_parcela[$dados->pr_tipo];
+
+$mini_tipo= substr($tipo_parcela[$dados->pr_tipo],0,4);
+		$tipo="<b><span style='font-size:10pt'>{$dados->ed_nome} - {$dados->ap_num}</span></b> <br /><span style='font-size:7pt;font-family:verdana'>{$dados->pr_num}/$max_presta</span> $mini_tipo";
+
+
+
+
+
+//$tipo="<span style='font-size:7pt;font-family:verdana'>".$dados->pr_num."/".$max_presta. "</span> " . $tipo_parcela[$dados->pr_tipo];
 
 
 

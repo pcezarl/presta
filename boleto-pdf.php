@@ -60,7 +60,7 @@ $MhtFileMaker->SetFrom('Construtora Aires <aires@aires.com.br>');
 $MhtFileMaker->SetSubject('Boleto');
 $MhtFileMaker->AddContents("","text/html",$boleto);
 
-$MhtFileMaker->AddFile('imagens/logocaixa.jpg', 'logocaixa.jpg', NULL);
+$MhtFileMaker->AddFile('imagens/logohsbc.jpg', 'logohsbc.jpg', NULL);
 $MhtFileMaker->AddFile('imagens/1.png', '1.png', NULL);
 $MhtFileMaker->AddFile('imagens/2.png', '2.png', NULL);
 $MhtFileMaker->AddFile('imagens/3.png', '3.png', NULL);
@@ -87,9 +87,9 @@ $valor=mil($d->bo_valor);
 $msg="
 Segue em anexo<br />
 boleto referente ao pagamento de parcela do apartamento {$d->ap_num} do edificio {$d->ed_nome}<br>
-Valor da prestaÃ§Ã£o: R\${$valor}<br />
+Valor da prestação: R\${$valor}<br />
 Numero do documento: {$d->bo_ndoc}<br /><br /><br />
-caso tenha problemas na visualizaï¿½ï¿½o do boleto, utilize a linha digitavel:<br /><br />
+caso tenha problemas na visualização do boleto, utilize a linha digitavel:<br /><br />
 <span style='padding:3px;background:#C0C0C0;border:1px solid;#585858;font-family:courier;font-size:11pt;color:black;font-weight:bold'>{$b->dadosboleto[linha_digitavel]} </span>
 
 ";

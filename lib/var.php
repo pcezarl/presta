@@ -1,11 +1,6 @@
 <?php /// Valmirez System - valmirez@hotmail.com
 
 error_reporting(164);
-// error_reporting(-1);
-
-// phpinfo();
-ini_set("default_charset", 'utf-8');
-
 ob_start("ob_gzhandler");
 
 function __autoload($c) {require_once "lib/class_".$c . '.php';}
@@ -13,9 +8,9 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 $_version=PHP_VERSION;
 die("
 <h1>ERRO DE SISTEMA</h1>
-A vers√£oo do compilador n√£o √© compativel com o sistema.<br />
-Vers√£o atual: <b>$_version</b><br />
-Vers√£o requerida: <b>5.3.0</b> ou posterior.<br />
+A vers„o do compilador n„o È compativel com o sistema.<br />
+Vers„o atual: <b>$_version</b><br />
+Vers„o requerida: <b>5.3.0</b> ou posterior.<br />
 <hr>
 $_SERVER[SERVER_SIGNATURE]
 ");
@@ -26,19 +21,19 @@ unset($_version);
 
 
 // para o autobase
-$_host="http://127.0.0.1/presta";
+$_host="http://127.0.0.1/mc";
 
 $mysql["host"]="127.0.0.1";
-$mysql["dados"]="contabilidade";
+$mysql["dados"]="teste";
 $mysql["user"]="root";
-$mysql["pass"]="root";
+$mysql["pass"]="zaq1xsw2";
 
 
 $mes_extenso=array(
 "",
 "Janeiro",
 "Fevereiro",
-"Mar√ßo",
+"MarÁo",
 "Abril",
 "Maio",
 "Junho",
@@ -79,4 +74,7 @@ $tipo_parcela=array(
 "a"=>"avulsa",
 "i"=>"intermediaria"
 );
+
+
+
 ?>

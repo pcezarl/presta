@@ -60,8 +60,8 @@
 
 		$b->set("demonstrativo1","parcela {$d->pr_num} de $tt ($parc) ");
 		$b->set("demonstrativo2","Edificio {$d->ed_nome} apto: {$d->ap_num}");
-		$b->set("demonstrativo4","taxa do boleto: R\$ ".mil($b->taxa_boleto));
-	//	$b->set("demonstrativo3","Construtura Aires");
+		$b->set("demonstrativo3","Taxa do boleto: R\$ ".mil($b->taxa_boleto));
+		$b->set("demonstrativo4","Construtura Aires");
 
 		$b->set("endereco1","{$d->cli_rua},{$d->cli_numero} - {$d->cli_bairro}");
 		$b->set("endereco2","{$d->cli_cidade} - {$d->cli_estado} -CEP:{$d->cli_cep}");

@@ -31,8 +31,8 @@ $idx=$db->get_val("idx");
 
 $b->set("demonstrativo1","parcela {$d->bo_num_presta} de $idx  ($tipo) ");
 $b->set("demonstrativo2","Edificio {$d->ed_nome} apto: {$d->ap_num}");
-//$b->set("demonstrativo4","taxa do boleto: R\$ ".mil($b->taxa_boleto));
-//$b->set("demonstrativo3","");
+$b->set("demonstrativo3","Taxa do boleto: R\$ ".mil($b->taxa_boleto));
+$b->set("demonstrativo4",".");
 $b->set("endereco1","{$d->cli_rua},{$d->cli_numero} - {$d->cli_bairro}");
 $b->set("endereco2","{$d->cli_cidade} - {$d->cli_estado} -CEP:{$d->cli_cep}");
 $b->val("valor_boleto",$d->bo_valor);

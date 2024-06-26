@@ -4,33 +4,27 @@
 
 class boleto_HSBC{
 
-///////////////////////// configuração  /////////////////////
+///////////////////////// configuração  ////////////////////
 
 
-private $identificacao_empresa="Aires Construtora e Incorporadora Ltda"; // nome da empresa
-private $cnpj_empresa="12.460.505/0001-18"; // CNPJ da empresa
-private $endereco_empresa="Av. Brasil, 600 - cj.1009 - Boqueirão"; // endereco da empresa
+private $identificacao_empresa="Construtora Aires"; // nome da empresa
+private $cnpj_empresa="00.774.707/0001-55"; // CNPJ da empresa
+private $endereco_empresa="Av. Brasil, 600 - sala 1009"; // endereco da empresa
 private $cidade_empresa="Praia Grande - SP"; // cidade da empresa
-private $codigo_empresa="4133528";  // codigo do banco (7 digitos)
+private $codigo_empresa="3505901";  // codigo do banco (7 digitos)
 
-//4133528
-//4448316
+public $imprimir=true; //  [true ou false] define se o dialogo de impressão aparecerá automaticamente
 
-public $imprimir=false; //  [true ou false] define se o dialogo de impressão aparecerá automaticamente
-
-public  $mvence=0; // dias de vencimento do boleto
-public  $taxa_boleto=0.00; // taxa do boleto
+public  $mvence=7; // dias de vencimento do boleto
+public  $taxa_boleto=0; // taxa do boleto
 
 
 // configuracao das instrucoes do boleto
-const inst1="Sr. Caixa, após o vencimento cobrar 10% de multa";
-const inst2="Não receber apos 30 dias do vencimento";
+const inst1="Sr. Caixa, receber até 2 dias úteis após o vencimento";
+const inst2="";
 const inst3="";
 const inst4="";
 
-
-//Sr. Caixa, após o vencimento cobrar 10% de multa
-//Não receber apos 30 dias do vencimento
 
 private $carteira     ="CNR";
 private $codigobanco  ="399";
@@ -123,59 +117,20 @@ private function formata_numero($numero,$loop,$insert,$tipo = "geral") {
                 while(strlen($numero)<$loop){
                         $numero = $insert . $numero;
                 }
-        return $numero;
         }
-
-
         if ($tipo == "valor") {
                 $numero = str_replace(",","",$numero);
-                //$numero = str_replace(".","",$numero);
-
+                $numero = str_replace(".","",$numero);
                 while(strlen($numero)<$loop){
                         $numero = $insert . $numero;
                 }
-        return $numero;
         }
-
-
         if ($tipo == "convenio") {
                 while(strlen($numero)<$loop){
                         $numero = $numero . $insert;
                 }
-
+        }
         return $numero;
-        }
-
-
-        if ($tipo == "digitavel") {
-
-                if(  (!is_int((integer)$this->dadosboleto["valor_boleto"]))  ){
-                        $numero = str_replace(".","",$numero);
-                        $cents=false;
-                } else{
-                        $cents=true;
-                }
-
-                $numero = str_replace(",","",$numero);
-                //$numero = str_replace(".","",$numero);
-
-                $cents=true;
-                if($cents==true){
-                $numero*=100;
-                }
-
-                while(strlen($numero)<$loop){
-                        $numero = $insert . $numero;
-                }
-
-
-
-          return $numero;
-        }
-
-
-
-        //return $numero;
 }
 
 private function geraNossoNumero($ndoc,$cedente,$venc,$tipoid) {
@@ -489,11 +444,7 @@ $this->layout="
 
 // exibe layout do boleto
 function draw(){
-
-$v1=$this->dadosboleto["valor_boleto"]+$this->taxa_boleto;
-
-$this->valor = $this->formata_numero($v1,10,0,"digitavel");
-
+$this->valor = $this->formata_numero($this->dadosboleto["valor_boleto"]+$this->taxa_boleto,10,0,"valor");
 $this->codigo_banco_com_dv = $this->geraCodigoBanco($this->codigobanco);
 $this->set("codigo_banco_com_dv",$this->codigo_banco_com_dv);
 
@@ -528,7 +479,7 @@ $this->set("agencia_codigo",$this->agencia_codigo);
 
 $this->set("data_vencimento",$this->dadosboleto["data_vencimento"]);
 
-$this->set("valor_boleto",$this->mil($this->dadosboleto["valor_boleto"]));
+$this->set("valor_boleto",$this->mil($this->valor));
 $this->set("valor_unitario",'');
 
 
@@ -598,7 +549,6 @@ public function get_layout_encode(){
 return chunk_split($this->str_encode($this->layout_original),70);
 
 }
-
 
 
 

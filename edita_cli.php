@@ -15,7 +15,7 @@
 	$i=limpa($_GET["i"]);
 
 	$d->query("select * from clientes where id_cliente='$i'" );
-	if($d->rows!=1)die("<h1>Server error:</h1>não foi possivel compor os bytes de alinhamento.");
+	if($d->rows!=1)die("<h1>Server error:</h1>n�o foi possivel compor os bytes de alinhamento.");
 
 	$dados=mysql_fetch_object($d->result);
 
@@ -68,7 +68,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td>informações adicionais:<br>
+				<td>informa&ccedil;&otilde;es adicionais:<br>
 				</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>

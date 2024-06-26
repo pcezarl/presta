@@ -6,7 +6,6 @@ include "lib/func.php";
 include "lib/class_tpl.php";
 include "lib/class_db.php";
 
-
 $i=limpa($_GET["i"]);
 
 $p =new tpl("$modelo");
