@@ -91,10 +91,6 @@ class boleto_SICOOB
 
       return $numero;
     }
-
-
-
-    //return $numero;
   }
 
 
@@ -137,19 +133,6 @@ class boleto_SICOOB
     $res = $ndoc + $cedente + $venc;
     return $ndoc . $this->modulo_11_invertido($res);
   }
-
-  private function digitoVerificador_nossonumero($numero)
-  {
-    $resto2 = modulo_11($numero, 9, 1);
-    $digito = 11 - $resto2;
-    if ($digito == 10 || $digito == 11) {
-      $dv = 0;
-    } else {
-      $dv = $digito;
-    }
-    return $dv;
-  }
-
 
   private function dataJuliano($data)
   {
@@ -233,11 +216,11 @@ class boleto_SICOOB
     }
   } //fim mod11
 
-  private function modulo_11_invertido($num)
-  { // Calculo de Modulo 11 "Invertido" (com pesos de 9 a 2  e nÃ£o de 2 a 9)
+  private function modulo_11_invertido($num, $ftInicio = 9)
+  { // Calculo de Modulo 11 "Invertido" (com pesos de 9 a 2 e não de 2 a 9)
     $ftini = 2;
     $ftfim = 9;
-    $fator = $ftfim;
+    $fator = $ftInicio;
     $soma = 0;
 
     for ($i = strlen($num); $i > 0; $i--) {
@@ -247,9 +230,9 @@ class boleto_SICOOB
     }
 
     $digito = $soma % 11;
-    if ($digito > 9)
-      $digito = 0;
-
+    if ($digito > 9 || $digito === 0 ) {
+      $digito = 1;
+    }
     return $digito;
   }
 
@@ -282,8 +265,6 @@ class boleto_SICOOB
 
 
     //Desenho da barra
-
-
     //Guarda inicial
 ?><img src="cboleto/imagens/p.png" width=<?php echo $fino ?> height=<?php echo $altura ?> border=0><img
       src="cboleto/imagens/b.png" width=<?php echo $fino ?> height=<?php echo $altura ?> border=0><img
@@ -380,19 +361,34 @@ class boleto_SICOOB
     $campo1 = $a.$b.$c.$d.$e;
     $campo2 = $f.$g.$h1.$i;
     $campo3 = $h2.$j.$k;
+    $campo4 = $this->dv_cod_barras;
     $campo5 = $m.$n;
-    $this->dv_cod_barras = $campo4 = $this->digitoVerificador_barra($campo1.$campo2.$campo3.$campo5);
-
+    
+    
     return "$campo1 $campo2 $campo3 $campo4 $campo5";
   }
 
 
   function monta_campo_livre() {
-    return $this->carteira.$this->codigo_cooperativa.$this->modalidade.$this->formata_numero($this->codigo_cliente, 7, 0).$this->formata_numero($this->nosso_numero, 8, 0).$this->formata_numero($this->parcela, 3, 0);
+    return $this->carteira.$this->codigo_cooperativa.$this->modalidade.$this->formata_numero($this->codigo_cliente, 7, 0).$this->formata_numero($this->nosso_numero_com_dv, 8, 0).$this->formata_numero($this->parcela, 3, 0);
   }
   function monta_codigo_barras() {
-    return $this->codigobanco.$this->moeda.$this->dv_cod_barras.$this->fator_vencimento.$this->valor.$this->campo_livre;
+    $this->dv_cod_barras = $this->dvCodigoBarras($this->codigobanco.$this->nummoeda.$this->fator_vencimento.$this->valor.$this->campo_livre);
+    return $this->codigobanco.$this->nummoeda.$this->dv_cod_barras.$this->fator_vencimento.$this->valor.$this->campo_livre;
   }
+
+  private function dvCodigoBarras($numero)
+  {
+    $resto2 = $this->modulo_11($numero, 9, 1);
+    $digito = 11 - $resto2;
+    if ($digito === 0 || $digito === 1 || $digito > 9) {
+      $dv = 1;
+    } else {
+      $dv = $digito;
+    }
+    return $dv;
+  }
+
   private function geraCodigoBanco($numero)
   {
     $parte1 = substr($numero, 0, 3);
@@ -428,7 +424,7 @@ class boleto_SICOOB
     $ano = $data[2];
     $mes = $data[1];
     $dia = $data[0];
-    return (abs(($this->_dateToDays("2000", "07", "03")) - ($this->_dateToDays($ano, $mes, $dia)) + 1000));
+    return (abs(($this->_dateToDays($ano, $mes, $dia)) - ($this->_dateToDays("1997","10","07"))));
   }
 
   ////////////////////////////
@@ -477,7 +473,7 @@ class boleto_SICOOB
 
     $im = ($this->imprimir) ? "onload='print()'" : "";
     $this->layout = "
-    <html><head><title>Boleto - ". $this->dadosboleto['razao']. " </title></head><body $im>
+    <html><head><title>Boleto - ". $this->identificacao_empresa. " </title></head><body $im>
     " . $this->layout;
 
   } // fim init
@@ -486,6 +482,7 @@ class boleto_SICOOB
   function draw()
   {
 
+    $this->codigo_cooperativa = $this->formata_numero($this->dadosboleto['agencia'], 4, 0);
     $this->dadosboleto['data_processamento'] = date('d/m/Y');
     $this->codigo_cliente = $this->dadosboleto['conta_cedente'] = $this->formata_numero($this->dadosboleto['codigo_cliente'], 7, 0);
     $this->codigo_cliente_dv = $this->dadosboleto['conta_dv'] = $this->digitoVerificador_cedente($this->codigo_cliente);
@@ -498,24 +495,22 @@ class boleto_SICOOB
 
     $this->codigo_banco_com_dv = $this->geraCodigoBanco($this->codigobanco);
     $this->set("codigo_banco_com_dv", $this->codigo_banco_com_dv);
+    $dv_nosso_numero = $this->dvNossoNumero($this->formata_numero($this->codigo_cooperativa, 4, 0) . $this->formata_numero($this->codigo_cliente, 10, 0) . $this->formata_numero($this->nosso_numero, 7, 1));
+    $this->nosso_numero_com_dv = $this->nosso_numero.$dv_nosso_numero;
 
     $this->fator_vencimento = $this->_fator_vencimento($this->dadosboleto['data_vencimento']);
     $this->ndoc = $this->dadosboleto['numero_documento'];
     $this->data_vencimento = $this->dadosboleto['data_vencimento'];
     $this->set("data_vencimento", $this->data_vencimento);
 
-    //agencia é 4 digitos
-    $this->codigo_cooperativa = $this->formata_numero($this->dadosboleto['agencia'], 4, 0);
-
     $this->campo_livre = $this->monta_campo_livre();
-    $dv_nosso_numero = $this->dvNossoNumero($this->formata_numero($this->codigo_cooperativa, 4, 0) . $this->formata_numero($this->codigo_cliente, 10, 0) . $this->nosso_numero);
-    $this->nosso_numero_com_dv = $this->nosso_numero.$dv_nosso_numero;
+    $codigo_barras = $this->monta_codigo_barras();
     $linha = $this->monta_linha_digitavel();
     
     $this->set('linha_digitavel', $linha);
     $this->set('agencia_codigo', $this->codigo_cooperativa."/".$this->codigo_cliente);
     $this->set('nosso_numero',  $this->nosso_numero.'-'.$dv_nosso_numero);
-    $this->set('codigo_barras', $this->fbarcode($this->monta_codigo_barras()));
+    $this->set('codigo_barras', $this->fbarcode($codigo_barras));
 
     // $this->set("data_vencimento",$this->dadosboleto['data_vencimento']);
     $this->set("valor_boleto", $this->mil($this->dadosboleto['valor_boleto']));
@@ -591,7 +586,6 @@ class boleto_SICOOB
 
   public function get_layout_encode()
   {
-
     return chunk_split($this->str_encode($this->layout_original), 70);
 
   }

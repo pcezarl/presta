@@ -135,7 +135,7 @@
         <tr>
           <td class=cp valign=top width=7 height=12><img height=12 src=imagens/1.png width=1 border=0></td>
           <td class=cp valign=top width=298 height=12>
-            <span class="campo">{{razao}}</span></td>
+            <span class="campo">{{cedente}}</span></td>
           <td class=cp valign=top width=7 height=12><img height=12 src=imagens/1.png width=1 border=0></td>
           <td class=cp valign=top width=126 height=12>
             <span class="campo">

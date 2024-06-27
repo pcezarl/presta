@@ -88,7 +88,7 @@
             
         }
             public function registro($data) {
-
+                
                 $modalidade                 = '01'; # Com registro - boleto emitido pelo beneficiario
                 $carteira                   = '1';
                 $data_vencimento            = minimo(unmask(date('dmY', strtotime($data['data_vencimento_titulo']))), 8, 1);
@@ -125,7 +125,7 @@
                 $percentual_multa           = minimo('200', 15, 1);
                 $mensagem3                  = vazios(40);
                 $mensagem4                  = vazios(40);
-                $nosso_numero                   = $identificacao_titulo.minimo($data['parcela'], 2, 1).$modalidade.'1'.vazios(5);
+                $nosso_numero               = $identificacao_titulo.minimo($data['parcela'], 2, 1).$modalidade.'1'.vazios(5);
 
                 $registro_p =
                 $this->codigo_banco.$this->codigo_lote_servico.'3'.minimo($this->quantidade_registros, 5, 1).'P'.' '.'01'.$this->codigo_cooperativa.$this->codigo_beneficiario.' '
@@ -150,10 +150,11 @@
 
                 $registro_s = 
                     $this->codigo_banco.$this->codigo_lote_servico.'3'.minimo($this->quantidade_registros, 5, 1).'S'.' '.'01'.'3'.vazios(222);
+                $this->quantidade_registros++;
 
-                    $this->valor_total += $data['valor_titulo'];
-                    $this->quantidade_total_titulos++;
-                
+                $this->valor_total += $data['valor_titulo'];
+                $this->quantidade_total_titulos++;
+
 
                 $this->registros .= $registro_p."\r\n".$registro_q."\r\n".$registro_r."\r\n".$registro_s."\r\n";
                 return $this->registros;
