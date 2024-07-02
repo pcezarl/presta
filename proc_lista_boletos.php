@@ -1,5 +1,6 @@
 <?php
 
+
 	// gera os boletos para impressao
 	set_time_limit(600);
 
@@ -51,6 +52,7 @@
 
 	} else if ( $dados[0] == 'SICOOB' ) {
 		$b = new boleto_SICOOB();
+		$b->init();
 		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
 		// loop boletos
 		while($d=mysql_fetch_object($db->result)){
@@ -61,16 +63,11 @@
 			$b->val("conta"     	, $d->conta);
 			$b->val("codigo_cliente", $d->cod_cliente);
 			$dados[2] = $d->id;
-			
 		}
-		$b->init();
-
 	} else {
 		// $b= new boleto_HSBC();
 		die('Erro na hora do processamento');
 	}
-
-	
 
 	$cnt=0;
 
@@ -95,9 +92,7 @@
 
 		// calcula o vencimento
 		$vc=strtotime($d->pr_vencimento);
-		$vc=strtotime("+{$b->mvence} day",$vc); //  dias a partir da data atual
 		$vc=date("d/m/Y",$vc);
-
 
 		$sql="
 		select max(pr_num) as tt
@@ -180,7 +175,7 @@
 		if($cb->status=="erro")die($cb->erro);
 
 		if($cb->get_val("qt")==0){
-			$nnum = str_replace(array('/','-',' '), '', ($dados[0] != 'SICOOB') ? substr($b->dadosboleto["nosso_numero"], 2) : $b->dadosboleto["nosso_numero"]);
+			$nnum = str_replace(array('/','-',' '), '', ($dados[0] != 'SICOOB') ? substr($b->dadosboleto["nosso_numero"], 2) : $b->dadosboleto["nosso_numero_completo"]);
 			$sql="insert into boletos (bo_apto,bo_prop,bo_presta,bo_valor,bo_data_emissao,bo_data_vence,bo_num_presta,bo_ndoc,bo_nnum, conta_id)
 			values ('{$d->id_apto}','{$d->id_cliente}', '{$d->id_presta}', '{$d->pr_valor}','$de','$vcq','{$d->pr_num}','$ndoc','$nnum', '{$dados[2]}')
 			";

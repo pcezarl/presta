@@ -66,8 +66,8 @@
                 $msg="
                 Segue em anexo<br />
                 boleto referente ao pagamento de parcela do apartamento {$d->ap_num} do edificio {$d->ed_nome}<br>
-                Valor da prestação: R\${$valor}<br /><br /><br />
-                caso tenha problemas na visualização do boleto, utilize a linha digitavel:<br /><br />
+                Valor da prestaï¿½ï¿½o: R\${$valor}<br /><br /><br />
+                caso tenha problemas na visualizaï¿½ï¿½o do boleto, utilize a linha digitavel:<br /><br />
                 <span style='padding:3px;background:#C0C0C0;border:1px solid;#585858;font-family:courier;font-size:11pt;color:black;font-weight:bold'>{$b->dadosboleto[linha_digitavel]} </span>
                 ";
 

@@ -15,7 +15,6 @@ class boleto_Bradesco {
 
     public $imprimir=false; //  [true ou false] define se o dialogo de impressão aparecerá automaticamente
 
-    public  $mvence=0; // dias de vencimento do boleto
     public  $taxa_boleto=0.00; // taxa do boleto
 
 

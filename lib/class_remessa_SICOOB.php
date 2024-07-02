@@ -98,8 +98,8 @@
                 $codigo_juros               = '2'; // 0: Isento | 1: Valor por Dia | 2: Taxa Mensal
                 $data_juros = $data_multa   = minimo(unmask(date('dmY', strtotime($data['data_vencimento_titulo']. '+1 day'))), 8, 1);
                 $data_emissao_titulo        = date('dmY', strtotime($data['data_emissao_titulo']));
-                $emissor_boleto             = '2'; // 1: Sicoob Emite | 2: Beneficiário Emite
-                $distribuidor_boleto        = '2'; // 1: Sicoob Emite | 2: Beneficiário Emite
+                $emissor_boleto             = '2'; // 1: Sicoob emite | 2: Beneficiário emite
+                $distribuidor_boleto        = '2'; // 1: Sicoob distribui | 2: Beneficiário distribui
                 $juros_mora                 = minimo('100', 15, 1);
                 $codigo_desconto            = '0'; // 0: Não Conceder desconto | 1: Valor Fixo Até a Data Informada | 2: Percentual Até a Data Informada
                 $data_desconto              = zeros(8); 
@@ -119,13 +119,13 @@
                 $bairro_pagador             = minimo($data['bairro_pagador'], 15);
                 $cep_pagador                = minimo(unmask($data['cep_pagador']), 8, 1);
                 $cidade_pagador             = minimo($data['cidade_pagador'], 15);
-                $uf_pagador                 = minimo($data['estado_pagador'], 2);
 
+                $uf_pagador                 = minimo($data['estado_pagador'], 2);
                 $codigo_multa               = '2'; #2 = percentual | 1 = valor fixo'
-                $percentual_multa           = minimo('200', 15, 1);
+                $percentual_multa           = minimo('200', 15, 1); 
                 $mensagem3                  = vazios(40);
                 $mensagem4                  = vazios(40);
-                $nosso_numero               = $identificacao_titulo.minimo($data['parcela'], 2, 1).$modalidade.'1'.vazios(5);
+                $nosso_numero               = minimo(unmask($data['nosso_numero_completo']), 10, 1)."01".$modalidade.'4'.vazios(5);
 
                 $registro_p =
                 $this->codigo_banco.$this->codigo_lote_servico.'3'.minimo($this->quantidade_registros, 5, 1).'P'.' '.'01'.$this->codigo_cooperativa.$this->codigo_beneficiario.' '
@@ -155,7 +155,6 @@
                 $this->valor_total += $data['valor_titulo'];
                 $this->quantidade_total_titulos++;
 
-
                 $this->registros .= $registro_p."\r\n".$registro_q."\r\n".$registro_r."\r\n".$registro_s."\r\n";
                 return $this->registros;
             }
@@ -166,7 +165,7 @@
                 $this->quantidade_registros++;
                 $quantidade_registros = minimo($this->quantidade_registros, 6, 1);
 
-                $registro_5 = $this->codigo_banco.$this->codigo_lote_servico.'5'.vazios(9).$quantidade_registros.minimo($this->quantidade_total_titulos, 6,1).minimo($this->valor_total, 17, 1).$filler.vazios(125);
+                $registro_5 = $this->codigo_banco.$this->codigo_lote_servico.'5'.vazios(9).$quantidade_registros.minimo($this->quantidade_total_titulos, 6,1).minimo(unmask($this->valor_total), 17, 1).$filler.vazios(125);
                 
                 $quantidade_total_registros = minimo($this->quantidade_registros +2, 6, 1);
                 $registro_9 = $this->codigo_banco.'9999'.'9'.vazios(9).minimo('1', 6, true).$quantidade_total_registros.zeros(6).vazios(205);

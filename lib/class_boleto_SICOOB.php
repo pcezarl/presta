@@ -496,7 +496,7 @@ class boleto_SICOOB
     $this->codigo_banco_com_dv = $this->geraCodigoBanco($this->codigobanco);
     $this->set("codigo_banco_com_dv", $this->codigo_banco_com_dv);
     $dv_nosso_numero = $this->dvNossoNumero($this->formata_numero($this->codigo_cooperativa, 4, 0) . $this->formata_numero($this->codigo_cliente, 10, 0) . $this->formata_numero($this->nosso_numero, 7, 1));
-    $this->nosso_numero_com_dv = $this->nosso_numero.$dv_nosso_numero;
+    $this->dadosboleto['nosso_numero_completo'] = $this->nosso_numero_com_dv = $this->nosso_numero.$dv_nosso_numero;
 
     $this->fator_vencimento = $this->_fator_vencimento($this->dadosboleto['data_vencimento']);
     $this->ndoc = $this->dadosboleto['numero_documento'];
