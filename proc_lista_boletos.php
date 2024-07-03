@@ -105,8 +105,8 @@
 		$parc=$tipo_parcela[$d->pr_tipo];
 		$parc=strtoupper($parc);
         $b->set("parcela", $parc) ;
-        $b->set("demonstrativo1","Parcela {$d->pr_num} ($parc)") ;  
-
+		
+        $b->set("demonstrativo1","Parcela {$d->pr_num} ($parc)");
 		$b->set("demonstrativo2","Edificio {$d->ed_nome}  -  apartamento {$d->ap_num}"); 
 		$b->set("endereco1", (($d->cli_rua)).','.$d->cli_numero.' - '.$d->cli_bairro);
 		$b->set("endereco2", ($d->cli_cidade." - ".$d->cli_estado." - CEP: {$d->cli_cep}"));

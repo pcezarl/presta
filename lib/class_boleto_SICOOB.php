@@ -4,7 +4,7 @@ class boleto_SICOOB
 {
   // configuracao das instrucoes do boleto
   const inst1 = "Sr. Caixa, após vencimento cobrar multa de 2%";
-  const inst2 = "";
+  const inst2 = "Não receber após 30 dias do vencimento.";
   const inst3 = "";
   const inst4 = "";
 
