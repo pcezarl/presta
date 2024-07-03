@@ -3,8 +3,8 @@
 class boleto_SICOOB
 {
   // configuracao das instrucoes do boleto
-  const inst1 = "Sr. Caixa, cobrar multa de 2%";
-  const inst2 = "Não receber após 30 dias do vencimento.";
+  const inst1 = "Sr. Caixa, após vencimento cobrar multa de 2%";
+  const inst2 = "";
   const inst3 = "";
   const inst4 = "";
 
@@ -533,14 +533,14 @@ class boleto_SICOOB
     $this->set("numero_documento", $this->dadosboleto['numero_documento']);
     $this->set("nosso_numero", $this->nosso_numero);
     $this->set("carteira", $this->carteira);
-    $this->set("demonstrativo3", "taxa do boleto: R\$ " . $this->mil($this->taxa_boleto));
+    $this->set("demonstrativo3", "");
 
     $this->set("instrucoes1", self::inst1);
     $this->set("instrucoes2", self::inst2);
     $this->set("instrucoes3", self::inst3);
     $this->set("instrucoes4", self::inst4);
 
-    echo '<script>window.printaaa()</script>';
+    echo '<script>window.print()</script>';
   }// fim mostra boleto
 
   public function val($t, $v)
