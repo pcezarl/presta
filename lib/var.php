@@ -22,17 +22,13 @@ $_SERVER[SERVER_SIGNATURE]
 unset($_version);
 }
 
-
-
-
 // para o autobase
-$_host="http://127.0.0.1/presta";
+$_host="http://127.0.0.1/mc";
 
 $mysql["host"]="127.0.0.1";
-$mysql["dados"]="contabilidade";
+$mysql["dados"]="teste";
 $mysql["user"]="root";
-$mysql["pass"]="root";
-
+$mysql["pass"]="zaq1xsw2";
 
 $mes_extenso=array(
 "",
