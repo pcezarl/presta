@@ -1,0 +1,100 @@
+
+<script type="text/javascript" src="js/jquery.bsformaccelerator.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function()
+{
+
+$.bsformaccelerator('myform',{handle : 'enter'});
+
+});
+
+function ss(){
+document.getElementById("c_proc").style.display="block";
+}
+
+
+</script>
+
+<h3 class="titulo">Cadastro de cliente ::</h3>
+
+
+
+
+
+<form action="proc_add_cli.php" method="post" target="proc" name="myform" id="myform" onsubmit="ss()">
+  <table width="95%" border="0" cellpadding="3" cellspacing="0">
+	<tr>
+	  <td width="10%"><span class="obr">!</span>nome:</td>
+	  <td width="38%"><input name="nome" type="text" id="nome" size="40" tabindex="1" /></td>
+	  <td width="11%">e-mail</td>
+	  <td width="41%"><input name="email" type="text" id="email" size="40" tabindex="2" /></td>
+	</tr>
+	<tr>
+	  <td><span class="obr">!</span>telefone:</td>
+	  <td><input name="telefone" type="text" id="telefone" size="40" tabindex="3" /></td>
+	  <td><span class="obr">!</span>CPF/CNPJ:</td>
+	  <td><input name="cpf" type="text" id="cpf" size="40" tabindex="4" /></td>
+	</tr>
+	<tr>
+	  <td colspan="2">&nbsp; </td>
+	  <td>&nbsp; </td>
+	  <td>&nbsp; </td>
+	</tr>
+	<tr>
+	  <td><span class="obr">!</span>rua:</td>
+	  <td><input name="rua" type="text" id="rua" size="40" tabindex="5" /></td>
+	  <td><span class="obr">!</span>n&uacute;mero:</td>
+	  <td><input name="numero" type="text" id="numero" size="8" tabindex="6" /></td>
+	</tr>
+	<tr>
+	  <td><span class="obr">!</span>bairro:</td>
+	  <td><input name="bairro" type="text" id="bairro" size="40" tabindex="7" /></td>
+	  <td><span class="obr">!</span>cidade:</td>
+	  <td><input name="cidade" type="text" id="cidade" size="40" tabindex="8" /></td>
+	</tr>
+	<tr>
+	  <td><span class="obr">!</span>CEP:</td>
+	  <td><input name="cep" type="text" id="cep" size="10" tabindex="9" /></td>
+	  <td><span class="obr">!</span>estado</td>
+	  <td><input name="estado" type="text" id="estado" value="SP" size="4" maxlength="2" tabindex="10" /></td>
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td>informa&ccedil;&otilde;es adicionais:<br />
+	  </td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td><textarea name="info" cols="40" rows="4" id="info" ></textarea></td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td colspan="4">
+
+<div  id="c_proc" style="display:none;">
+<iframe name="proc" id="proc" height="48px" width="650px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+</div>
+</td>
+
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td align="center"> <input name="limpa" type="reset" id="limpa" value="Limpar" />
+	  </td>
+	  <td>&nbsp;</td>
+	  <td align="center"> <input name="ok" type="submit" id="ok" value=":: Cadastrar ::"  tabindex="11" />
+	  </td>
+	</tr>
+  </table>
+</form>

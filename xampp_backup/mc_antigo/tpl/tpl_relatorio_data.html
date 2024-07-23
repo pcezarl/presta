@@ -1,0 +1,248 @@
+<!-- //////////   COMECO TEMPLATE RELATORIO   ///////   -->
+<script type="text/javascript">
+
+function valida(){
+
+	// <![CDATA[
+/// essa vai ser um saco pra fazer.....
+
+var dia_inicio=parseInt( document.getElementById("dia_inicio").value );
+var mes_inicio=parseInt( document.getElementById("mes_inicio").value );
+var ano_inicio=parseInt( document.getElementById("ano_inicio").value );
+
+var dia_final=parseInt( document.getElementById("dia_final").value );
+var mes_final=parseInt( document.getElementById("mes_final").value );
+var ano_final=parseInt( document.getElementById("ano_final").value );
+
+
+// agora vai
+if(
+(dia_inicio>31) || ( isNaN(dia_inicio) ) ||
+(mes_inicio>12) || ( isNaN(mes_inicio) ) ||
+(ano_inicio<2000) || ( isNaN(ano_inicio) ) ||
+
+(dia_final>31) || ( isNaN(dia_final) ) ||
+(mes_final>12) || ( isNaN(mes_final) ) ||
+(ano_final<2000) || ( isNaN(ano_final) )
+
+
+){
+// erro
+alert("ERRO: Não existem dados suficientes para gerar relatório");
+}
+else
+{ /// OK
+
+try{
+document.getElementById("rel").style.display="block";
+document.getElementById("ff").submit();
+
+
+}catch(e){
+alert("erro no sistema de validação do formulario");
+}
+
+
+}
+
+} // fim valida
+
+
+// ]]>
+
+</script>
+
+<h1 class="titulo">Relat&oacute;rios Financeiros</h1>
+<form method="get" target="rel" action="proc_relatorio.php" name="ff" id="ff">
+<table width="95%" border="0" align="center" cellspacing="0" style="border:1px solid #104A8B;background-color: #83B0E9;">
+  <tr>
+	<td width="10%" >data inicial</td>
+	<td width="30%">
+	<select name="dia_inicio" id="dia_inicio">
+		<option value="01">1</option>
+		<option value="02">2</option>
+		<option value="03">3</option>
+		<option value="04">4</option>
+		<option value="05">5</option>
+		<option value="06">6</option>
+		<option value="07">7</option>
+		<option value="08">8</option>
+		<option value="09">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+		<option value="12">12</option>
+		<option value="13">13</option>
+		<option value="14">14</option>
+		<option value="15">15</option>
+		<option value="16">16</option>
+		<option value="17">17</option>
+		<option value="18">18</option>
+		<option value="19">19</option>
+		<option value="20">20</option>
+		<option value="21">21</option>
+		<option value="22">22</option>
+		<option value="23">23</option>
+		<option value="24">24</option>
+		<option value="25">25</option>
+		<option value="26">26</option>
+		<option value="27">27</option>
+		<option value="28">28</option>
+		<option value="29">29</option>
+		<option value="30">30</option>
+		<option value="31">31</option>
+	</select>
+
+	  /
+	  <select name="mes_inicio" id="mes_inicio">
+		<option value="01">Janeiro</option>
+		<option value="02">Fevereiro</option>
+		<option value="03">Mar&ccedil;o</option>
+		<option value="04">Abril</option>
+		<option value="05">Maio</option>
+		<option value="06">Junho</option>
+		<option value="07">Julho</option>
+		<option value="08">Agosto</option>
+		<option value="09">Setembro</option>
+		<option value="10">Outubro</option>
+		<option value="11">Novembro</option>
+		<option value="12">Dezembro</option>
+	  </select>
+	  /
+	  <select name="ano_inicio" id="ano_inicio">
+		<option value="2007">2007</option>
+        <option value="2008">2008</option>
+        <option value="2009">2009</option>
+		<option value="2010">2010</option>
+		<option value="2011">2011</option>
+		<option value="2012">2012</option>
+		<option value="2013">2013</option>
+		<option value="2014">2014</option>
+		<option value="2015">2015</option>
+		<option value="2016">2016</option>
+		<option value="2017">2017</option>
+		<option value="2018">2018</option>
+		<option value="2019">2019</option>
+		<option value="2020">2020</option>
+		<option value="2021">2021</option>
+		<option value="2022">2022</option>
+		<option value="2023">2023</option>
+		<option value="2024">2024</option>
+		<option value="2025">2025</option>
+		<option value="2026">2026</option>
+		<option value="2027">2027</option>
+		<option value="2028">2028</option>
+		<option value="2029">2029</option>
+		<option value="2030">2030</option>
+		<option value="2031">2031</option>
+		<option value="2032">2032</option>
+		<option value="2033">2033</option>
+		<option value="2034">2034</option>
+		<option value="2035">2035</option>
+		<option value="2036">2036</option>
+		<option value="2037">2037</option>
+		<option value="2038">2038</option>
+		<option value="2039">2039</option>
+		<option value="2040">2040</option>
+	</select>
+
+
+	   </td>
+
+	<td width="3%">&nbsp;</td>
+	<td width="8%">data final</td>
+	<td width="34%">
+	<select name="dia_final" id="dia_final">
+		<option value="01">1</option>
+		<option value="02">2</option>
+		<option value="03">3</option>
+		<option value="04">4</option>
+		<option value="05">5</option>
+		<option value="06">6</option>
+		<option value="07">7</option>
+		<option value="08">8</option>
+		<option value="09">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+		<option value="12">12</option>
+		<option value="13">13</option>
+		<option value="14">14</option>
+		<option value="15">15</option>
+		<option value="16">16</option>
+		<option value="17">17</option>
+		<option value="18">18</option>
+		<option value="19">19</option>
+		<option value="20">20</option>
+		<option value="21">21</option>
+		<option value="22">22</option>
+		<option value="23">23</option>
+		<option value="24">24</option>
+		<option value="25">25</option>
+		<option value="26">26</option>
+		<option value="27">27</option>
+		<option value="28">28</option>
+		<option value="29">29</option>
+		<option value="30">30</option>
+		<option value="31">31</option>
+	</select>
+	  /
+	  <select name="mes_final" id="mes_final">
+		<option value="01">Janeiro</option>
+		<option value="02">Fevereiro</option>
+		<option value="03">Mar&ccedil;o</option>
+		<option value="04">Abril</option>
+		<option value="05">Maio</option>
+		<option value="06">Junho</option>
+		<option value="07">Julho</option>
+		<option value="08">Agosto</option>
+		<option value="09">Setembro</option>
+		<option value="10">Outubro</option>
+		<option value="11">Novembro</option>
+		<option value="12">Dezembro</option>
+	  </select> /
+
+			<select name="ano_final" id="ano_final">
+		<option value="2007">2007</option>
+        <option value="2008">2008</option>
+        <option value="2009">2009</option>
+		<option value="2010">2010</option>
+		<option value="2011">2011</option>
+		<option value="2012">2012</option>
+		<option value="2013">2013</option>
+		<option value="2014">2014</option>
+		<option value="2015">2015</option>
+		<option value="2016">2016</option>
+		<option value="2017">2017</option>
+		<option value="2018">2018</option>
+		<option value="2019">2019</option>
+		<option value="2020">2020</option>
+		<option value="2021">2021</option>
+		<option value="2022">2022</option>
+		<option value="2023">2023</option>
+		<option value="2024">2024</option>
+		<option value="2025">2025</option>
+		<option value="2026">2026</option>
+		<option value="2027">2027</option>
+		<option value="2028">2028</option>
+		<option value="2029">2029</option>
+		<option value="2030">2030</option>
+		<option value="2031">2031</option>
+		<option value="2032">2032</option>
+		<option value="2033">2033</option>
+		<option value="2034">2034</option>
+		<option value="2035">2035</option>
+		<option value="2036">2036</option>
+		<option value="2037">2037</option>
+		<option value="2038">2038</option>
+		<option value="2039">2039</option>
+		<option value="2040">2040</option>
+	</select>
+	  </td>
+	<td width="15%" align="center"><a href="javascript:void(0)" class="aqua4" onclick="valida();this.blur()">Exibir</a></td>
+  </tr>
+</table>
+</form>
+<br />
+<br />
+<div style="text-align: center;margin-left: 30px;">
+<iframe name="rel" id="rel" frameborder="0" width="800px" height="600px" scrolling="auto" style="display:none;"></iframe>
+</div>

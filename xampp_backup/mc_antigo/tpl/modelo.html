@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="content-language" content="pt-br" />
+<title>Cobran&ccedil;a Aires :: {{pagina}}</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="menu.css" />
+<link rel="stylesheet" type="text/css" href="facebox.css" />
+
+<script type="text/javascript" src="js/jquery.js" ></script>
+<script type="text/javascript" src="js/chili-1.7.pack.js"></script>
+<script type="text/javascript" src="js/jquery.easing.js"></script>
+<script type="text/javascript" src="js/jquery.dimensions.js"></script>
+<script type="text/javascript" src="js/jquery.accordion.js"></script>
+<script type="text/javascript" src="js/facebox.js"></script>
+
+
+<script type="text/javascript"> 
+<!--
+$(document).ready(function()
+{
+jQuery('#menu').accordion({
+header: 'div.title',
+active: true, 
+alwaysOpen: false
+});
+
+$('a[rel*=facebox]').facebox();
+
+
+});
+-->
+</script>
+
+</head>
+<body>
+<div id="master">
+
+<div id="cab"><!-- parte de cima com logo -->
+
+<div id="menu_cima"> <!-- container posicionado na parte branca do logo -->
+
+<div id="menu" > <!-- menu geral -->
+ 
+<a href="index.php" class="title">Inicio</a>
+
+<div></div>
+
+<div>
+<div class="title">Cadastro</div>
+<div class="painel">
+<a href="add_cli.php" class="m_item">Cliente</a>
+<a href="add_edificio.php" class="m_item">Edificio</a>
+<a href="add_apto.php" class="m_item">Apartamento</a>
+<a href="add_conta.php" class="m_item">Conta</a>
+</div>
+</div>
+
+<div>
+<div class="title">Presta&ccedil;&otilde;es</div>
+<div class="painel">
+<a href="lista-mes-atual.php" class="m_item">Este mes</a>
+<a href="form-add-correcao.php" class="m_item">Adicionar corre&ccedil;&atilde;o</a>
+<a href="form-relatorio.php" class="m_item">Relat&oacute;rio</a>
+
+</div>
+</div>
+
+
+<div>
+<div class="title">Boletos</div>
+<div class="painel">
+<a href="lista-boletos.php" class="m_item">Gerar Boletos</a>
+<a href="lista-remessa.php" class="m_item">Gerar Remessa</a>
+</div>
+</div>
+
+
+
+
+<a href="#busca" rel="facebox" class="title">Busca</a>
+</div>   <!-- fim menu geral -->
+
+</div>
+
+</div>
+
+
+<div id="busca" style="display:none;">
+<form action="resultado-busca.php" method="post">
+  <input type="text" name="palavra" class="busca" size="20" />
+  <select name="campo"  class="busca">
+    <option value="cliente">Nome do cliente</option>
+    <option value="edificio">Nome do edif&iacute;cio</option>
+  </select>
+  <input type="submit" name="Submit" value="Procurar"  class="busca" />
+</form>
+</div>
+
+
+<div id="conteudo">
+<!-- INICIO DO CONTEUDO -->
+{{conteudo}}
+<!-- FIM DO CONTEUDO -->
+</div>
+<!-- fim master -->
+</body>
+</html>

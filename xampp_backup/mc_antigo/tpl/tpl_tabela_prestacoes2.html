@@ -1,0 +1,65 @@
+<!-- listagem dos dados -->
+
+
+<script type='text/javascript' src='js/lib_opt.js'></script>
+<iframe frameborder='0' width='1' height='2' id='opts' name='opts' style='display:none'></iframe>
+
+<div style= "
+border:1px solid black;
+background-repeat: no-repeat;
+display: block;
+width: 1000px;
+height: 570px;
+position: relative;
+overflow:auto;
+
+">
+
+<div
+style="
+display: block;
+overflow: auto;
+height: 580px;
+width: 95%;
+"
+>
+
+
+
+<table width="100%" cellspacing="0"
+style="
+font-family:courier;
+font-size:10pt;
+position: relative;"
+
+>
+<tr style="background:black;color:white;">
+<th width="10px">DIA</th>
+<th width="10%">VALOR</th>
+<th width="10%">PAGO</th>
+<th width="130px">TIPO</th>
+<th width="20%">OBS</th>
+<th width="50px">DOC</th>
+<th width="100px" align="center">OPÇÕES</th>
+</tr>
+
+<!--loop:linha -->
+<tr class='{{cor}}'>
+<td>{{data}}</td>
+<td style='border-left:1px solid black;text-align:right'>{{valor}}</td>
+<td style='border-left:1px solid black;text-align:center'>{{pago}} {{data_pg}}</td>
+<td style='border-left:1px solid black;padding-left:5px;padding-right:3px'>{{tipo}}</td>
+<td style='border-left:1px solid black;padding-left:5px'>{{obs}}</td>
+<td style='border-left:1px solid black;padding-left:5px;text-align:right;font-size:11pt;font-weight: bold;'>{{doc}}</td>
+<td style='border-left:1px solid black;padding-left:3px;text-align:right'>
+{{bt pagar}}{{bt editar}}{{bt boleto}}
+</td>
+<!-- <td>&nbsp;</td> -->
+</tr>
+<!--end loop:linha -->
+
+</table>
+
+</div>
+
+</div><br /><br />

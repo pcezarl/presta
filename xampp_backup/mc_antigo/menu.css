@@ -1,0 +1,46 @@
+#menu{
+position: absolute;
+display: block;
+}
+
+.title{
+
+color:white;
+background-image: url("images/fundo-titulo.gif");
+width: 368px;
+cursor:pointer;
+display:block;
+padding:4px;
+margin-top: 0;
+text-decoration: none;
+font-weight: bold;
+font-size: 10pt;
+border-top: 1px solid #FFFFFF;
+border-bottom: 1px solid #999;
+}
+
+div #menu{
+background-color: #1D2850;
+border:1px solid black;
+}
+
+.painel{
+color:white;
+}
+
+
+.m_item:link, .m_item:visited{
+color:white;
+text-decoration: none;
+display: inline;
+padding-left: 5px;
+padding-right: 5px;
+}
+
+
+.m_item:hover{
+color:black;
+text-decoration: underline;
+background-color: #FFFF00;
+
+}

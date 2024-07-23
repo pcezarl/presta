@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>A CURIOSIDADE MATOU O GATO</title>
+<meta http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body style="background:white">
+<div style="background:white;width:700px;padding:10px">
+<form name="form1" method="post" action="proc_add_presta">
+  <table width="84%" border="1" cellspacing="0">
+    <tr> 
+      <td width="10%">Valor</td>
+      <td width="54%"><input name="valor" type="text" id="valor"></td>
+      <td width="7%">tipo</td>
+      <td width="29%"><select name="tipo" id="tipo">
+          <option value="a">Avulsa</option>
+          <option value="m">Mensal</option>
+          <option value="t">Trimestral</option>
+          <option value="s">Semestral</option>
+        </select></td>
+    </tr>
+    <tr> 
+      <td height="28">Vencimento</td>
+      <td><input name="dia" type="text" id="dia" size="3" maxlength="2">
+        / <select name="mes" id="mes">
+          <option value="01">Janeiro</option>
+          <option value="02">Fevereiro</option>
+          <option value="03">Mar&ccedil;o</option>
+          <option value="04">Abril</option>
+          <option value="05">Maio</option>
+          <option value="06">Junho</option>
+          <option value="07">Julho</option>
+          <option value="08">Agosto</option>
+          <option value="09">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+        / <input name="ano" type="text" id="ano" size="6" maxlength="4"></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr> 
+      <td><input name="apto" type="hidden" id="apto" value="{{apto}}"></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td><input type="submit" name="Submit" value="Adicionar"></td>
+    </tr>
+  </table>
+</form>
+</div>
+</body>
+</html>

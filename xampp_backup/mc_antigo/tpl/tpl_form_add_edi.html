@@ -1,0 +1,53 @@
+<h3 class="titulo">Cadastro de edifício ::</h3>
+
+
+<style type="text/css">
+input{
+background-image: url("images/fundo-form.gif");
+height: 24px;
+font-size: 12pt;
+border:1px solid #B5A266;
+}
+</style>
+
+
+<form action="proc_add_edi.php" method="post" target="proc" id="form">
+  <table width="94%" border="0">
+    <tr> 
+      <td width="6%">nome</td>
+      <td width="34%"><input name="nome" type="text" id="nome" size="40" ></td>
+      <td width="14%">&nbsp;</td>
+      <td width="46%">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr> 
+      <td colspan="2">endere&ccedil;o:<br>
+        <textarea name="endereco" cols="40" rows="5" id="endereco"></textarea> </td>
+      <td>&nbsp;</td>
+      <td>OBS:<br>
+        <textarea name="obs" cols="40" rows="5" id="obs"></textarea> </td>
+    </tr>
+    <tr> 
+      <td colspan="4">
+<div style="display:block;">
+<iframe name="proc" id="proc" height="100px" width="650px" frameborder="0" scrolling="no"></iframe>
+</div>
+</td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+      <td align="center">
+<input name="limpa" type="reset" id="limpa" value="Limpar">
+      </td>
+      <td>&nbsp;</td>
+      <td align="center">
+<input name="ok" type="submit" id="ok" value=":: Cadastrar ::">
+      </td>
+    </tr>
+  </table>
+</form>

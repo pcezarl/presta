@@ -1,0 +1,33 @@
+Example:
+
+$('#checkall').checkgroup({groupName:'group'});
+
+Also can have multiple select all boxes to one group - for instance one on top of the group and one on bottom:
+
+$('.checkall').checkgroup({
+  groupSelector:'.groupclass',
+  enabledOnly:true,
+  onComplete: function(boxes){
+                         //do something with the affected check boxes - boxes is an array
+                       }
+
+});
+
+The HTML would look like this:
+<input type='checkbox' class='checkall'>checkall<br>
+<input class='groupclass' name='group' type='checkbox'>chk1<br>
+<input class='groupclass' name='group' type='checkbox'>chk2<br>
+<input class='groupclass' name='group' type='checkbox'>chk3<br>
+<input class='groupclass' name='group' type='checkbox'>chk4<br>
+<input type='checkbox' class='checkall'>
+
+
+
+$title = "Esta é minha página HTML"; // Variable definition
+
+define("PAGE", addslashes(implode("", file("mypage.tpl"))));
+$template=PAGE;
+eval("\$newcode= \"$template\";");
+echo $newcode;
+
+// normal php code

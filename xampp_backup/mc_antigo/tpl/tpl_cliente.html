@@ -1,0 +1,126 @@
+<style type="text/css">
+<!--
+.unnamed1 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	background-color: #000000;
+	text-align: center;
+}
+-->
+</style>
+
+
+<script type="text/javascript">
+
+function del_cli(i){
+
+if(confirm("Confirme a exclusão do cliente")){
+location="proc_apaga_cli.php?i="+i;
+}else{
+
+return false}
+
+
+}
+
+
+
+</script>
+
+
+<table width="90%" border="1" cellspacing="0">
+  <tr> 
+    <td colspan="4" class="unnamed1">DADOS PESSOAIS</td>
+  </tr>
+  <tr> 
+    <td width="9%">nome:</td>
+    <td width="42%">{{nome}}</td>
+    <td width="10%">telefone:</td>
+    <td width="39%">{{telefone}}</td>
+  </tr>
+  <tr> 
+    <td>e-mail</td>
+    <td>{{email}}</td>
+    <td>CPF/CNPJ</td>
+    <td>{{cpf}}</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<br>
+<table width="90%" border="1" cellspacing="0">
+  <tr> 
+    <td colspan="4" class="unnamed1">ENDERE&Ccedil;O</td>
+  </tr>
+  <tr> 
+    <td width="9%">rua</td>
+    <td width="40%">{{rua}}</td>
+    <td width="8%">n&uacute;mero</td>
+    <td width="43%">{{numero}}</td>
+  </tr>
+  <tr> 
+    <td>bairro</td>
+    <td>{{bairro}}</td>
+    <td>cidade</td>
+    <td>{{cidade}}</td>
+  </tr>
+  <tr> 
+    <td>CEP</td>
+    <td>{{cep}}</td>
+    <td>estado</td>
+    <td>{{estado}}</td>
+  </tr>
+  <tr> 
+    <td><a href="edita_cli.php?i={{id_cli}}" rel="facebox" class="aqua2">Editar</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><a  href="javascript:void(0)" onclick="del_cli('{{id_cli}}')" class="aqua4">EXCLUIR</a></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+
+
+
+
+<br>
+<!--esc:aptos -->
+<table width="90%" border="1" cellspacing="0">
+  <tr> 
+    <td colspan="4" class="unnamed1">APARTAMENTOS DESTE PROPRIETÁRIO</td>
+  </tr>
+  <!--loop:linha -->
+  <tr> 
+    <td width="7%">edificio</td>
+    <td width="38%"><a href="edificio.php?i={{id_ed}}">{{nome_edi}}</a></td>
+    <td width="23%">n&uacute;mero do apartamento</td>
+    <td width="32%"><a href="apto.php?i={{id_apto}}">{{apto}}</a></td>
+  </tr>
+  <!--end loop:linha -->
+</table>
+<!--endesc:aptos -->
+
+
+
