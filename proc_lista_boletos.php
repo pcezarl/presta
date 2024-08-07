@@ -1,9 +1,7 @@
 <?php
 
-
 	// gera os boletos para impressao
 	set_time_limit(600);
-
 
 	include "lib/var.php";
 	include "lib/func.php";
@@ -14,7 +12,6 @@
 	$bol  = new db(); // load de boletos
 	$cb   = new db(); // link de checagem do boleto
 	$mail = new envia_boleto();
-
 
 	$dados = explode(' - ', $_POST['banco']);
 	$sql="select * from contas where conta = $dados[1]";
@@ -47,7 +44,6 @@
 			$b->val("conta"     , $d->conta);
 			// $b->val("acessorio" , $d->acessorio);
 			$dados[2] = $d->id;
-
 		}
 
 	} else if ( $dados[0] == 'SICOOB' ) {
@@ -84,8 +80,6 @@
 	$qt=$db->rows;
 	if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
 
-
-
 	// loop boletos
 	while($d=mysql_fetch_object($db->result)){
 		$cnt++;
@@ -119,11 +113,14 @@
 			$ndoc = substr(unmask($d->cli_cpf),0 , 6) . date('my');
 			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
 			$boleto = $bol->get_val("bo_ndoc");
-			if ( $boleto != '' ) {
-				$digito = substr($boleto, -1, 1)+1;
-			} else {
+			$nnum = $bol->get_val("bo_nnum");
+			// if ( $boleto != '' ) {
+				// $digito = substr($boleto, -1, 1)+1;
+				// pre("oi".$nnum);
+				// }
+			// } else {
 				$digito = 1;
-			}
+			// }
 			$ndoc = $ndoc. $digito;
 		}
 
@@ -170,19 +167,37 @@
 		///////////// fim  envia boleto por email
 
 		/////// verifica de o boleto existe, caso contrario insere no banco de dados
-
 		$cb->query("select count(*) as qt from boletos where bo_presta='{$d->id_presta}'");
 		if($cb->status=="erro")die($cb->erro);
-
 		if($cb->get_val("qt")==0){
-			$nnum = str_replace(array('/','-',' '), '', ($dados[0] != 'SICOOB') ? substr($b->dadosboleto["nosso_numero"], 2) : $b->dadosboleto["nosso_numero_completo"]);
+			if ($dados[0] != 'SICOOB') {
+				$nnum = substr(str_replace(array('/','-',' '), '', $b->nossonumero), 2);
+			} else {
+				$nnum = str_replace(array('/','-',' '), '', $b->dadosboleto["nosso_numero_completo"]);
+			}
+
 			$sql="insert into boletos (bo_apto,bo_prop,bo_presta,bo_valor,bo_data_emissao,bo_data_vence,bo_num_presta,bo_ndoc,bo_nnum, conta_id)
 			values ('{$d->id_apto}','{$d->id_cliente}', '{$d->id_presta}', '{$d->pr_valor}','$de','$vcq','{$d->pr_num}','$ndoc','$nnum', '{$dados[2]}')
 			";
 
 			$cb->reset();
 			$cb->query($sql);
+		} else {
 
+			$bol->reset();
+			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
+
+			$boleto = $bol->get_val("bo_ndoc");
+			$nnum = $bol->get_val("bo_nnum");
+			if ( $boleto != '' ) {
+				if ($nnum == null ) {
+					$nnum = str_replace(array('/','-',' '), '', $b->nossonumero);
+					$nnum = substr($nnum, 2);
+
+					$cb->reset();
+					$cb->query("UPDATE boletos SET bo_nnum = ".$nnum. ", remessa_id = 0 WHERE bo_ndoc = ". $ndoc); 
+				}
+			}
 		}
 		/////////// fim verifica boleto
 		$b->reset();
