@@ -446,7 +446,7 @@ class boleto_Bradesco {
         $im=($this->imprimir)?"onload='print()'":"";
 
         $this->layout="
-        <html><head><title>Boleto - $this->dadosboleto['razao'] </title></head><body $im>
+        <html><head><title>Boleto</title></head><body $im>
         ".$this->layout;
 
     } // fim init
