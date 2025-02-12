@@ -83,7 +83,7 @@
 			$data['parcela'] = '1';
 		}
 		$data['cep_pagador'] = $d->cli_cep;
-		$data['nosso_numero_completo'] = $d->bo_nnum;
+		$data['nosso_numero_completo'] = $data['nosso_numero'] = $d->bo_nnum;
 		$data['numero_documento'] = $d->bo_ndoc;
 
 		// atualizo o boleto, indicando que ele pertence a essa remessa que esta sendo gerada

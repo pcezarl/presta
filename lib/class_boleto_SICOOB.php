@@ -418,14 +418,16 @@ class boleto_SICOOB
       $day + 1721119);
   }
 
-  private function _fator_vencimento($data)
-  {
-    $data = explode("/", $data);
-    $ano = $data[2];
-    $mes = $data[1];
-    $dia = $data[0];
-    return (abs(($this->_dateToDays($ano, $mes, $dia)) - ($this->_dateToDays("1997","10","07"))));
-  }
+  private function _fator_vencimento($data) {
+    $data =explode("/",$data);
+    $data_dias = $this->_dateToDays($data[2], $data[1], $data[0]);
+    // Adicionada regra da FEBRABAN, onde altera a logica do fator de vencimento para a data base de 21/02/2025
+    if ($data_dias <= 2460728) {
+        return(abs(($this->_dateToDays("1997","10","07")) - $data_dias));
+    } else {
+        return(abs(($this->_dateToDays("2025","02","22")) - $data_dias) + 1000);
+    }
+}
 
   ////////////////////////////
   /////// funcoes especificas da classe
