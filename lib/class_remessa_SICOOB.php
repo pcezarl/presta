@@ -96,7 +96,8 @@
                 $valor_titulo               = minimo(unmask($data['valor_titulo']), 15, 1);
                 $aceite                     = 'A'; #A: possui aceite - N: Não possui aceite
                 $codigo_juros               = '2'; // 0: Isento | 1: Valor por Dia | 2: Taxa Mensal
-                $data_juros = $data_multa   = minimo(unmask(date('dmY', strtotime($data['data_vencimento_titulo']. '+1 day'))), 8, 1);
+                $data_limite_pagamento      = minimo(unmask(date('dmY', strtotime($data['data_vencimento_titulo']. '+30 days'))), 8, 1);
+                $data_multa = $data_juros   = minimo(unmask(date('dmY', strtotime($data['data_vencimento_titulo']. '+1 day'))), 8, 1);
                 $data_emissao_titulo        = date('dmY', strtotime($data['data_emissao_titulo']));
                 $emissor_boleto             = '2'; // 1: Sicoob emite | 2: Beneficiário emite
                 $distribuidor_boleto        = '2'; // 1: Sicoob distribui | 2: Beneficiário distribui
@@ -145,7 +146,7 @@
                 $registro_r = 
                     $this->codigo_banco.$this->codigo_lote_servico.'3'.minimo($this->quantidade_registros, 5, 1).'R'.' '.'01'.'0'
                     .$data_desconto.$valor_desconto.'0'.$data_desconto.$valor_desconto.$codigo_multa.$data_multa.$percentual_multa.vazios(10).$mensagem3.$mensagem4
-                    .vazios(20).$data_juros.zeros(8).' '.zeros(12).vazios(2).'0'.vazios(9);
+                    .vazios(20).$data_limite_pagamento.zeros(8).' '.zeros(12).vazios(2).'0'.vazios(9);
                 $this->quantidade_registros++;
 
                 $registro_s = 
