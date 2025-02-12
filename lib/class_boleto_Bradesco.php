@@ -302,17 +302,6 @@ class boleto_Bradesco {
         return substr($entra,strlen($entra)-$comp,$comp);
     }
 
-    private function fator_vencimento($data) {
-      if ($data != "") {
-        $data = explode("/",$data);
-        $ano = $data[2];
-        $mes = $data[1];
-        $dia = $data[0];
-        return(abs(($this->_dateToDays("1997","10","07")) - ($this->_dateToDays($ano, $mes, $dia))));
-    } else {
-        return "0000";
-    }
-    }
     public function monta_linha_digitavel($codigo) {
         // 01-03    -> Código do banco sem o digito
         // 04-04    -> Código da Moeda (9-Real)
@@ -406,10 +395,13 @@ class boleto_Bradesco {
 
         private function _fator_vencimento($data) {
             $data =explode("/",$data);
-            $ano = $data[2];
-            $mes = $data[1];
-            $dia = $data[0];
-            return(abs(($this->_dateToDays("1997","10","07")) - ($this->_dateToDays($ano, $mes, $dia))));
+            $data_dias = $this->_dateToDays($data[2], $data[1], $data[0]);
+            // Adicionada regra da FEBRABAN, onde altera a logica do fator de vencimento para a data base de 21/02/2025
+            if ($data_dias <= 2460728) {
+                return(abs(($this->_dateToDays("1997","10","07")) - $data_dias));
+            } else {
+                return(1000 + abs(($this->_dateToDays("2025","02","22")) - $data_dias));
+            }
         }
 
     ////////////////////////////
@@ -480,7 +472,6 @@ class boleto_Bradesco {
     $this->codigo_banco_com_dv = $this->geraCodigoBanco($this->codigobanco);
     $this->set("codigo_banco_com_dv",$this->codigo_banco_com_dv);
 
-    $this->fator_vencimento = $this->_fator_vencimento($this->dadosboleto["data_vencimento"]);
     $this->conta_cedente = $this->formata_numero($this->dadosboleto['conta'],6,0);
     $this->ndoc = $this->dadosboleto["numero_documento"];
     $this->data_vencimento = $this->dadosboleto["data_vencimento"];
@@ -490,7 +481,7 @@ class boleto_Bradesco {
     $codigobanco = "237";
     $codigo_banco_com_dv = $this->geraCodigoBanco($codigobanco);
     $nummoeda = "9";
-    $fator_vencimento = $this->fator_vencimento($this->dadosboleto["data_vencimento"]);
+    $fator_vencimento = $this->_fator_vencimento($this->dadosboleto["data_vencimento"]);
     $valor = $this->formata_numero($v1,10,0,"digitavel");
 
     //agencia é 4 digitos
