@@ -108,18 +108,15 @@
 		$b->val("data_vencimento",$vc);
 
 		if ( $dados[0] == 'SICOOB' ) {
-			$ndoc = $d->id_presta;
+			$ndoc = substr(unmask($d->cli_cpf),0 , 4) . date('m');
 		} else {
 			$ndoc = substr(unmask($d->cli_cpf),0 , 6) . date('my');
-			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
-			$boleto = $bol->get_val("bo_ndoc");
-			if ( $boleto != '' ) {
-				$digito = substr($boleto, -1, 1)+1;
-			} else {
-				$digito = 1;
-			}
-			$ndoc = $ndoc. $digito;
 		}
+		$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
+		$boleto = $bol->get_val("bo_ndoc");
+		$nnum = $bol->get_val("bo_nnum");
+		$digito = ( $boleto != '' ) ? substr($boleto, -1, 1)+1 : 1;
+		$ndoc = $ndoc. $digito;
 
 		$b->val("numero_documento",$ndoc);
 		$b->set("data_documento",date("d/m/Y"));
@@ -180,9 +177,10 @@
 			$cb->reset();
 			$cb->query($sql);
 		} else {
+
 			$bol->reset();
-			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%{$ndoc}%' ORDER BY bo_ndoc desc");
-			
+			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
+
 			$boleto = $bol->get_val("bo_ndoc");
 			$nnum = $bol->get_val("bo_nnum");
 			if ( $boleto != '' ) {
