@@ -108,21 +108,15 @@
 		$b->val("data_vencimento",$vc);
 
 		if ( $dados[0] == 'SICOOB' ) {
-			$ndoc = $d->id_presta;
+			$ndoc = substr(unmask($d->cli_cpf),0 , 4) . date('m');
 		} else {
 			$ndoc = substr(unmask($d->cli_cpf),0 , 6) . date('my');
-			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
-			$boleto = $bol->get_val("bo_ndoc");
-			$nnum = $bol->get_val("bo_nnum");
-			// if ( $boleto != '' ) {
-				// $digito = substr($boleto, -1, 1)+1;
-				// pre("oi".$nnum);
-				// }
-			// } else {
-				$digito = 1;
-			// }
-			$ndoc = $ndoc. $digito;
 		}
+		$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
+		$boleto = $bol->get_val("bo_ndoc");
+		$nnum = $bol->get_val("bo_nnum");
+		$digito = ( $boleto != '' ) ? substr($boleto, -1, 1)+1 : 1;
+		$ndoc = $ndoc. $digito;
 
 		$b->val("numero_documento",$ndoc);
 		$b->set("data_documento",date("d/m/Y"));
@@ -170,17 +164,11 @@
 		$cb->query("select count(*) as qt from boletos where bo_presta='{$d->id_presta}'");
 		if($cb->status=="erro")die($cb->erro);
 		if($cb->get_val("qt")==0){
-			if ($dados[0] != 'SICOOB') {
-				$nnum = substr(str_replace(array('/','-',' '), '', $b->nossonumero), 2);
-			} else {
+			// if ($dados[0] != 'SICOOB') {
+				// $nnum = substr(str_replace(array('/','-',' '), '', $b->nossonumero), 2);
+			// } else {
 				$nnum = str_replace(array('/','-',' '), '', $b->dadosboleto["nosso_numero_completo"]);
-			}
-
-			if ($dados[0] != 'SICOOB') {
-				$nnum = substr(str_replace(array('/','-',' '), '', $b->nossonumero), 2);
-			} else {
-				$nnum = str_replace(array('/','-',' '), '', $b->dadosboleto["nosso_numero_completo"]);
-			}
+			// }
 
 			$sql="insert into boletos (bo_apto,bo_prop,bo_presta,bo_valor,bo_data_emissao,bo_data_vence,bo_num_presta,bo_ndoc,bo_nnum, conta_id)
 			values ('{$d->id_apto}','{$d->id_cliente}', '{$d->id_presta}', '{$d->pr_valor}','$de','$vcq','{$d->pr_num}','$ndoc','$nnum', '{$dados[2]}')
