@@ -29,11 +29,11 @@ brew install php      # opcional, mas recomendado; qualquer versão serve para o
 php --version
 ```
 
-Sem isso, os comandos `php sandbox/testes/*.php` deste plano só rodam na máquina física do usuário, e as tasks devem ser entregues com o teste escrito mas não executado — declarando isso explicitamente, nunca afirmando que passou.
+Sem isso, os comandos `php tests/*.php` deste plano só rodam na máquina física do usuário, e as tasks devem ser entregues com o teste escrito mas não executado — declarando isso explicitamente, nunca afirmando que passou.
 
 As Tasks 2, 4 e 6 dependem de banco de dados e sessão e **só podem ser verificadas na máquina física**, independentemente de haver PHP local.
 
-**Desvio em relação ao design:** a seção 7 do spec previa um único script `sandbox/verifica_asa.php`. Este plano o substitui por três arquivos em `sandbox/testes/` — um por unidade testável, com um helper de asserção comum. Mesmo propósito e mesmos valores esperados, mas cada task fecha com o seu próprio teste em vez de todas dependerem de um script final.
+**Desvio em relação ao design:** a seção 7 do spec previa um único script `tests/verifica_asa.php`. Este plano o substitui por três arquivos em `tests/` — um por unidade testável, com um helper de asserção comum. Mesmo propósito e mesmos valores esperados, mas cada task fecha com o seu próprio teste em vez de todas dependerem de um script final.
 
 ## File Structure
 
@@ -44,9 +44,9 @@ As Tasks 2, 4 e 6 dependem de banco de dados e sessão e **só podem ser verific
 | `lib/class_remessa_ASA.php` (novo) | Registros CNAB 240: header de arquivo, header de lote, segmentos P/Q/R, trailers. |
 | `cboleto/include/layout_asa.php` (novo) | Template HTML do boleto. |
 | `db/migrations/2026-07-27-contas-asa.sql` (novo) | Colunas novas em `contas`. |
-| `sandbox/testes/assert.php` (novo) | Helper de asserção. |
-| `sandbox/testes/teste_asa_calc.php` (novo) | Vetor de aceitação do boleto. |
-| `sandbox/testes/teste_asa_remessa.php` (novo) | Larguras e posições dos registros CNAB. |
+| `tests/assert.php` (novo) | Helper de asserção. |
+| `tests/teste_asa_calc.php` (novo) | Vetor de aceitação do boleto. |
+| `tests/teste_asa_remessa.php` (novo) | Larguras e posições dos registros CNAB. |
 | `tpl/tpl_form_add_conta.html` (modificar) | Opção ASA e campos novos. |
 | `proc_add_conta.php` (modificar) | Persistir campos novos. |
 | `proc_lista_boletos.php` (modificar) | Ramo ASA + alocação do nosso número. |
@@ -59,8 +59,8 @@ As Tasks 2, 4 e 6 dependem de banco de dados e sessão e **só podem ser verific
 O coração da integração. Tudo que é verificável sem banco vive aqui, e o vetor de aceitação do spec valida o conjunto de uma vez.
 
 **Files:**
-- Create: `sandbox/testes/assert.php`
-- Create: `sandbox/testes/teste_asa_calc.php`
+- Create: `tests/assert.php`
+- Create: `tests/teste_asa_calc.php`
 - Create: `lib/class_asa_calc.php`
 
 **Interfaces:**
@@ -80,7 +80,7 @@ O coração da integração. Tudo que é verificável sem banco vive aqui, e o v
 
 - [ ] **Step 1: Criar o helper de asserção**
 
-Arquivo `sandbox/testes/assert.php`:
+Arquivo `tests/assert.php`:
 
 ```php
 <?php
@@ -110,7 +110,7 @@ function t_fim() {
 
 - [ ] **Step 2: Escrever o teste que falha**
 
-Arquivo `sandbox/testes/teste_asa_calc.php`. Os valores esperados vêm do boleto-modelo do kit e estão conferidos dígito a dígito no spec:
+Arquivo `tests/teste_asa_calc.php`. Os valores esperados vêm do boleto-modelo do kit e estão conferidos dígito a dígito no spec:
 
 ```php
 <?php
@@ -167,7 +167,7 @@ t_fim();
 - [ ] **Step 3: Rodar o teste e confirmar que falha**
 
 ```bash
-php sandbox/testes/teste_asa_calc.php
+php tests/teste_asa_calc.php
 ```
 
 Esperado: erro fatal `Class 'asa_calc' not found` ou falha ao incluir `lib/class_asa_calc.php`. Se PHP não estiver disponível, pular para o Step 4 e registrar que o teste não foi executado.
@@ -326,7 +326,7 @@ class asa_calc {
 - [ ] **Step 5: Rodar o teste e confirmar que passa**
 
 ```bash
-php sandbox/testes/teste_asa_calc.php
+php tests/teste_asa_calc.php
 ```
 
 Esperado: `15 verificacoes, 0 falha(s)` e código de saída 0. Se algum valor divergir, o erro está na implementação — os valores esperados foram conferidos contra o boleto-modelo e não devem ser ajustados para acomodar o código.
@@ -334,7 +334,7 @@ Esperado: `15 verificacoes, 0 falha(s)` e código de saída 0. Se algum valor di
 - [ ] **Step 6: Commit**
 
 ```bash
-git add lib/class_asa_calc.php sandbox/testes/assert.php sandbox/testes/teste_asa_calc.php
+git add lib/class_asa_calc.php tests/assert.php tests/teste_asa_calc.php
 git commit -m "feat(asa): nucleo de calculo do boleto com vetor de aceitacao"
 ```
 
@@ -489,7 +489,7 @@ Esta task não é verificável aqui. Anotar no relatório de entrega, para o usu
 **Files:**
 - Create: `cboleto/include/layout_asa.php`
 - Create: `lib/class_boleto_ASA.php`
-- Create: `sandbox/testes/teste_asa_boleto.php`
+- Create: `tests/teste_asa_boleto.php`
 
 **Interfaces:**
 - Consumes: `asa_calc` (Task 1).
@@ -510,7 +510,7 @@ Os tokens que o layout deve continuar tendo são exatamente: `{{aceite}}`, `{{ag
 
 - [ ] **Step 2: Escrever o teste que falha**
 
-Arquivo `sandbox/testes/teste_asa_boleto.php`. Testa que a classe alimenta o layout com os valores certos, usando o mesmo vetor de aceitação:
+Arquivo `tests/teste_asa_boleto.php`. Testa que a classe alimenta o layout com os valores certos, usando o mesmo vetor de aceitação:
 
 ```php
 <?php
@@ -557,7 +557,7 @@ t_fim();
 - [ ] **Step 3: Rodar o teste e confirmar que falha**
 
 ```bash
-php sandbox/testes/teste_asa_boleto.php
+php tests/teste_asa_boleto.php
 ```
 
 Esperado: `Class 'boleto_ASA' not found`.
@@ -691,7 +691,7 @@ Copiar os métodos `_fbarcode`, `esquerda` e `direita` de `lib/class_boleto_SICO
 - [ ] **Step 5: Rodar o teste e confirmar que passa**
 
 ```bash
-php sandbox/testes/teste_asa_boleto.php
+php tests/teste_asa_boleto.php
 ```
 
 Esperado: `6 verificacoes, 0 falha(s)`.
@@ -701,7 +701,7 @@ Se a asserção "nenhum token nao substituido" falhar, o layout tem tokens que o
 - [ ] **Step 6: Commit**
 
 ```bash
-git add cboleto/include/layout_asa.php lib/class_boleto_ASA.php sandbox/testes/teste_asa_boleto.php
+git add cboleto/include/layout_asa.php lib/class_boleto_ASA.php tests/teste_asa_boleto.php
 git commit -m "feat(asa): layout e classe de emissao do boleto"
 ```
 
@@ -854,7 +854,7 @@ Anotar no relatório de entrega, para a máquina física:
 
 **Files:**
 - Create: `lib/class_remessa_ASA.php`
-- Create: `sandbox/testes/teste_asa_remessa.php`
+- Create: `tests/teste_asa_remessa.php`
 
 **Interfaces:**
 - Consumes: `asa_calc` (Task 1).
@@ -862,7 +862,7 @@ Anotar no relatório de entrega, para a máquina física:
 
 - [ ] **Step 1: Escrever o teste que falha**
 
-Arquivo `sandbox/testes/teste_asa_remessa.php`:
+Arquivo `tests/teste_asa_remessa.php`:
 
 ```php
 <?php
@@ -961,7 +961,7 @@ Nota sobre a partição Bradesco: produto `121` (3) + zeros (5) + nosso número 
 - [ ] **Step 2: Rodar o teste e confirmar que falha**
 
 ```bash
-php sandbox/testes/teste_asa_remessa.php
+php tests/teste_asa_remessa.php
 ```
 
 Esperado: `Class 'remessa_ASA' not found`.
@@ -1253,7 +1253,7 @@ class remessa_ASA {
 - [ ] **Step 4: Rodar o teste e confirmar que passa**
 
 ```bash
-php sandbox/testes/teste_asa_remessa.php
+php tests/teste_asa_remessa.php
 ```
 
 Esperado: `33 verificacoes, 0 falha(s)`.
@@ -1263,7 +1263,7 @@ Se alguma largura der diferente de 240, somar os tamanhos dos campos do registro
 - [ ] **Step 5: Commit**
 
 ```bash
-git add lib/class_remessa_ASA.php sandbox/testes/teste_asa_remessa.php
+git add lib/class_remessa_ASA.php tests/teste_asa_remessa.php
 git commit -m "feat(asa): registros CNAB 240 da remessa no layout Bradesco"
 ```
 
@@ -1326,9 +1326,9 @@ Esperado: `No syntax errors detected`.
 - [ ] **Step 5: Rodar toda a bateria de testes**
 
 ```bash
-php sandbox/testes/teste_asa_calc.php && \
-php sandbox/testes/teste_asa_boleto.php && \
-php sandbox/testes/teste_asa_remessa.php && \
+php tests/teste_asa_calc.php && \
+php tests/teste_asa_boleto.php && \
+php tests/teste_asa_remessa.php && \
 echo "TODOS OS TESTES PASSARAM"
 ```
 
