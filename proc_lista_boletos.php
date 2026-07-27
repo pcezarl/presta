@@ -60,6 +60,24 @@
 			$b->val("codigo_cliente", $d->cod_cliente);
 			$dados[2] = $d->id;
 		}
+	} else if ( $dados[0] == 'ASA' ) {
+		$b = new boleto_ASA();
+		$b->init();
+		if($db->rows<1)error("Erro ao gerar boletos, dados insufucientes para completar a operação");
+		// loop boletos
+		while($d=mysql_fetch_object($db->result)){
+
+			$b->val("razao"      , $d->razao);
+			$b->val("cnpj"       , $d->cnpj);
+			$b->val("agencia"    , $d->agencia);
+			$b->val("agencia_dv" , $d->agencia_dv);
+			$b->val("conta"      , $d->conta);
+			$b->val("conta_dv"   , $d->conta_dv);
+			$b->val("operacao"   , $d->operacao);
+			$b->val("carteira"   , $d->carteira);
+			$conta_asa = $d;
+			$dados[2] = $d->id;
+		}
 	} else {
 		// $b= new boleto_HSBC();
 		die('Erro na hora do processamento');
@@ -121,6 +139,38 @@
 		$b->val("numero_documento",$ndoc);
 		$b->set("data_documento",date("d/m/Y"));
 
+		if ( $dados[0] == 'ASA' ) {
+			// Reimpressao nunca consome numero novo: reusa o que ja foi emitido.
+			$cb->reset();
+			$cb->query("SELECT bo_nnum FROM boletos WHERE bo_presta = '{$d->id_presta}' AND bo_nnum IS NOT NULL AND bo_nnum <> '' LIMIT 1");
+			$nnum_asa = $cb->get_val("bo_nnum");
+			$asa_lock = false;
+
+			if ( $nnum_asa == '' ) {
+				// Alocacao sob lock: numero duplicado faz o ASA recusar a remessa inteira.
+				// O lock, o SELECT MAX e o INSERT precisam estar na MESMA conexao ($cb),
+				// porque no MySQL o LOCK TABLES vale so para a conexao que o executou.
+				$cb->reset();
+				$cb->query("LOCK TABLES boletos WRITE");
+				$asa_lock = true;
+
+				$cb->reset();
+				$cb->query("SELECT MAX(CAST(bo_nnum AS UNSIGNED)) AS ultimo FROM boletos WHERE conta_id = ".$dados[2]);
+				$ultimo = (int) $cb->get_val("ultimo");
+
+				$nnum_asa = ( $ultimo < (int) $conta_asa->faixa_inicio )
+					? (int) $conta_asa->faixa_inicio
+					: $ultimo + 1;
+
+				if ( $nnum_asa > (int) $conta_asa->faixa_fim ) {
+					$cb->reset();
+					$cb->query("UNLOCK TABLES");
+					erro("A faixa de nosso numero da conta ASA acabou (limite: {$conta_asa->faixa_fim}). Solicite uma nova faixa ao banco antes de emitir mais boletos.");
+				}
+			}
+			$b->val("nosso_numero", $nnum_asa);
+		}
+
 		$b->set("sacado", $d->cli_nome . ' - CPF/CNPJ: ' . $d->cli_cpf);
 		$b->draw();
 
@@ -164,7 +214,10 @@
 		$cb->query("select count(*) as qt from boletos where bo_presta='{$d->id_presta}'");
 		if($cb->status=="erro")die($cb->erro);
 		if($cb->get_val("qt")==0){
-			if ($dados[0] != 'SICOOB') {
+			if ($dados[0] == 'ASA') {
+				// Gravado SEM o DV: a alocacao usa MAX(bo_nnum)+1 e o DV e recalculado.
+				$nnum = $nnum_asa;
+			} else if ($dados[0] != 'SICOOB') {
 				$nnum = substr(str_replace(array('/','-',' '), '', $b->nossonumero), 2);
 			} else {
 				$nnum = str_replace(array('/','-',' '), '', $b->dadosboleto["nosso_numero_completo"]);
@@ -176,7 +229,7 @@
 
 			$cb->reset();
 			$cb->query($sql);
-		} else {
+		} else if ( $dados[0] != 'ASA' ) {
 
 			$bol->reset();
 			$bol->query("SELECT * FROM boletos WHERE bo_ndoc LIKE '%".$ndoc."%' ORDER BY bo_ndoc desc");
@@ -192,6 +245,14 @@
 					$cb->query("UPDATE boletos SET bo_nnum = ".$nnum. ", remessa_id = 0 WHERE bo_ndoc = ". $ndoc); 
 				}
 			}
+		}
+
+		// Libera o lock em qualquer caminho — inclusive quando o boleto ja existia
+		// mas estava sem bo_nnum, caso em que o lock foi adquirido e nao houve INSERT.
+		if ( $dados[0] == 'ASA' && $asa_lock ) {
+			$cb->reset();
+			$cb->query("UNLOCK TABLES");
+			$asa_lock = false;
 		}
 		/////////// fim verifica boleto
 		$b->reset();
