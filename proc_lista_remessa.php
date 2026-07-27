@@ -15,6 +15,8 @@
 		$b = new remessa_Bradesco();
 	} else if ( $_SESSION['banco'] == 'SICOOB' ) {
 		$b = new remessa_SICOOB();
+	} else if ( $_SESSION['banco'] == 'ASA' ) {
+		$b = new remessa_ASA();
 	} else {
 		// $b= new boleto_HSBC();
 		die('Erro na hora do processamento');
@@ -41,6 +43,10 @@
 	$data['acessorio'] 		= $row['acessorio'];
 	$data['numero_sequencia_remessa'] = $remessa_id;
 	$data['numero_sequencia_registro'] = 1;
+	$data['agencia_dv'] = $row['agencia_dv'];
+	$data['conta_dv']   = $row['conta_dv'];
+	$data['operacao']   = $row['operacao'];
+	$data['carteira']   = $row['carteira'];
 
 	// Classe que monta o cabecalho do arquivo de remessa
 	$b->header($data);
@@ -81,6 +87,14 @@
 			$data['bairro_pagador']   = $d->cli_bairro;
 			$data['estado_pagador']   = $d->cli_estado;
 			$data['parcela'] = '1';
+		} else if ( $_SESSION['banco'] == 'ASA' ) {
+			$data['data_vencimento_titulo'] = $d->bo_data_vence;
+			$data['endereco_pagador'] = $d->cli_rua.' - '.$d->cli_numero;
+			$data['cidade_pagador']   = $d->cli_cidade;
+			$data['bairro_pagador']   = $d->cli_bairro;
+			$data['estado_pagador']   = $d->cli_estado;
+			// bo_nnum guarda o nosso numero SEM o DV; a classe recalcula o digito.
+			$data['nosso_numero']     = $d->bo_nnum;
 		}
 		$data['cep_pagador'] = $d->cli_cep;
 		$data['nosso_numero_completo'] = $data['nosso_numero'] = $d->bo_nnum;
