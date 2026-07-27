@@ -166,6 +166,10 @@ Quatro colunas novas em `contas`, num `ALTER TABLE` idempotente entregue como `d
 | `carteira` | `VARCHAR(3)` default `121` | campo livre, posições 5-7 |
 | `faixa_inicio` | `INT UNSIGNED` | primeiro nosso número da faixa |
 | `faixa_fim` | `INT UNSIGNED` | último nosso número da faixa |
+| `agencia_dv` | `VARCHAR(1)` | dígito da agência — `9` |
+| `conta_dv` | `VARCHAR(1)` | dígito da conta vinculada — `8` |
+
+As duas últimas colunas existem porque `agencia` e `conta` guardam os valores **sem dígito** (o formulário atual diz "s/ dígito") e os dígitos do ASA são atribuídos pelo banco, não calculáveis. O segmento P exige os dois (posições 23 e 36), assim como os cabeçalhos de arquivo e de lote.
 
 ## 6. Pontos de integração
 
