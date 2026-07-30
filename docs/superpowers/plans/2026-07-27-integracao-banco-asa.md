@@ -1352,10 +1352,12 @@ Anotar no relatório de entrega, para a máquina física:
 
 ---
 
-## Pendências que este plano não resolve
+## Pendências — resolvidas em 2026-07-27
 
-Estão documentadas na seção 8 do design e permanecem abertas ao fim da implementação:
+O banco respondeu e as três pendências fecharam **sem exigir mudança de código**. As respostas estão fixadas como testes de regressão.
 
-1. **Partição das posições 38-57 do segmento P.** Implementada com a leitura do Bradesco; a constante `remessa_ASA::IDENTIFICACAO_TITULO` alterna para a leitura do ASA.
-2. **Faixa de nosso número.** O código a exige e a valida, mas os valores vêm do banco.
-3. **Número da operação na remessa.** Suspenso por decisão do usuário; os campos candidatos (convênio e número do contrato) ficam zerados.
+1. **Partição das posições 38-57 do segmento P.** Confirmada a leitura do Bradesco: nosso número com DV nas colunas 46-57. O DV segue o mesmo módulo 10 já implementado, validado contra o exemplo da planilha do banco (NN `1` → DV `1`).
+2. **Faixa de nosso número.** `0007862083` a `0007877082`, 15.000 números.
+3. **Número da operação.** Somente na linha digitável do boleto, campos 13 a 19 — que são as posições 8-14 do campo livre, onde já estava. No arquivo não é informada, o que torna a decisão D6 definitiva.
+
+Resta apenas confirmar as posições 38-45 (carteira `121` em 38-40, zeros em 41-45), coerentes com o layout Bradesco e de risco baixo agora que o nosso número está alinhado.

@@ -202,9 +202,21 @@ A operação `0001316` é a do exemplo do manual, não a da conta. Trocá-la mud
 
 A remessa não tem vetor equivalente: a validação é o ASA aceitar o arquivo. Antes do primeiro envio real, gerar um arquivo de teste e submetê-lo à homologação do banco.
 
-## 8. Pendências com o banco
+## 8. Pendências com o banco — RESOLVIDAS
 
-### 8.1 Partição das posições 38-57 do segmento P
+O banco respondeu em **2026-07-27** e as três pendências fecharam **sem exigir mudança de código**. As respostas estão fixadas como testes de regressão em `tests/teste_asa_calc.php` e `tests/teste_asa_remessa.php`.
+
+| Pendência | Resposta do banco | Efeito |
+|---|---|---|
+| Faixa de nosso número | `0007862083` a `0007877082` (15.000 números) | Cadastro da conta; nenhuma alteração de código |
+| Partição das posições 38-57 | "o nosso número com range + DV deve ser informado das colunas 46 a 57" — 12 posições, que é o que a partição Bradesco produz. O DV segue o cálculo da planilha anexa, que é o mesmo módulo 10 já implementado (validado com o exemplo NN `1` → DV `1`) | Confirma o padrão `IDENTIFICACAO_TITULO = 'BRADESCO'` |
+| Número da operação | "utilizada somente na composição da linha digitável do boleto, campos 13 a 19. No arquivo não será informada" | Confirma a decisão D6; posições 13-19 da linha digitável são exatamente as posições 8-14 do campo livre, onde já estava |
+
+O único trecho ainda não confirmado explicitamente são as **posições 38-45** (carteira `121` em 38-40 e zeros em 41-45). O banco confirmou 46-57 e mandou usar o layout Bradesco, cuja especificação define 38-40 como "Identificação do Produto" e 41-45 como zeros — a leitura coerente, e de risco baixo agora que o alinhamento do nosso número está fechado.
+
+O histórico das duas leituras conflitantes fica registrado abaixo.
+
+### 8.1 Partição das posições 38-57 do segmento P — histórico
 
 Os dois manuais dividem os mesmos 20 caracteres de forma incompatível:
 
@@ -220,15 +232,15 @@ Os dois manuais dividem os mesmos 20 caracteres de forma incompatível:
 
 O nosso número fica deslocado em uma posição entre as duas leituras, e arquivo desalinhado é recusado por inteiro.
 
-**Tratamento:** implementar num método `identificacaoTitulo()` com as duas variantes e uma constante de seleção no topo da classe. O padrão é a partição do Bradesco, porque os dados de liberação dizem "Layout CNAB: Bradesco 240". Trocar para a leitura do ASA é uma edição de uma linha.
+**Resolução:** o banco confirmou as colunas 46-57 para o nosso número com DV, que é o que a partição Bradesco produz. A constante `remessa_ASA::IDENTIFICACAO_TITULO` fica em `'BRADESCO'`; a variante `'ASA'` permanece implementada apenas como registro histórico.
 
-### 8.2 Faixa de nosso número
+### 8.2 Faixa de nosso número — definida
 
-Mínimo e máximo ainda não fornecidos. São cadastrados em `contas` quando chegarem; a implementação não depende deles, mas a emissão sim.
+`0007862083` a `0007877082`, 15.000 números. A conta é nova e nenhum boleto foi emitido, então a primeira alocação parte de `0007862083` (DV `1`). O último número da faixa é `0007877082` (DV `6`).
 
-### 8.3 Número da operação na remessa — **suspenso**
+### 8.3 Número da operação na remessa — não se aplica
 
-No boleto a operação `0004142` é obrigatória e está definida. Na remessa não há campo evidente no segmento P do Bradesco; os candidatos são "Código do Convênio" (header de lote, 34-53) e "Número do Contrato" (segmento P, 230-239). Por decisão do usuário, a operação **não é gravada na remessa** nesta etapa. **Retomar este item antes do primeiro envio em produção.**
+O banco confirmou que a operação `0004142` é usada **somente na linha digitável do boleto**, campos 13 a 19 — que correspondem às posições 8-14 do campo livre, onde a implementação já a coloca. No arquivo de remessa ela não é informada, o que valida a decisão D6: "Código do Convênio" (header de lote, 34-53) e "Número do Contrato" (segmento P, 230-239) ficam zerados de forma definitiva, não provisória.
 
 ## Fora de escopo
 

@@ -88,4 +88,16 @@ echo "\nremessa_ASA :: identificacao do titulo (posicoes 38-57)\n";
 t_equals(20, strlen($r->identificacao_titulo('121', '0001', '465280')), 'identificacao do titulo tem 20 posicoes');
 t_equals('12100000000004652809', $r->identificacao_titulo('121', '0001', '465280'), 'particao Bradesco');
 
+// O banco confirmou em 2026-07-27: "o nosso numero com range + DV deve ser
+// informado das colunas 46 a 57" — 12 posicoes, que e o que a particao Bradesco produz.
+$id_faixa = $r->identificacao_titulo('121', '0001', '7862083');
+t_equals('121',   substr($id_faixa, 0, 3), 'identificacao: carteira nas colunas 38-40');
+t_equals('00000', substr($id_faixa, 3, 5), 'identificacao: zeros nas colunas 41-45');
+t_equals('000078620831', substr($id_faixa, 8, 12), 'identificacao: NN da faixa + DV nas colunas 46-57');
+
+// A mesma faixa dentro do segmento P completo, para garantir o alinhamento absoluto.
+$dados_faixa = array_merge($data, array('nosso_numero' => '7862083'));
+$p_faixa = $r->segmento_p($dados_faixa);
+t_equals('000078620831', substr($p_faixa, 45, 12), 'segmento P: NN + DV nas posicoes 46-57 do registro');
+
 t_fim();

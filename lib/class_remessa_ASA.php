@@ -15,8 +15,10 @@ class remessa_ASA {
      * Particao das posicoes 38-57 do segmento P.
      * 'BRADESCO' = produto(3) + zeros(5) + nosso numero(11) + DV(1)
      * 'ASA'      = 5(1) + zeros(3) + zeros(2) + carteira(3) + nosso numero com DV(11)
-     * Os dois manuais se contradizem nessa faixa; ver secao 8.1 do design.
-     * Trocar esta constante e a unica mudanca necessaria para testar a outra leitura.
+     *
+     * CONFIRMADO PELO BANCO em 2026-07-27: "o nosso numero com range + DV deve ser
+     * informado das colunas 46 a 57" — sao 12 posicoes, exatamente o que a particao
+     * BRADESCO produz. A variante 'ASA' fica registrada apenas por historico.
      */
     const IDENTIFICACAO_TITULO = 'BRADESCO';
 
