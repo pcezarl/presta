@@ -1,0 +1,55 @@
+# Ambiente de desenvolvimento local. Nao tem relacao com o servidor de producao,
+# que continua sendo o XAMPP com PHP 5.3 no PC antigo.
+#
+#   docker compose up -d      sobe tudo
+#   http://localhost:8080     a aplicacao
+#   docker compose down -v    derruba e apaga o banco (recria do zero no proximo up)
+
+services:
+  app:
+    build: ./docker
+    platform: linux/amd64
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DB: teste
+      MYSQL_USER: root
+      MYSQL_PASS: zaq1xsw2
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:5.7
+    platform: linux/amd64
+    # sql-mode vazio reproduz a permissividade do MySQL antigo do XAMPP. O codigo
+    # legado grava datas zeradas ('0000-00-00') e strings vazias em colunas DATE,
+    # o que o modo estrito do 5.7 rejeitaria.
+    command: >
+      --character-set-server=utf8
+      --collation-server=utf8_general_ci
+      --sql-mode=
+    environment:
+      MYSQL_ROOT_PASSWORD: zaq1xsw2
+      MYSQL_DATABASE: teste
+    ports:
+      # 3307 no host para nao colidir com um MySQL que voce ja tenha instalado
+      - "3307:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+      # Rodados em ordem alfabetica na primeira subida do container.
+      # O 02 e o arquivo de migracao real do ASA — subir o ambiente valida a migracao.
+      - ./db/init/01-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./db/migrations/2026-07-27-contas-asa.sql:/docker-entrypoint-initdb.d/02-contas-asa.sql:ro
+      - ./db/init/03-seed.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pzaq1xsw2"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysqldata:

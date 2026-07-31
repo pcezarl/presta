@@ -25,10 +25,13 @@ unset($_version);
 // para o autobase
 $_host="http://127.0.0.1/mc";
 
-$mysql["host"]="127.0.0.1";
-$mysql["dados"]="teste";
-$mysql["user"]="root";
-$mysql["pass"]="zaq1xsw2";
+// Os valores abaixo sao os do servidor de producao. As variaveis de ambiente
+// existem so para o ambiente Docker de desenvolvimento (docker-compose.yml);
+// quando nao estao definidas — que e o caso em producao — nada muda.
+$mysql["host"] =(getenv('MYSQL_HOST') !== false) ? getenv('MYSQL_HOST') : "127.0.0.1";
+$mysql["dados"]=(getenv('MYSQL_DB')   !== false) ? getenv('MYSQL_DB')   : "teste";
+$mysql["user"] =(getenv('MYSQL_USER') !== false) ? getenv('MYSQL_USER') : "root";
+$mysql["pass"] =(getenv('MYSQL_PASS') !== false) ? getenv('MYSQL_PASS') : "zaq1xsw2";
 
 $mes_extenso=array(
 "",
