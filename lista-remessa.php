@@ -13,6 +13,21 @@ $p =new tpl("$modelo");
 $pn=new tpl("tpl/tpl_form_lista_remessa.html");
 $db=new db();
 
+// A consulta de prestacoes abaixo filtra por conta_id, mas a sessao so era
+// preenchida mais adiante, ao montar o dropdown. No primeiro acesso a tela o
+// filtro saia sem valor, o SQL falhava e a lista aparecia vazia ate recarregar.
+if ( !isset($_SESSION['conta_id']) || $_SESSION['conta_id'] == '' ) {
+    $cc = new db();
+    $cc->query("select * from contas order by id limit 1");
+    if ( $cc->rows > 0 ) {
+        $c = mysql_fetch_object($cc->result);
+        $_SESSION['conta']    = $c->conta;
+        $_SESSION['conta_id'] = $c->id;
+        $_SESSION['banco']    = $c->banco;
+    }
+    $cc->reset();
+}
+
 $data=date("d/m/Y");
 $mes=date("m");
 $mes_atual=$mes_extenso[(integer)date("m")];
@@ -95,14 +110,19 @@ if($db->rows<1){
         while($d=mysql_fetch_object($db->result)){
             if( $i == 0 ) {
                 $selected = 'selected';
+                // A sessao tem que apontar para a conta marcada como selecionada no
+                // dropdown, que e a primeira. Sem esta guarda a atribuicao rodava a
+                // cada volta do laco e a sessao terminava na ULTIMA conta cadastrada:
+                // a tela mostrava uma conta e a remessa saia com os dados de outra,
+                // inclusive no layout do banco errado.
+                $_SESSION['conta'] = $d->conta;
+                $_SESSION['conta_id'] = $d->id;
+                $_SESSION['banco'] = $d->banco;
+                $pn->set("conta_id", $d->id);
             } else {
                 $selected = '';
             }
             $lista_contas .= "<option $selected value='$d->banco - $d->conta'>Ag: $d->banco - CB: $d->conta</option>";
-            $_SESSION['conta'] = $d->conta;
-            $_SESSION['conta_id'] = $d->id;
-            $_SESSION['banco'] = $d->banco;
-            $pn->set("conta_id", $d->id);
 
             $i++;
         }
