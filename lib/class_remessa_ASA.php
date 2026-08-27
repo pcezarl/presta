@@ -11,17 +11,6 @@ class remessa_ASA {
     const BANCO = '594';
     const LOTE  = '0001';
 
-    /**
-     * Particao das posicoes 38-57 do segmento P.
-     * 'BRADESCO' = produto(3) + zeros(5) + nosso numero(11) + DV(1)
-     * 'ASA'      = 5(1) + zeros(3) + zeros(2) + carteira(3) + nosso numero com DV(11)
-     *
-     * CONFIRMADO PELO BANCO em 2026-07-27: "o nosso numero com range + DV deve ser
-     * informado das colunas 46 a 57" — sao 12 posicoes, exatamente o que a particao
-     * BRADESCO produz. A variante 'ASA' fica registrada apenas por historico.
-     */
-    const IDENTIFICACAO_TITULO = 'BRADESCO';
-
     const MENSAGEM_1 = 'Apos vencimento, cobrar multa de 2%';
     const MENSAGEM_2 = 'Nao receber apos 30 dias do vencimento.';
 
@@ -39,17 +28,26 @@ class remessa_ASA {
         unset($this->txt);
     }
 
+    /**
+     * Identificacao do Titulo — posicoes 38 a 57 do segmento P (20 posicoes).
+     *
+     * Layout confirmado pelo banco em 2026-08-04, apos analise do arquivo enviado:
+     *   38-40  identificacao do produto = carteira (121)
+     *   41-45  zeros
+     *   46-56  nosso numero COM DV (10 digitos + 1 de DV)
+     *   57     branco
+     *
+     * Historico: em 2026-07-27 o banco havia indicado "nosso numero com range + DV
+     * das colunas 46 a 57", o que levou a colocar o DV isolado na 57, como faz o
+     * layout Bradesco. A revisao acima corrige isso — o DV entra junto do numero,
+     * dentro de 46-56, e a 57 fica em branco.
+     */
     public function identificacao_titulo($carteira, $agencia, $nosso_numero) {
         $dv = asa_calc::dv_nosso_numero($agencia, $carteira, $nosso_numero);
-        if (self::IDENTIFICACAO_TITULO == 'ASA') {
-            return '5' . zeros(3) . zeros(2)
-                 . str_pad($carteira, 3, '0', STR_PAD_LEFT)
-                 . str_pad($nosso_numero, 10, '0', STR_PAD_LEFT) . $dv;
-        }
-        return str_pad($carteira, 3, '0', STR_PAD_LEFT)
-             . zeros(5)
-             . str_pad($nosso_numero, 11, '0', STR_PAD_LEFT)
-             . $dv;
+        return str_pad($carteira, 3, '0', STR_PAD_LEFT)                  // 38-40
+             . zeros(5)                                                  // 41-45
+             . str_pad($nosso_numero, 10, '0', STR_PAD_LEFT) . $dv       // 46-56
+             . ' ';                                                      // 57
     }
 
     public function header_arquivo($data) {

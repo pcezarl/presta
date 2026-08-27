@@ -86,18 +86,21 @@ t_equals('000000000000200', substr($s, 74, 15), 'R: multa de 2,00% nas posicoes 
 echo "\nremessa_ASA :: identificacao do titulo (posicoes 38-57)\n";
 
 t_equals(20, strlen($r->identificacao_titulo('121', '0001', '465280')), 'identificacao do titulo tem 20 posicoes');
-t_equals('12100000000004652809', $r->identificacao_titulo('121', '0001', '465280'), 'particao Bradesco');
+t_equals('1210000000004652809 ', $r->identificacao_titulo('121', '0001', '465280'), 'identificacao do titulo montada');
 
-// O banco confirmou em 2026-07-27: "o nosso numero com range + DV deve ser
-// informado das colunas 46 a 57" — 12 posicoes, que e o que a particao Bradesco produz.
+// Layout confirmado pelo banco em 2026-08-04, apos analise do arquivo enviado:
+// nosso numero COM DV nas colunas 46-56, coluna 57 em branco.
 $id_faixa = $r->identificacao_titulo('121', '0001', '7862083');
-t_equals('121',   substr($id_faixa, 0, 3), 'identificacao: carteira nas colunas 38-40');
-t_equals('00000', substr($id_faixa, 3, 5), 'identificacao: zeros nas colunas 41-45');
-t_equals('000078620831', substr($id_faixa, 8, 12), 'identificacao: NN da faixa + DV nas colunas 46-57');
+t_equals('121',   substr($id_faixa, 0, 3),  'identificacao: carteira nas colunas 38-40');
+t_equals('00000', substr($id_faixa, 3, 5),  'identificacao: zeros nas colunas 41-45');
+t_equals('00078620831', substr($id_faixa, 8, 11), 'identificacao: NN com DV nas colunas 46-56');
+t_equals(' ',     substr($id_faixa, 19, 1), 'identificacao: coluna 57 em branco');
 
 // A mesma faixa dentro do segmento P completo, para garantir o alinhamento absoluto.
 $dados_faixa = array_merge($data, array('nosso_numero' => '7862083'));
 $p_faixa = $r->segmento_p($dados_faixa);
-t_equals('000078620831', substr($p_faixa, 45, 12), 'segmento P: NN + DV nas posicoes 46-57 do registro');
+t_equals('00078620831', substr($p_faixa, 45, 11), 'segmento P: NN com DV nas posicoes 46-56 do registro');
+t_equals(' ', substr($p_faixa, 56, 1), 'segmento P: posicao 57 em branco');
+t_equals('2', substr($p_faixa, 57, 1), 'segmento P: carteira segue intacta na posicao 58');
 
 t_fim();

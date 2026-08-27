@@ -209,7 +209,7 @@ O banco respondeu em **2026-07-27** e as três pendências fecharam **sem exigir
 | Pendência | Resposta do banco | Efeito |
 |---|---|---|
 | Faixa de nosso número | `0007862083` a `0007877082` (15.000 números) | Cadastro da conta; nenhuma alteração de código |
-| Partição das posições 38-57 | "o nosso número com range + DV deve ser informado das colunas 46 a 57" — 12 posições, que é o que a partição Bradesco produz. O DV segue o cálculo da planilha anexa, que é o mesmo módulo 10 já implementado (validado com o exemplo NN `1` → DV `1`) | Confirma o padrão `IDENTIFICACAO_TITULO = 'BRADESCO'` |
+| Partição das posições 38-57 | **Revisada em 2026-08-04**, após o banco analisar o arquivo enviado: nosso número **com DV** nas colunas **46-56** (11 posições) e coluna **57 em branco**. A instrução de 2026-07-27 dizia "46 a 57", o que levou a pôr o DV isolado na 57, como faz o layout Bradesco. O DV segue o mesmo módulo 10 já implementado (validado com o exemplo NN `1` → DV `1`) | Implementado em `remessa_ASA::identificacao_titulo()`; a constante de seleção entre duas leituras foi removida, já que o layout está definido |
 | Número da operação | "utilizada somente na composição da linha digitável do boleto, campos 13 a 19. No arquivo não será informada" | Confirma a decisão D6; posições 13-19 da linha digitável são exatamente as posições 8-14 do campo livre, onde já estava |
 
 O único trecho ainda não confirmado explicitamente são as **posições 38-45** (carteira `121` em 38-40 e zeros em 41-45). O banco confirmou 46-57 e mandou usar o layout Bradesco, cuja especificação define 38-40 como "Identificação do Produto" e 41-45 como zeros — a leitura coerente, e de risco baixo agora que o alinhamento do nosso número está fechado.
@@ -232,7 +232,16 @@ Os dois manuais dividem os mesmos 20 caracteres de forma incompatível:
 
 O nosso número fica deslocado em uma posição entre as duas leituras, e arquivo desalinhado é recusado por inteiro.
 
-**Resolução:** o banco confirmou as colunas 46-57 para o nosso número com DV, que é o que a partição Bradesco produz. A constante `remessa_ASA::IDENTIFICACAO_TITULO` fica em `'BRADESCO'`; a variante `'ASA'` permanece implementada apenas como registro histórico.
+**Resolução (2026-08-04):** o banco analisou o arquivo enviado e fechou o layout:
+
+| Faixa | Conteúdo |
+|---|---|
+| 38-40 | identificação do produto = carteira `121` |
+| 41-45 | zeros |
+| 46-56 | nosso número **com DV** (10 dígitos + 1) |
+| 57 | **branco** |
+
+Não é nenhuma das duas leituras que estavam em disputa: o Bradesco separa o DV na coluna 57 e o manual do ASA deslocava tudo para 47-57. A constante `IDENTIFICACAO_TITULO`, que alternava entre as duas, foi removida — o layout agora é único e está fixado por teste.
 
 ### 8.2 Faixa de nosso número — definida
 
