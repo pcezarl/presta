@@ -9,24 +9,29 @@ $(document).ready(function() {
 
 	// $('.show_acessorio').hide();
 	$('.show_asa').hide();
+	$('.show_numeracao').hide();
 
 	$('#banco').change(function() {
 		console.log(this.value);
 		if ( this.value == 'BRA' ) {
 			$('.show_asa').hide();
+			$('.show_numeracao').hide();
 			$('.show_acessorio').show();
 			$('.text.conta').html('<span class="obr">!</span>Conta:<sup>s/ d&iacute;gito</sup>')
 		} else if ( this.value == "CEF" ) {
 			$('.show_asa').hide();
+			$('.show_numeracao').hide();
 			$('.show_acessorio').hide();
 			$('.text.conta').html('<span class="obr">!</span>Cod. Cedente:<sup>s/ d&iacute;gito</sup>')
 		} else if ( this.value == "SICOOB" ) {
 			$('.show_asa').hide();
+			$('.show_numeracao').show();
 			$('.show_acessorio').hide();
 			$('.text.conta').html('<span class="obr">!</span>Cod. Cedente:<sup>s/ d&iacute;gito</sup>')
 		} else if ( this.value == "ASA" ) {
 			$('.show_acessorio').hide();
 			$('.show_asa').show();
+			$('.show_numeracao').show();
 			$('.text.conta').html('<span class="obr">!</span>Conta Vinculada:<sup>s/ d&iacute;gito</sup>')
 		}
 	})
@@ -81,7 +86,7 @@ document.getElementById("c_proc").style.display="block";
 		<input name="conta_dv" type="text" id="conta_dv" size="2" maxlength="1" style="width:38px !important" />
 	  </td>
 	</tr>
-	<tr class="show_asa">
+	<tr class="show_asa show_numeracao">
 	  <td class="text"><span class="obr">!</span>Nosso n&uacute;mero de:</td>
 	  <td><input name="faixa_inicio" type="text" id="faixa_inicio" size="40" maxlength="10" /></td>
 	  <td class="text"><span class="obr">!</span>at&eacute;:</td>
