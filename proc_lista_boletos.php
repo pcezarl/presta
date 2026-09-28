@@ -169,6 +169,22 @@
 				}
 			}
 			$b->val("nosso_numero", $nnum_asa);
+
+			// O numero do documento do ASA passa a ser o proprio nosso numero,
+			// zero-preenchido em 10 posicoes.
+			//
+			// Motivo: o ASA le o campo das posicoes 63-77 do segmento P com apenas
+			// 10 caracteres. A composicao padrao do sistema — 6 digitos do CPF +
+			// MMAA + 1 sequencial, 11 caracteres — tem os 10 primeiros identicos
+			// para o mesmo sacado no mesmo mes, entao dois titulos do mesmo pagador
+			// chegavam ao banco com o mesmo numero. Recusa "RC02 Documento em
+			// duplicidade" na homologacao de 16/09/2026, com a coluna Titulo do
+			// relatorio mostrando 0225210926 e 3812580926, de 10 digitos.
+			//
+			// O nosso numero ja e unico por construcao (faixa atribuida pelo banco),
+			// tem comprimento fixo e nao colide entre sacados, meses ou remessas.
+			$ndoc = str_pad($nnum_asa, 10, '0', STR_PAD_LEFT);
+			$b->val("numero_documento", $ndoc);
 		}
 
 		$b->set("sacado", $d->cli_nome . ' - CPF/CNPJ: ' . $d->cli_cpf);
