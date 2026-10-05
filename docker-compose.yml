@@ -41,9 +41,10 @@ services:
     volumes:
       - mysqldata:/var/lib/mysql
       # Rodados em ordem alfabetica na primeira subida do container.
-      # O 02 e o arquivo de migracao real do ASA — subir o ambiente valida a migracao.
+      # Os 02 sao arquivos de migracao reais — subir o ambiente valida as migracoes.
       - ./db/init/01-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
       - ./db/migrations/2026-07-27-contas-asa.sql:/docker-entrypoint-initdb.d/02-contas-asa.sql:ro
+      - ./db/migrations/2026-09-28-contas-ultimo-nsa.sql:/docker-entrypoint-initdb.d/02b-contas-ultimo-nsa.sql:ro
       - ./db/init/03-seed.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pzaq1xsw2"]

@@ -35,11 +35,12 @@ O MySQL fica exposto em `localhost:3307` (não 3306, para não colidir com um My
 
 ## O que é criado automaticamente
 
-Na primeira subida, três arquivos rodam em ordem:
+Na primeira subida, quatro arquivos rodam em ordem:
 
 1. `db/init/01-schema.sql` — o schema atual do sistema
 2. `db/migrations/2026-07-27-contas-asa.sql` — a migração do ASA (é o arquivo real, então subir o ambiente já valida a migração)
-3. `db/init/03-seed.sql` — dados de exemplo
+3. `db/migrations/2026-09-28-contas-ultimo-nsa.sql` — contador de NSA da remessa por conta
+4. `db/init/03-seed.sql` — dados de exemplo
 
 O seed já traz a **conta do ASA cadastrada com os dados reais de liberação** (agência `0001-9`, conta `600001425-8`, operação `0004142`, carteira `121`, faixa `0007862083`–`0007877082`), uma conta Bradesco para conferir que o caminho antigo não quebrou, um edifício, três clientes, três apartamentos e cinco prestações em aberto no mês corrente.
 

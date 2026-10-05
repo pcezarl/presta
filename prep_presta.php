@@ -121,7 +121,7 @@ Data:<input type="text" size="3" maxlength="3" name="dia" id="dia" />/
 if($_POST["ctl"]){
 
 
-$data=strtotime("$_POST[ano]-$_POST[mes]-$_POST[dia]") ;
+$data="$_POST[ano]-$_POST[mes]-$_POST[dia]";
 $val=mil($_POST["valor"]);
 $data_h="$_POST[dia]/$_POST[mes]/$_POST[ano] - R\$$val<br />";
 

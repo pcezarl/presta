@@ -7,8 +7,6 @@ include "lib/class_tpl.php";
 include "lib/class_db.php";
 session_start();
 
-$i=limpa($_GET["i"]);
-
 $p =new tpl("$modelo");
 $pn=new tpl("tpl/tpl_form_lista_remessa.html");
 $db=new db();
@@ -28,45 +26,32 @@ if ( !isset($_SESSION['conta_id']) || $_SESSION['conta_id'] == '' ) {
     $cc->reset();
 }
 
-$data=date("d/m/Y");
-$mes=date("m");
-$mes_atual=$mes_extenso[(integer)date("m")];
-$ano=date("Y");
+// Periodo escolhido na tela, como em lista-boletos.php. A troca de conta
+// recarrega a pagina com a mesma URL, entao o mes escolhido se mantem.
+$per=periodo_vencimento($_GET["mes"],$_GET["ano"],$_GET["i"]);
+$periodo=$mes_extenso[$per["mes"]]."/".$per["ano"];
+$titulo=($per["dia"])?$per["dia"]."/".$periodo:$periodo;
+foreach(array("mes","ano","mes_ant","ano_ant","mes_prox","ano_prox") as $k){
+    $pn->set($k,$per[$k]);
+}
+$pn->set("periodo",$periodo);
+$pn->set("titulo",$titulo);
 
-// dia separado
-if($i){
 $sql="
 select * from prestacoes
 left join aptos on pr_apto=id_apto
 left join clientes on pr_prop=id_cliente
 left join edificios on ap_ed=id_edificio
 left join boletos on bo_presta=id_presta
-where day(pr_vencimento)='$i' and month(pr_vencimento)='$mes' and year(pr_vencimento)='$ano'
-AND conta_id = ".$_SESSION['conta_id']." 
-AND remessa_id = 0
-and pr_pago='n'";
-
-$pn->set("titulo","$i/$mes_atual/$ano");
-}// fim dia separado
-else { // todos
-$sql="
-select * from prestacoes
-left join aptos on pr_apto=id_apto
-left join clientes on pr_prop=id_cliente
-left join edificios on ap_ed=id_edificio
-left join boletos on bo_presta=id_presta
-
-where month(pr_vencimento)='$mes' and year(pr_vencimento)='$ano'
-AND conta_id = ".$_SESSION['conta_id']." 
+where pr_vencimento>='{$per["inicio"]}' and pr_vencimento<'{$per["fim"]}'
+AND conta_id = ".(int)$_SESSION['conta_id']."
 AND remessa_id = 0
 and pr_pago='n'
+order by pr_vencimento, cli_nome
 ";
-$pn->set("titulo","$mes_atual/$ano");
-} // fim todos
 $db->query($sql);
 if($db->rows<1){
-    $pn->set("sem_registros", "Essa conta n&atilde;o possui nenhum boleto gerado no momento");
-// error(6);
+    $pn->set("sem_registros", "Essa conta n&atilde;o possui boleto aguardando remessa em $titulo");
 } else {
     $pn->set("sem_registros", "");
 }

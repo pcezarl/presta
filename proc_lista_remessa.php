@@ -27,11 +27,28 @@
 	$cb   = new db(); // link de checagem da remessa
 	$ub   = new db(); // query de update da remessa
 	// $mail = new envia_boleto();
-	// Pego o ultimo ID de remessa gerado
-	$db->query("SELECT MAX(remessa_id) as max_remessa_id FROM boletos WHERE conta_id =".$_SESSION['conta_id']);
-	$result = mysql_fetch_assoc($db->result);
-	$max_remessa_id = ( $result['max_remessa_id'] == '' ) ? '0' : $result['max_remessa_id'];
-	$remessa_id = (int)$max_remessa_id + 1; 
+
+	if ( empty($_POST["parcela"]) ) {
+		erro("Selecione ao menos uma parcela para gerar a remessa.");
+	}
+
+	// NSA — numero sequencial do arquivo, que o banco exige crescente por conta.
+	//
+	// Antes era MAX(boletos.remessa_id) + 1. Como o numero so existia enquanto houvesse
+	// boleto marcado com ele, zerar o remessa_id (ex.: ao regerar o nosso numero) fazia
+	// o NSA voltar para tras e o banco recusava o arquivo como repetido.
+	//
+	// Agora o contador fica em contas.ultimo_nsa e e incrementado de forma atomica. O
+	// LAST_INSERT_ID(expr) devolve o valor novo na mesma conexao, entao nao pode haver
+	// reset() do $db entre o UPDATE e o SELECT. Cada ambiente tem o seu contador; so o
+	// de producao corresponde ao que o banco ja recebeu.
+	$conta_id = (int) $_SESSION['conta_id'];
+	$db->query("UPDATE contas SET ultimo_nsa = LAST_INSERT_ID(ultimo_nsa + 1) WHERE id = ".$conta_id);
+	if ( $db->affect != 1 ) {
+		erro("Conta de cobranca nao encontrada. Selecione a conta novamente antes de gerar a remessa.");
+	}
+	$db->query("SELECT LAST_INSERT_ID() AS nsa");
+	$remessa_id = (int) $db->get_val("nsa");
 	// Carrego os detalhes da conta selecionada
 	$sql = "SELECT * FROM contas where id = ".$_SESSION['conta_id'];
 	$db->query($sql);
