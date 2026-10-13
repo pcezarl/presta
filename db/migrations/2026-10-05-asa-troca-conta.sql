@@ -12,13 +12,15 @@
 --
 -- A faixa NAO e escolhida por nos: o banco cadastra uma faixa de nosso numero
 -- para a carteira 121 atrelada a uma operacao ("1.MANUAL NUMERO BANCARIO.pdf",
--- item 1). O banco manteve a faixa 7862083-7877082 para a operacao nova; como
--- a alocacao parte de MAX(bo_nnum) + 1, os numeros ja usados nao se repetem.
+-- item 1). Cada ambiente tem a sua faixa:
+--   homologacao: 7862083 a 7877082 (a mesma de antes; a alocacao parte de
+--                MAX(bo_nnum) + 1, entao os numeros ja usados nao se repetem)
+--   producao:    8502083 a 8517082
 --
 -- So para HOMOLOGACAO (develop), onde a conta ASA ja existe com os dados antigos.
 -- Em PRODUCAO a conta ASA nao existe — a release/0.0.1-prod nao tinha ASA — e e
--- cadastrada pela tela add_conta.php depois do deploy (ver PR #2). Se este
--- script for rodado la, o passo 2 nao altera nada.
+-- cadastrada pela tela add_conta.php depois do deploy, com a faixa de producao
+-- (ver PR #2). Se este script for rodado la, o passo 2 nao altera nada.
 
 -- ---------------------------------------------------------------------------
 -- Passo 1 — diagnostico (nao altera nada)
@@ -54,8 +56,6 @@ SELECT c.id                                                   AS conta_id,
 --   ou se devem ser reemitidos na faixa nova.
 -- maior_nosso_numero: a alocacao parte de MAX(bo_nnum) + 1 da conta. Se esse
 --   numero ja chegou ao fim da faixa, o passo 2 recusa a troca (ver la).
---   Ele tambem define o "Faixa de" da conta em PRODUCAO: o maior nosso numero ja
---   enviado ao banco, mais 1 — o banco recusa numero repetido.
 
 -- ---------------------------------------------------------------------------
 -- Passo 2 — aplica (rode o bloco inteiro de uma vez)
