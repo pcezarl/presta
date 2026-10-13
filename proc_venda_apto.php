@@ -96,7 +96,7 @@
 
                         $presta=$v["valor"];
 
-                        $data_vence=date("Y-m-d",$v["data"]);
+                        $data_vence=formata_data($v["data"],"Y-m-d");
                         $sql=sprintf($sqlbase,"$presta","$data_vence","e");
                         $db->query($sql);
 
@@ -118,7 +118,7 @@
                 foreach($en as $v){
                         $presta= $v["valor"];
 
-                        $data_vence=date("Y-m-d",$v["data"]);
+                        $data_vence=formata_data($v["data"],"Y-m-d");
                         $sql=sprintf($sqlbase,"$presta","$data_vence","s");
                         $db->query($sql);
 
@@ -144,7 +144,7 @@
                 foreach($en as $v){
                         $presta= $v["valor"];
 
-                        $data_vence=date("Y-m-d",$v["data"]);
+                        $data_vence=formata_data($v["data"],"Y-m-d");
                         $sql=sprintf($sqlbase,"$presta","$data_vence","t");
                         $db->query($sql);
 
@@ -170,7 +170,7 @@
                 foreach($en as $v){
                         $presta= $v["valor"];
 
-                        $data_vence=date("Y-m-d",$v["data"]);
+                        $data_vence=formata_data($v["data"],"Y-m-d");
                         $sql=sprintf($sqlbase,"$presta","$data_vence","i");
                         $db->query($sql);
 
@@ -225,14 +225,12 @@
                 exit();
         }
 
-        $ts_inicio=mktime(0,0,0,$_mes,$_dia,$_ano);
         for($i=0;$i < $parcelas;$i++)
         {
 
                 $conta_presta++;
 
-                $data_vence=strtotime("+$i month", $ts_inicio);
-                $data_vence=date("Y-m-d",$data_vence);
+                $data_vence=data_soma_meses($_ano,$_mes,$_dia,$i);
 
 
                 $sql=sprintf($sqlbase,"$parcela_base","$data_vence","n");

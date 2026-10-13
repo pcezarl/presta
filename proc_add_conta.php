@@ -13,6 +13,12 @@ $banco     = limpa($_POST["banco"]);
 $razao     = limpa($_POST["razao"]);
 $agencia   = limpa($_POST["agencia"]);
 $acessorio = limpa($_POST["acessorio"]);
+$operacao     = limpa($_POST["operacao"]);
+$carteira     = limpa($_POST["carteira"]);
+$faixa_inicio = (int) $_POST["faixa_inicio"];
+$faixa_fim    = (int) $_POST["faixa_fim"];
+$agencia_dv   = limpa($_POST["agencia_dv"]);
+$conta_dv     = limpa($_POST["conta_dv"]);
 
 
 // teste do form
@@ -25,13 +31,30 @@ if( (!$razao) || (!$cnpj) || (!$agencia) || (!$conta) || (!$banco) ) {
 			<span style=\"font-size:8pt\">Alguns campos são obrigatorios</span>"
 	);
 }
+if ( $banco == 'ASA' ) {
+	if ( (!$operacao) || (!$carteira) || (!$faixa_inicio) || (!$faixa_fim) || (!$agencia_dv) || (!$conta_dv) ) {
+		die("
+			<body style=\"color:white;background-color:#A21A24;font-family:verdana  \">
+				<h2 style=\"display:inline \">OPPS!!</h2>:<b>DADOS DO ASA INCOMPLETOS</B><br />
+				<span style=\"font-size:8pt\">Operacao, carteira, digitos e faixa de nosso numero sao obrigatorios</span>"
+		);
+	}
+	if ( $faixa_fim < $faixa_inicio ) {
+		die("
+			<body style=\"color:white;background-color:#A21A24;font-family:verdana  \">
+				<h2 style=\"display:inline \">OPPS!!</h2>:<b>FAIXA DE NOSSO NUMERO INVALIDA</B><br />
+				<span style=\"font-size:8pt\">O numero final deve ser maior ou igual ao inicial</span>"
+		);
+	}
+}
+
 // fim teste do form
 
 $db = new db();
 
 $data = date("Y-m-d");
 
-$sql = "INSERT INTO contas (id, razao, cnpj, agencia, conta, data, info, banco, acessorio) values (NULL,'$razao','$cnpj','$agencia','$conta','$data','$info', '$banco', '$acessorio');";
+$sql = "INSERT INTO contas (id, razao, cnpj, agencia, conta, data, info, banco, acessorio, operacao, carteira, faixa_inicio, faixa_fim, agencia_dv, conta_dv) values (NULL,'$razao','$cnpj','$agencia','$conta','$data','$info', '$banco', '$acessorio', '$operacao', '$carteira', '$faixa_inicio', '$faixa_fim', '$agencia_dv', '$conta_dv');";
 $teste = $db->query($sql);
 
 if($db->status=="ok") {

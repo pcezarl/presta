@@ -60,19 +60,86 @@ return $t[0];
 }
 
 
+// Datas passam por DateTime, nunca por timestamp inteiro: no PHP 32 bits do
+// servidor (XAMPP) o timestamp estoura em 19/01/2038 e date() de um valor
+// invalido devolve 31/12/1969. DateTime guarda a data em 64 bits em qualquer build.
+
+// formata uma data em texto ('2040-01-15', '15-01-2040'...) no formato $fmt.
+// Aceita tambem timestamp inteiro, formato antigo das parcelas guardadas na sessao.
+function formata_data($d,$fmt){
+if(is_int($d) || ctype_digit((string)$d))return date($fmt,$d);
+if(trim($d)=="")return "";
+try{
+	$o=new DateTime($d);
+}catch(Exception $e){
+	return "";
+}
+return $o->format($fmt);
+}
+
+// soma $n meses a uma data, com o mesmo transbordo do strtotime (31/01 + 1 mes = 03/03)
+function data_soma_meses($ano,$mes,$dia,$n){
+$o=new DateTime();
+$o->setDate($ano,$mes,$dia);
+$o->setTime(0,0,0);
+$o->modify("+$n month");
+return $o->format("Y-m-d");
+}
+
+// periodo de vencimento das listagens (lista-boletos.php, lista-remessa.php), vindo do $_GET.
+// Devolve o intervalo [inicio, fim) para filtrar pr_vencimento e os meses vizinhos para a
+// navegacao. Mes ou ano invalido cai no mes corrente; dia invalido ou que nao existe no mes
+// (31/09) vale o mes inteiro, em vez de transbordar para o mes seguinte.
+// So digitos sao aceitos, entao nada do $_GET chega ao SQL sem passar por aqui.
+function periodo_vencimento($mes,$ano,$dia){
+$mes=(string)$mes;
+$ano=(string)$ano;
+$dia=(string)$dia;
+if(!ctype_digit($mes) || !ctype_digit($ano) || $mes<1 || $mes>12 || $ano<2000 || $ano>2100){
+	$mes=date("n");
+	$ano=date("Y");
+}
+
+$o=new DateTime();
+$o->setDate((int)$ano,(int)$mes,1);
+$o->setTime(0,0,0);
+$dia=(ctype_digit($dia) && $dia>=1 && $dia<=(int)$o->format("t"))?(int)$dia:0;
+
+$ant=clone $o;
+$ant->modify("-1 month");
+$prox=clone $o;
+$prox->modify("+1 month");
+
+$p=array(
+	"mes"=>(int)$mes,
+	"ano"=>(int)$ano,
+	"dia"=>$dia,
+	"mes_ant"=>(int)$ant->format("n"),
+	"ano_ant"=>(int)$ant->format("Y"),
+	"mes_prox"=>(int)$prox->format("n"),
+	"ano_prox"=>(int)$prox->format("Y")
+);
+
+if($dia){
+	$o->setDate((int)$ano,(int)$mes,$dia);
+	$p["inicio"]=$o->format("Y-m-d");
+	$o->modify("+1 day");
+	$p["fim"]=$o->format("Y-m-d");
+}else{
+	$p["inicio"]=$o->format("Y-m-d");
+	$p["fim"]=$prox->format("Y-m-d");
+}
+return $p;
+}
+
 // converte data mysql em data normal
 function mydata($d){
-$data=strtotime($d);
-$data=date("d/m/Y",$data);
-return $data;
+return formata_data($d,"d/m/Y");
 }
 
 // converte data normal em data mysql
 function data2mysql($d){
-$data=str_replace("/","-",$d);
-$data=strtotime($data);
-$data=date("Y-m-d",$data);
-return $data;
+return formata_data(str_replace("/","-",$d),"Y-m-d");
 }
 
 // mostra erros padronizados
