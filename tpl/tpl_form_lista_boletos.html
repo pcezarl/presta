@@ -11,10 +11,10 @@ return(typeof(o.length)=="undefined")?false:true;
 function filtra(){
 d=document.getElementById("f_dia").value;
 if(parseInt(d)<=31){
-location="lista-boletos.php?i="+d;
+location="lista-boletos.php?mes={{mes}}&ano={{ano}}&i="+d;
 }else{
 if(d==''){
-location="lista-boletos.php";
+location="lista-boletos.php?mes={{mes}}&ano={{ano}}";
 }
 document.getElementById("f_dia").value='';
 document.getElementById("f_dia").focus();
@@ -68,6 +68,12 @@ border-right: 1px solid #ffffff;
 </style>
 
 <h1 class="titulo">Seleção das prestações para gerar boletos {{titulo}} - parcelas:{{qt}} </h1>
+<div style="text-align:center;margin:8px 0">
+<a href="lista-boletos.php?mes={{mes_ant}}&ano={{ano_ant}}" class="cinza" style="display:inline;padding-left:10px;padding-right:10px;margin-right:10px">&laquo; anterior</a>
+<b>{{periodo}}</b>
+<a href="lista-boletos.php?mes={{mes_prox}}&ano={{ano_prox}}" class="cinza" style="display:inline;padding-left:10px;padding-right:10px;margin-left:10px">pr&oacute;ximo &raquo;</a>
+<a href="lista-boletos.php" class="cinza" style="display:inline;padding-left:10px;padding-right:10px;margin-left:10px">m&ecirc;s atual</a>
+</div>
 <div id="Layer1">
 <table border="0" width="100%">
 <tr>
@@ -92,7 +98,7 @@ Exibir Somente dia <input type="text" id="f_dia" name="f_dia" size="3" maxlength
 Enviar por e-mail? <input type="radio" name="send" value="s" checked="checked"><label for="send">Sim</label> / <input type="radio" name="send" value="n"><label for="send">Não</label>
 <input type="hidden" class="hidden_banco" name="banco">
 </div>
-<table border="0" cellspacing="0" width="100%" align="center">
+<table border="0" class="table_boletos" cellspacing="0" width="100%" align="center">
 <tr style="background:black;color:white;text-align:center">
 <td width="1%" class="b2">&nbsp;</td>
 <td width="1%" class="b2">Dia</td>
@@ -115,7 +121,12 @@ Enviar por e-mail? <input type="radio" name="send" value="s" checked="checked"><
 </table>
 </form>
 </div>
+<h3 class="registro_inexistente">{{sem_registros}}</h3>
 <script>
+	if ( jQuery('.registro_inexistente').text() != '' ) {
+		jQuery('.table_boletos').hide()
+		jQuery('.registro_inexistente').css('text-align', 'center')
+	}
 	jQuery('.select_banco').change(function() {
 		jQuery('.hidden_banco').val(this.value);
 	});

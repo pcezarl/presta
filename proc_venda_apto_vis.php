@@ -49,7 +49,7 @@ $en=array_simply($en);
 $t_entrada="<table border='1' cellpadding='1' cellspacing='0' width='100%'>";
 foreach($en as $v){
 $presta=mil($v["valor"]);
-$data_vence=date("d/m/Y",$v["data"]);
+$data_vence=mydata($v["data"]);
 $t_entrada.="<tr><td style='border-right:none'>$data_vence</td><td style='text-align:right;border-left:none'>R\$ $presta</td></tr>\n";
 
 $total_entrada+=$v["valor"];
@@ -68,7 +68,7 @@ $en=array_simply($en);
 $t_semestral="<table border='1' cellpadding='1' cellspacing='0' width='100%'>";
 foreach($en as $v){
 $presta=mil($v["valor"]);
-$data_vence=date("d/m/Y",$v["data"]);
+$data_vence=mydata($v["data"]);
 $t_semestral.="<tr><td style='border-right:none'>$data_vence</td><td style='text-align:right;border-left:none'>R\$ $presta</td></tr>\n";
 
 $total_semestral+=$v["valor"];
@@ -90,7 +90,7 @@ $en=array_simply($en);
 $t_trimestral="<table border='1' cellpadding='1' cellspacing='0' width='100%'>";
 foreach($en as $v){
 $presta=mil($v["valor"]);
-$data_vence=date("d/m/Y",$v["data"]);
+$data_vence=mydata($v["data"]);
 $t_trimestral.="<tr><td style='border-right:none'>$data_vence</td><td style='text-align:right;border-left:none'>R\$ $presta</td></tr>\n";
 
 $total_trimestral+=$v["valor"];
@@ -112,7 +112,7 @@ $en=array_simply($en);
 $t_intermediaria="<table border='1' cellpadding='1' cellspacing='0' width='100%'>";
 foreach($en as $v){
 $presta=mil($v["valor"]);
-$data_vence=date("d/m/Y",$v["data"]);
+$data_vence=mydata($v["data"]);
 $t_intermediaria.="<tr><td style='border-right:none'>$data_vence</td><td style='text-align:right;border-left:none'>R\$ $presta</td></tr>\n";
 
 $total_intermediaria+=$v["valor"];

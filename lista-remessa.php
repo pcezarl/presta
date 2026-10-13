@@ -7,51 +7,51 @@ include "lib/class_tpl.php";
 include "lib/class_db.php";
 session_start();
 
-$i=limpa($_GET["i"]);
-
 $p =new tpl("$modelo");
 $pn=new tpl("tpl/tpl_form_lista_remessa.html");
 $db=new db();
 
-$data=date("d/m/Y");
-$mes=date("m");
-$mes_atual=$mes_extenso[(integer)date("m")];
-$ano=date("Y");
+// A consulta de prestacoes abaixo filtra por conta_id, mas a sessao so era
+// preenchida mais adiante, ao montar o dropdown. No primeiro acesso a tela o
+// filtro saia sem valor, o SQL falhava e a lista aparecia vazia ate recarregar.
+if ( !isset($_SESSION['conta_id']) || $_SESSION['conta_id'] == '' ) {
+    $cc = new db();
+    $cc->query("select * from contas order by id limit 1");
+    if ( $cc->rows > 0 ) {
+        $c = mysql_fetch_object($cc->result);
+        $_SESSION['conta']    = $c->conta;
+        $_SESSION['conta_id'] = $c->id;
+        $_SESSION['banco']    = $c->banco;
+    }
+    $cc->reset();
+}
 
-// dia separado
-if($i){
+// Periodo escolhido na tela, como em lista-boletos.php. A troca de conta
+// recarrega a pagina com a mesma URL, entao o mes escolhido se mantem.
+$per=periodo_vencimento($_GET["mes"],$_GET["ano"],$_GET["i"]);
+$periodo=$mes_extenso[$per["mes"]]."/".$per["ano"];
+$titulo=($per["dia"])?$per["dia"]."/".$periodo:$periodo;
+foreach(array("mes","ano","mes_ant","ano_ant","mes_prox","ano_prox") as $k){
+    $pn->set($k,$per[$k]);
+}
+$pn->set("periodo",$periodo);
+$pn->set("titulo",$titulo);
+
 $sql="
 select * from prestacoes
 left join aptos on pr_apto=id_apto
 left join clientes on pr_prop=id_cliente
 left join edificios on ap_ed=id_edificio
 left join boletos on bo_presta=id_presta
-where day(pr_vencimento)='$i' and month(pr_vencimento)='$mes' and year(pr_vencimento)='$ano'
-AND conta_id = ".$_SESSION['conta_id']." 
-AND remessa_id = 0
-and pr_pago='n'";
-
-$pn->set("titulo","$i/$mes_atual/$ano");
-}// fim dia separado
-else { // todos
-$sql="
-select * from prestacoes
-left join aptos on pr_apto=id_apto
-left join clientes on pr_prop=id_cliente
-left join edificios on ap_ed=id_edificio
-left join boletos on bo_presta=id_presta
-
-where month(pr_vencimento)='$mes' and year(pr_vencimento)='$ano'
-AND conta_id = ".$_SESSION['conta_id']." 
+where pr_vencimento>='{$per["inicio"]}' and pr_vencimento<'{$per["fim"]}'
+AND conta_id = ".(int)$_SESSION['conta_id']."
 AND remessa_id = 0
 and pr_pago='n'
+order by pr_vencimento, cli_nome
 ";
-$pn->set("titulo","$mes_atual/$ano");
-} // fim todos
 $db->query($sql);
 if($db->rows<1){
-    $pn->set("sem_registros", "Essa conta n&atilde;o possui nenhum boleto gerado no momento");
-// error(6);
+    $pn->set("sem_registros", "Essa conta n&atilde;o possui boleto aguardando remessa em $titulo");
 } else {
     $pn->set("sem_registros", "");
 }
@@ -95,14 +95,19 @@ if($db->rows<1){
         while($d=mysql_fetch_object($db->result)){
             if( $i == 0 ) {
                 $selected = 'selected';
+                // A sessao tem que apontar para a conta marcada como selecionada no
+                // dropdown, que e a primeira. Sem esta guarda a atribuicao rodava a
+                // cada volta do laco e a sessao terminava na ULTIMA conta cadastrada:
+                // a tela mostrava uma conta e a remessa saia com os dados de outra,
+                // inclusive no layout do banco errado.
+                $_SESSION['conta'] = $d->conta;
+                $_SESSION['conta_id'] = $d->id;
+                $_SESSION['banco'] = $d->banco;
+                $pn->set("conta_id", $d->id);
             } else {
                 $selected = '';
             }
             $lista_contas .= "<option $selected value='$d->banco - $d->conta'>Ag: $d->banco - CB: $d->conta</option>";
-            $_SESSION['conta'] = $d->conta;
-            $_SESSION['conta_id'] = $d->id;
-            $_SESSION['banco'] = $d->banco;
-            $pn->set("conta_id", $d->id);
 
             $i++;
         }
