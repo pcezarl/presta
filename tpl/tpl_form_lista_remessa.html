@@ -8,10 +8,10 @@ return(typeof(o.length)=="undefined")?false:true;
 function filtra(){
 d=document.getElementById("f_dia").value;
 if(parseInt(d)<=31){
-location="lista-remessa.php?i="+d;
+location="lista-remessa.php?mes={{mes}}&ano={{ano}}&i="+d;
 }else{
 if(d==''){
-location="lista-remessa.php";
+location="lista-remessa.php?mes={{mes}}&ano={{ano}}";
 }
 document.getElementById("f_dia").value='';
 document.getElementById("f_dia").focus();
@@ -65,6 +65,12 @@ border-right: 1px solid #ffffff;
 </style>
 
 <h1 class="titulo">Seleção das prestações para gerar arquivo de remessa {{titulo}} - parcelas:{{qt}} </h1>
+<div style="text-align:center;margin:8px 0">
+<a href="lista-remessa.php?mes={{mes_ant}}&ano={{ano_ant}}" class="cinza" style="display:inline;padding-left:10px;padding-right:10px;margin-right:10px">&laquo; anterior</a>
+<b>{{periodo}}</b>
+<a href="lista-remessa.php?mes={{mes_prox}}&ano={{ano_prox}}" class="cinza" style="display:inline;padding-left:10px;padding-right:10px;margin-left:10px">pr&oacute;ximo &raquo;</a>
+<a href="lista-remessa.php" class="cinza" style="display:inline;padding-left:10px;padding-right:10px;margin-left:10px">m&ecirc;s atual</a>
+</div>
 <div id="Layer1">
 <table border="0" width="100%">
 <tr>
