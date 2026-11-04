@@ -92,6 +92,16 @@
         <td width=41></TD>
       </tr>
     </table>
+    <table width=666 cellspacing=5 cellpadding=0 border=0 align=Default>
+      <tr>
+        <td width=41><img src="imagens/logo_aires.png" class="logo_empresa"></td>
+        <td class=ti width=455>{{identificacao}} - {{cpf_cnpj}} <br>
+          {{endereco}}<br>
+          {{cidade_uf}}<br>
+        </td>
+        <td align=RIGHT width=150 class=ti>&nbsp;</td>
+      </tr>
+    </table>
     <BR>
     <table cellspacing=0 cellpadding=0 width=666 border=0>
       <tr>

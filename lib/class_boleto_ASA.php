@@ -15,6 +15,8 @@ class boleto_ASA {
     public $layout_original;
     public $dadosboleto = array();
     public $imprimir;
+    private $endereco_empresa = "Av. Brasil";
+    private $cidade_empresa = "Praia Grande - SP";
 
     public function __construct() {
         $this->load_layout();
@@ -96,6 +98,8 @@ class boleto_ASA {
         $this->set("cedente", $this->dadosboleto['razao']);
         $this->set("identificacao", $this->dadosboleto['razao']);
         $this->set("cpf_cnpj", $this->dadosboleto['cnpj']);
+        $this->set("endereco", utf8_decode($this->endereco_empresa));
+        $this->set("cidade_uf", utf8_decode($this->cidade_empresa));
         $this->set("numero_documento", $this->dadosboleto['numero_documento']);
         $this->set("especie", "R\$");
         $this->set("especie_doc", "DM");
