@@ -12,11 +12,15 @@
 --
 -- A faixa NAO e escolhida por nos: o banco cadastra uma faixa de nosso numero
 -- para a carteira 121 atrelada a uma operacao ("1.MANUAL NUMERO BANCARIO.pdf",
--- item 1). Operacao nova pede faixa nova, informada pelo banco.
+-- item 1). Cada ambiente tem a sua faixa:
+--   homologacao: 7862083 a 7877082 (a mesma de antes; a alocacao parte de
+--                MAX(bo_nnum) + 1, entao os numeros ja usados nao se repetem)
+--   producao:    8502083 a 8517082
 --
--- Rodar em HOMOLOGACAO e em PRODUCAO, um ambiente de cada vez. Os valores novos
--- sao os mesmos nos dois (vem do banco); o diagnostico do passo 1 NAO e — cada
--- base tem os seus boletos.
+-- So para HOMOLOGACAO (develop), onde a conta ASA ja existe com os dados antigos.
+-- Em PRODUCAO a conta ASA nao existe — a release/0.0.1-prod nao tinha ASA — e e
+-- cadastrada pela tela add_conta.php depois do deploy, com a faixa de producao
+-- (ver PR #2). Se este script for rodado la, o passo 2 nao altera nada.
 
 -- ---------------------------------------------------------------------------
 -- Passo 1 — diagnostico (nao altera nada)
@@ -50,8 +54,8 @@ SELECT c.id                                                   AS conta_id,
 -- abertos_nao_enviados: se entrarem numa remessa depois da troca, vao com a conta
 --   nova no header e o nosso numero da faixa antiga. Confirme com o banco se aceita
 --   ou se devem ser reemitidos na faixa nova.
--- maior_nosso_numero: a alocacao parte de MAX(bo_nnum) + 1 da conta. Se a faixa
---   nova comecar abaixo desse numero, o passo 2 recusa a troca (ver la).
+-- maior_nosso_numero: a alocacao parte de MAX(bo_nnum) + 1 da conta. Se esse
+--   numero ja chegou ao fim da faixa, o passo 2 recusa a troca (ver la).
 
 -- ---------------------------------------------------------------------------
 -- Passo 2 — aplica (rode o bloco inteiro de uma vez)
@@ -61,12 +65,12 @@ SELECT c.id                                                   AS conta_id,
 -- uma vez so.
 
 SET @conta_atual       = '600001425';
-SET @nova_conta        = '<CONTA>';               -- so digitos, sem o DV
-SET @novo_conta_dv     = '<DV>';                  -- 1 caractere
+SET @nova_conta        = '000016537';             -- so digitos, sem o DV
+SET @novo_conta_dv     = '0';                     -- 1 caractere
 SET @novo_cnpj         = '21.987.647/0001-29';
 SET @nova_operacao     = '0004254';
-SET @nova_faixa_inicio = <INICIO>;                -- nosso numero sem o DV, sem zeros a esquerda
-SET @nova_faixa_fim    = <FIM>;
+SET @nova_faixa_inicio = 7862083;                 -- nosso numero sem o DV, sem zeros a esquerda
+SET @nova_faixa_fim    = 7877082;
 
 -- 2a. Verificacao: explica um eventual "0 linhas afetadas" no UPDATE abaixo.
 SELECT CASE
@@ -74,9 +78,11 @@ SELECT CASE
            THEN 'ERRO: conta ASA 600001425 nao encontrada'
          WHEN @nova_faixa_inicio > @nova_faixa_fim
            THEN 'ERRO: inicio da faixa maior que o fim'
+         WHEN MAX(CAST(b.bo_nnum AS UNSIGNED)) >= @nova_faixa_fim
+           THEN 'PARE: os numeros ja usados esgotam a faixa'
          WHEN MAX(CAST(b.bo_nnum AS UNSIGNED)) >= @nova_faixa_inicio
-           THEN 'PARE: ja existe nosso numero >= inicio da faixa nova'
-         ELSE 'OK: proximo boleto sai no inicio da faixa nova'
+           THEN 'OK: proximo boleto continua do maior nosso numero usado + 1'
+         ELSE 'OK: proximo boleto sai no inicio da faixa'
        END AS faixa,
        CASE
          WHEN NOT (@nova_conta REGEXP '^[0-9]+$')      THEN 'ERRO: conta so com digitos, sem o DV'
@@ -109,7 +115,7 @@ UPDATE contas
    AND @nova_faixa_fim <= 4294967295    -- limite do INT UNSIGNED das colunas de faixa
    AND NOT EXISTS (SELECT 1 FROM boletos b
                     WHERE b.conta_id = contas.id
-                      AND CAST(b.bo_nnum AS UNSIGNED) >= @nova_faixa_inicio);
+                      AND CAST(b.bo_nnum AS UNSIGNED) >= @nova_faixa_fim);
 
 -- Tem que voltar 1 ("1 linha afetada" no phpMyAdmin). Se voltar 0, nada foi alterado.
 SELECT ROW_COUNT() AS linhas_alteradas;

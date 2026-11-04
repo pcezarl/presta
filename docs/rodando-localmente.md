@@ -16,6 +16,10 @@ A aplicação **não roda em PHP 7 ou 8**. Ela depende de coisas removidas nessa
 
 A imagem usada é `php:5.6-apache` — a mais antiga ainda publicada oficialmente. Não é exatamente o 5.3 de produção, mas mantém tudo que o código precisa. Se o editor acusar erro em `__autoload`, é o linter avaliando com PHP 8; em 5.6 funciona.
 
+## Papel deste ambiente
+
+Desde 13/10/2026 este ambiente local faz as vezes de **homologação**. Produção roda a branch `release/0.0.1-prod` e tem a sua própria faixa de nosso número do ASA (`0008502083`–`0008517082`); a faixa daqui não se mistura com a de lá.
+
 ## Pré-requisito
 
 [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado. As imagens são `linux/amd64` e rodam emuladas no Apple Silicon — funciona, só sobe mais devagar na primeira vez.
@@ -42,7 +46,7 @@ Na primeira subida, quatro arquivos rodam em ordem:
 3. `db/migrations/2026-09-28-contas-ultimo-nsa.sql` — contador de NSA da remessa por conta
 4. `db/init/03-seed.sql` — dados de exemplo
 
-O seed já traz a **conta do ASA cadastrada com os dados reais de liberação** (agência `0001-9`, conta `600001425-8`, operação `0004142`, carteira `121`, faixa `0007862083`–`0007877082`), uma conta Bradesco para conferir que o caminho antigo não quebrou, um edifício, três clientes, três apartamentos e cinco prestações em aberto no mês corrente.
+O seed já traz a **conta do ASA cadastrada com os dados reais** (agência `0001-9`, conta `000016537-0`, operação `0004254`, carteira `121`, CNPJ `21.987.647/0001-29`) e a **faixa de homologação** (`0007862083`–`0007877082`), uma conta Bradesco para conferir que o caminho antigo não quebrou, um edifício, três clientes, três apartamentos e cinco prestações em aberto no mês corrente.
 
 > O `tabelas.sql` da raiz **está desatualizado** — não tem a tabela `contas` nem as colunas `boletos.conta_id` e `boletos.remessa_id`. Não use ele nem o `instalar.php` para criar o banco; use o `db/init/01-schema.sql`.
 

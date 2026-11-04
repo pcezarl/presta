@@ -5,15 +5,17 @@
 -- apareceria vazia dependendo de quando voce sobe o ambiente.
 
 -- -----------------------------------------------------
--- Conta do Banco ASA, com os dados reais de liberacao
+-- Conta do Banco ASA, com os dados reais da conta (troca de 13/10/2026) e a
+-- faixa de nosso numero de homologacao. Producao tem faixa propria
+-- (8502083-8517082), cadastrada direto la.
 -- -----------------------------------------------------
 INSERT INTO `contas`
   (`razao`, `cnpj`, `agencia`, `agencia_dv`, `conta`, `conta_dv`, `data`, `info`,
    `banco`, `operacao`, `carteira`, `faixa_inicio`, `faixa_fim`)
 VALUES
-  ('EMPRESA TESTE LTDA', '00.000.000/0001-00', '0001', '9', '600001425', '8',
-   CURDATE(), 'Conta de desenvolvimento — dados de liberacao reais do ASA',
-   'ASA', '0004142', '121', 7862083, 7877082);
+  ('EMPRESA TESTE LTDA', '21.987.647/0001-29', '0001', '9', '000016537', '0',
+   CURDATE(), 'Conta de homologacao — dados reais do ASA, faixa de homologacao',
+   'ASA', '0004254', '121', 7862083, 7877082);
 
 -- Uma conta Bradesco para conferir que o caminho antigo nao quebrou
 INSERT INTO `contas`
